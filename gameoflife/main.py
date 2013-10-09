@@ -4,8 +4,11 @@ import time
 import threading
 pygame.init()
 
-WIN_WIDTH = 800
-WIN_HEIGHT = 480
+#WIN_WIDTH = 800
+#WIN_HEIGHT = 480
+
+WIN_WIDTH = 100
+WIN_HEIGHT = 80
 
 LEFT = 1
 RIGHT = 0
@@ -15,6 +18,9 @@ RIGHTBUTTON = 2
 sq_size = 20
 sq_table = [[0 for _ in range((WIN_WIDTH/sq_size))] for _ in range((WIN_HEIGHT/sq_size))]
 sq_table_new = [[0 for _ in range((WIN_WIDTH/sq_size))] for _ in range((WIN_HEIGHT/sq_size))]
+
+num_rows = len(sq_table)
+num_cols = len(sq_table[0])
 
 window = pygame.display.set_mode((WIN_WIDTH, WIN_HEIGHT))
 window.fill((120, 120, 120))
@@ -50,14 +56,71 @@ def sq_fill(button, pos):
 #    if x != 0:
 #        if
 
+def neighbours(table, center):
+    #print "len:"
+    #print(len(table[0])) # cols
+    #print(len(table)) # rows
+    print table[0]
+    count = 0
+    print "center: "
+    print center
+    for i in range (0, len(table)):
+        "+1"
+        count += table[i].count(1)
+    if center == 1:
+        "-1"
+        count -= 1
+    return count
+
 class ThreadClass(threading.Thread):
     def run(self):
         #print sq_table[0]
-        testarr = [[0 for _ in range(5)] for _ in range(3)]
+        testarr = [[0 for _ in range(3)] for _ in range(3)]
+        #       Y  X
         testarr[0][1] = 1
         testarr[1][2] = 1
-        testarr[2][3] = 1
+        testarr[2][2] = 1
         print testarr
+        print neighbours(testarr, testarr[1][1])
+        print [row[0:3] for row in sq_table[0:3]]
+        print len(sq_table[0]) # cols 5
+        print len(sq_table) # rows 4
+        for y in range(0, num_rows):
+            for x in range(0, num_cols):
+                xstart = x - 1
+                ystart = y - 1
+                xstop = x + 2
+                ystop = y + 2
+                xind = 1
+                yind = 1
+                if x == 0:
+                    xstart = x
+                    xstop = x + 3
+                    xind = 0
+                if x == num_cols-2:
+                    xstart = x - 1
+                    xstop = x + 2
+                    xind = 0
+                if x == num_cols-1:
+                    xstart = x - 2
+                    xstop = x + 1
+                    xind = 2
+                if y == 0:
+                    ystart = y
+                    ystop = y + 3
+                    yind = 0
+                if y == num_rows-2:
+                    ystart = y - 1
+                    ystop = y + 2
+                    yind = 0
+                if y == num_rows-1:
+                    ystart = y - 2
+                    ystop = y + 1
+                    yind = 2
+                #subarr = [row[x:x+xrange] for row in sq_table[y:y+yrange]]
+                subarr = [row[xstart:xstop] for row in sq_table[ystart:ystop]]
+                n = neighbours(subarr, subarr[yind][xind])
+                print n
         #for x in enumerate(sq_table):
             # enumerate returns tuple (i, val)
          #   for y in enumerate(sq_table[x[0]]):
