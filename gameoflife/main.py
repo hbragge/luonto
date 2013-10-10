@@ -1,3 +1,13 @@
+#!/usr/bin/python
+
+# gameoflife - Simple Conway's game of life
+
+__author__ = "Henri Bragge"
+__version__ = "$Revision: 0.1 $"
+__date__ = "$Date: 2013/10/10 19:40:01 $"
+__copyright__ = "BSD"
+__license__ = "BSD"
+
 import sys
 import pygame
 import threading
