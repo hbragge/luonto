@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Procheck - a simple TODO list
+# Procheck - Simple command line tool for TODO list management
 
 __author__ = "Henri Bragge"
 __version__ = "$Revision: 0.1 $"
