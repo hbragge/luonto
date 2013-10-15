@@ -17,9 +17,6 @@ pygame.init()
 WIN_WIDTH = 800
 WIN_HEIGHT = 480
 
-#WIN_WIDTH = 100
-#WIN_HEIGHT = 80
-
 LEFT = 1
 RIGHT = 0
 LEFTBUTTON = 0
@@ -88,35 +85,37 @@ class ThreadClass(threading.Thread):
 
         for y in range(0, num_rows):
             for x in range(0, num_cols):
-                xstart = x - 1
-                ystart = y - 1
-                xstop = x + 2
-                ystop = y + 2
-                xind = 1
-                yind = 1
                 if x == 0:
                     xstart = x
                     xstop = x + 2
                     xind = 0
-                if x == num_cols-2:
+                elif x == num_cols-2:
                     xstart = x - 1
                     xstop = x + 2
-                    xind = 0
-                if x == num_cols-1:
+                    xind = 1
+                elif x == num_cols-1:
                     xstart = x - 1
                     xstop = x + 1
+                    xind = 1
+                else:
+                    xstart = x - 1
+                    xstop = x + 2
                     xind = 1
                 if y == 0:
                     ystart = y
                     ystop = y + 2
                     yind = 0
-                if y == num_rows-2:
+                elif y == num_rows-2:
                     ystart = y - 1
                     ystop = y + 2
-                    yind = 0
-                if y == num_rows-1:
+                    yind = 1
+                elif y == num_rows-1:
                     ystart = y - 1
                     ystop = y + 1
+                    yind = 1
+                else:
+                    ystart = y - 1
+                    ystop = y + 2
                     yind = 1
                 subarr = [row[xstart:xstop] for row in curr_table[ystart:ystop]]
                 n = neighbours(subarr, subarr[yind][xind])
