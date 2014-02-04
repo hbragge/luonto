@@ -49,7 +49,7 @@ class TemplateContainerTest < Test::Unit::TestCase
     assert problems.empty?, problems.collect{|p| "#{p.message}, line: #{p.line}"}.join("\n")
   end
 
-  def test_with_model
+  def test_model
     tc = RGen::TemplateLanguage::DirectoryTemplateContainer.new(StatemachineMM, OUTPUT_DIR)
     tc.load(TEMPLATES_DIR)
     File.delete(OUTPUT_DIR+"/fsm.c") if File.exists? OUTPUT_DIR+"/fsm.c"
