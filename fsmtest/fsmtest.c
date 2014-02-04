@@ -20,11 +20,18 @@ void sm_switch(int new_state)
 }
 
 int main(void) {
+	if (state != STATE_Off) { printf("wrong state\n"); return 1; }
 	sm_trigger();
+	if (state != STATE_Off) { printf("wrong state\n"); return 1; }
+
 	onoff_pressed = 1;
 	sm_trigger();
+	if (state != STATE_On) { printf("wrong state\n"); return 1; }
 	sm_trigger();
+	if (state != STATE_Off) { printf("wrong state\n"); return 1; }
 	sm_trigger();
+	if (state != STATE_On) { printf("wrong state\n"); return 1; }
 
+	printf("success\n");
 	return 0;
 }

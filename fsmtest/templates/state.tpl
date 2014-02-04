@@ -3,7 +3,7 @@ case STATE_<%= name %>:
 <%iinc%>
   if (<%= transition.condition %>) {
 <%iinc%>
-     sm_switch(STATE_<%= transition.targetState.targetIdentifier %>);
+     sm_switch(STATE_<%= transition.targetState.name %>);
 <%idec%>
   }
   break;

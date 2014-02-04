@@ -6,28 +6,28 @@ require 'rgen/template_language'
 require 'rgen/metamodel_builder'
 require 'rgen/model_builder'
 require 'rgen/environment'
+require 'rgen/instantiator/reference_resolver'
 require 'rtext/instantiator'
 require 'rtext/language'
 
 class TemplateContainerTest < Test::Unit::TestCase
   
-  TEMPLATES_DIR = File.dirname(__FILE__)+"/templates"
-  OUTPUT_DIR = File.dirname(__FILE__)+"/"
+  TPL_DIR = File.dirname(__FILE__)+"/templates"
+  OUT_DIR = File.dirname(__FILE__)+"/"
   
   module StatemachineMM
     extend RGen::MetamodelBuilder::ModuleExtension
     class Statemachine < RGen::MetamodelBuilder::MMBase
-      has_attr 'name'
-    end
-    class State < RGen::MetamodelBuilder::MMBase
-      has_attr 'name'
     end
     class Transition < RGen::MetamodelBuilder::MMBase
       has_attr 'condition'
-      has_one 'targetState', State
     end
+    class State < RGen::MetamodelBuilder::MMBase
+      has_attr 'name'
+      contains_one 'transition', Transition, 'state'
+    end
+    Transition.has_one 'targetState', State
     Statemachine.contains_many 'states', State, 'statemachine'
-    State.contains_one 'transition', Transition, 'state'
   end
 
   def instantiate(text, mm, options={})
@@ -50,28 +50,33 @@ class TemplateContainerTest < Test::Unit::TestCase
   end
 
   def test_model
-    tc = RGen::TemplateLanguage::DirectoryTemplateContainer.new(StatemachineMM, OUTPUT_DIR)
-    tc.load(TEMPLATES_DIR)
-    File.delete(OUTPUT_DIR+"/fsm.c") if File.exists? OUTPUT_DIR+"/fsm.c"
+    tc = RGen::TemplateLanguage::DirectoryTemplateContainer.new(StatemachineMM, OUT_DIR)
+    tc.load(TPL_DIR)
+    File.delete(OUT_DIR+"/fsm.c") if File.exists? OUT_DIR+"/fsm.c"
     root_elements = []
+    unresolved_refs = []
     env, problems = instantiate(%Q(
-      Statemachine Engine {
-        states: [
+      Statemachine {
           State On {
-            Transition targetState: Off, condition: "onoff_pressed == 1"
+            Transition targetState: /Off, condition: "onoff_pressed == 1"
           }
           State Off {
-            Transition targetState: On, condition: "onoff_pressed == 1"
+            Transition targetState: /On, condition: "onoff_pressed == 1"
           }
-        ]
       }
-      ), StatemachineMM, :root_elements => root_elements)
+      ), StatemachineMM, :root_elements => root_elements, :unresolved_refs => unresolved_refs)
+
+    # for some reason references are not found automatically
+    resolver = RGen::Instantiator::ReferenceResolver.new
+    resolver.add_identifier("/On", root_elements[0].states[0])
+    resolver.add_identifier("/Off", root_elements[0].states[1])
+    resolver.resolve(unresolved_refs)
 
     assert_no_problems(problems)
     tc.expand('root::Root', :for => root_elements)
     result = expected = ""
-    File.open(OUTPUT_DIR+"/fsm.c") {|f| result = f.read}
-    File.open(OUTPUT_DIR+"/fsm.c.expected") {|f| expected = f.read}
+    File.open(OUT_DIR+"/fsm.c") {|f| result = f.read}
+    File.open(OUT_DIR+"/fsm.c.expected") {|f| expected = f.read}
     assert_equal expected, result
   end
   
