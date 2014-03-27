@@ -30,7 +30,7 @@ class C < A
 end
 
 b = B.new('test', 5)
-b.name = "eiku"
+b.name = "eika"
 b.fun = lambda { |n| n * 2 }
 b.print
 c = C.new('test', 5)
