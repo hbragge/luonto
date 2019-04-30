@@ -1,0 +1,75 @@
+<% include ./partials/header %>
+
+<div class="container">
+
+<table id="demo" class="countries">
+  <thead>
+    <tr><th>Country</th>
+    <th>Ratio</th>
+    <th>Homicides</th>
+    <th>Special</th>
+  </tr></thead>
+  <tbody>
+    <% countries.forEach((c) => { %>
+    <tr <% if (c.isSpecial) { %>class="bg-success"<% } %> >
+      <td><strong><%= c.name %></strong></td>
+      <td><%= c.ratio %></td>
+      <td><%= c.homicides %></td>
+      <td><%= c.isSpecial %></td>
+    </tr>
+    <% }); %>
+  </tbody>
+</table>
+
+</div>
+
+<script src="tablefilter/tablefilter.js"></script>
+
+<script>
+    var filtersConfig = {
+        base_path: 'tablefilter/',
+        grid_layout: false,
+        btn_reset: true,
+        loader: true,
+        status_bar: true,
+        col_types: [
+            'string', 'number', 'number', 'string'
+        ],
+        col_widths: [
+            '12rem', '10rem', '10rem', '10rem'
+        ],
+        extensions: [
+            {
+                name: 'advancedGrid',
+                // For the purpose of this demo, ezEditTable dependency
+                // is loaded from its own website which is not a CDN.
+                // This dependency also requires a licence therefore
+                // DO NOT import it in this way in your projects.
+                filename: 'ezEditTable_min.js',
+                vendor_path: 'http://edittable.free.fr/ezEditTable/',
+                // Once ezEditTable dependency is installed in your
+                // project import it by pointing to a local path:
+                // vendor_path: 'path/to/ezEditTable'
+
+                // Below ezEditTable options for activating:
+                // - row(s)/cell(s) selection
+                selection: true,
+                default_selection: 'both',
+                on_validate_row: function(o, row){
+                    //var country = o.Selection.GetActiveRowValues()[0];
+                    //alert('Chosen record: ' + country);
+                }
+            }, {
+                name: 'sort'
+            }
+        ]
+    };
+
+    var tf = new TableFilter('demo', filtersConfig);
+    tf.init();
+</script>
+
+<script src="js/jquery.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<% include ./partials/footer %>
