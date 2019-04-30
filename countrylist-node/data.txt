@@ -1,0 +1,242 @@
+Country,Ratio,Homicides,IsSpecial
+AFRICA: 257646/158875,162,9999.0,0
+ASIA: 1054222/526291,200,9999.0,0
+Afghanistan: 7455/4468,166,6.35,0
+Albania: 632/303,208,2.7,1
+Algeria: 9763/5091,191,1.36,0
+Angola: 5490/3708,148,4.85,0
+Antigua and Barbuda: 21/12,175,10.33,0
+Argentina: 9644/5037,191,5.94,0
+Armenia: 598/345,173,2.98,1
+Aruba: 19/10,190,1.93,0
+Australia: 5191/2573,201,0.94,0
+Australia/New Zealand: 6121/3062,199,9999.0,0
+Austria: 1710/801,213,0.66,0
+Azerbaijan: 2322/1252,185,2.14,0
+Bahamas: 92/49,187,28.4,0
+Bahrain: 754/181,416,0.52,0
+Bangladesh: 39356/22327,176,2.5,0
+Barbados: 53/27,196,10.91,0
+Belarus: 1943/897,216,3.58,0
+Belgium: 2237/1047,213,1.95,0
+Belize: 88/54,162,37.6,0
+Benin: 2234/1416,157,6.18,0
+Bhutan: 223/114,195,1.13,0
+Bolivia (Plurinational State of): 2458/1434,171,9999.0,0
+Bosnia and Herzegovina: 738/347,212,1.28,0
+Botswana: 567/319,177,15.04,0
+Brazil: 49336/25666,192,29.53,0
+Brunei Darussalam: 113/53,213,9999.0,0
+Bulgaria: 1399/565,247,1.14,0
+Burkina Faso: 3763/2389,157,0.37,0
+Burundi: 2063/1464,140,6.02,0
+Cabo Verde: 133/80,166,9999.0,0
+Cambodia: 3653/2172,168,1.84,1
+Cameroon: 4924/3120,157,4.17,0
+Canada: 7481/3683,203,1.68,0
+Caribbean: 9305/5108,182,9999.0,0
+Central African Republic: 870/581,149,19.76,0
+Central America: 41394/23030,179,9999.0,0
+Central Asia: 16376/9366,174,9999.0,0
+Chad: 2818/1875,150,9.04,0
+Channel Islands: 33/14,235,9999.0,0
+Chile: 4065/2064,196,3.46,0
+China: 323485/147668,219,0.62,1
+China Hong Kong SAR: 1344/767,175,1.0,1
+China Macao SAR: 149/79,188,9999.0,0
+China Taiwan Province of China: 5268/2307,228,1.0,1
+Colombia: 11192/6059,184,25.5,0
+Comoros: 174/105,165,7.7,0
+Congo: 1052/619,169,9.32,0
+Costa Rica: 1142/602,189,11.9,0
+Croatia: 806/359,224,1.04,0
+Cuba: 2324/1079,215,4.99,0
+Curaçao: 26/14,185,19.19,0
+Cyprus: 278/136,204,1.11,0
+Czechia: 2227/876,254,9999.0,0
+Côte d'Ivoire: 4893/3095,158,9999.0,0
+Dem. People's Republic of Korea: 5721/2837,201,9999.0,0
+Democratic Republic of the Congo: 15195/9758,155,9999.0,0
+Denmark: 1105/553,199,0.98,1
+Djibouti: 230/138,166,6.48,0
+Dominican Republic: 2333/1338,174,15.18,0
+EUROPE: 146572/66213,221,9999.0,0
+Eastern Africa: 85408/55671,153,9999.0,0
+Eastern Asia: 371084/168069,220,9999.0,0
+Eastern Europe: 60750/27347,222,9999.0,0
+Ecuador: 3755/2105,178,5.85,1
+Egypt: 21912/11987,182,2.51,0
+El Salvador: 1288/885,145,82.84,0
+Equatorial Guinea: 395/166,237,2.31,0
+Eritrea: 1047/652,160,8.04,0
+Estonia: 256/111,230,3.19,0
+Ethiopia: 22059/14341,153,7.56,0
+Fiji: 200/103,194,2.26,0
+Finland: 1044/496,210,1.42,0
+France: 12186/5682,214,1.35,1
+French Guiana: 60/32,187,13.15,0
+French Polynesia: 65/33,196,0.38,0
+Gabon: 478/256,186,8.04,0
+Gambia: 398/272,146,9.13,0
+Georgia: 775/377,205,0.99,0
+Germany: 15357/7213,212,1.18,1
+Ghana: 6112/3720,164,1.68,0
+Greece: 2186/865,252,0.75,0
+Grenada: 25/14,178,10.25,0
+Guadeloupe: 70/39,179,8.01,0
+Guam: 35/18,194,2.51,0
+Guatemala: 3737/2381,156,27.26,0
+Guinea: 2574/1608,160,8.82,0
+Guinea-Bissau: 380/248,153,9999.0,0
+Guyana: 171/93,183,18.37,0
+Haiti: 2421/1506,160,10.04,0
+High-income countries: 247526/111165,222,9999.0,0
+Honduras: 2199/1315,167,56.52,0
+Hungary: 2023/861,234,2.07,0
+Iceland: 70/34,205,0.3,0
+India: 323295/166857,193,3.22,1
+Indonesia: 61835/31744,194,0.5,1
+Iran (Islamic Republic of): 20945/10788,194,9999.0,0
+Iraq: 8304/4850,171,9.85,0
+Ireland: 966/414,233,0.8,0
+Israel: 1712/872,196,1.36,1
+Italy: 10590/4360,242,0.67,0
+Jamaica: 638/363,175,47.01,0
+Japan: 22990/9248,248,0.28,0
+Jordan: 2204/1243,177,1.55,0
+Kazakhstan: 3942/2154,183,4.81,0
+Kenya: 10750/6698,160,4.87,0
+Kiribati: 24/15,160,7.5,0
+Kuwait: 1409/466,302,1.8,0
+Kyrgyzstan: 1343/794,169,4.49,0
+LATIN AMERICA AND THE CARIBBEAN: 148463/80041,185,9999.0,0
+Lao People's Democratic Republic: 1594/967,164,1.0,1
+Latvia: 363/160,226,3.36,0
+Least developed countries: 207988/130337,159,9999.0,0
+Lebanon: 1370/853,160,3.99,0
+Lesotho: 501/331,151,41.25,0
+Less developed regions: 1439904/757390,190,9999.0,0
+Less developed regions excluding China: 1109656/606568,182,9999.0,0
+Less developed regions excluding least developed countries: 1231915/627053,196,9999.0,0
+Liberia: 971/584,166,3.23,0
+Libya: 1624/814,199,2.5,0
+Lithuania: 551/270,204,5.25,0
+Low-income countries: 134682/86701,155,9999.0,0
+Lower-middle-income countries: 705011/383357,183,9999.0,0
+Luxembourg: 131/60,218,0.72,0
+Madagascar: 5313/3373,157,7.69,0
+Malawi: 3797/2532,149,1.73,0
+Malaysia: 8274/4400,188,2.11,1
+Maldives: 155/56,276,0.75,0
+Mali: 3423/2180,157,10.9,0
+Malta: 91/41,221,0.94,0
+Martinique: 53/31,170,2.78,0
+Mauritania: 955/563,169,9.94,0
+Mauritius: 278/141,197,1.82,0
+Mayotte: 49/31,158,5.93,0
+Melanesia: 2309/1289,179,9999.0,0
+Mexico: 30559/16464,185,19.26,0
+Micronesia: 108/62,174,9999.0,0
+Micronesia (Fed. States of): 23/14,164,9999.0,0
+Middle Africa: 31264/20112,155,9999.0,0
+Middle-income countries: 1306204/675178,193,9999.0,0
+Mongolia: 736/395,186,5.66,0
+Montenegro: 129/61,211,4.46,0
+More developed regions: 249078/115962,214,9999.0,0
+Morocco: 7838/4370,179,1.24,1
+Mozambique: 5569/3745,148,3.4,0
+Myanmar: 12134/6743,179,2.27,1
+NORTHERN AMERICA: 73394/37438,196,9999.0,0
+Namibia: 554/365,151,17.14,0
+Nepal: 6132/4186,146,2.16,1
+Netherlands: 3207/1558,205,0.55,1
+New Caledonia: 62/32,193,3.23,0
+New Zealand: 929/489,189,0.99,1
+Nicaragua: 1456/837,173,7.37,0
+Niger: 3534/2450,144,4.44,0
+Nigeria: 37802/22788,165,9.85,0
+Northern Africa: 52050/28859,180,9999.0,0
+Northern Europe: 20470/9891,206,9999.0,0
+Norway: 1129/535,211,0.51,0
+OCEANIA: 8683/4492,193,9999.0,0
+Oman: 2430/507,479,0.66,0
+Pakistan: 44932/26108,172,4.41,0
+Panama: 922/488,188,9.67,0
+Papua New Guinea: 1856/1043,177,7.85,0
+Paraguay: 1595/931,171,9.29,0
+Peru: 7447/4017,185,7.67,1
+Philippines: 23748/13574,174,11.02,1
+Poland: 8174/3571,228,0.67,0
+Polynesia: 144/77,187,9999.0,0
+Portugal: 1890/832,227,0.64,0
+Puerto Rico: 759/391,194,18.51,0
+Qatar: 1552/217,715,0.38,0
+Republic of Korea: 11388/4765,238,9999.0,0
+Republic of Moldova: 957/486,196,9999.0,0
+Romania: 4002/1735,230,1.25,0
+Russian Federation: 29719/13742,216,1.0,1
+Rwanda: 2510/1632,153,2.52,0
+Réunion: 160/85,188,1.82,0
+Saint Lucia: 41/22,186,19.27,0
+Saint Vincent and the Grenadines: 24/13,184,36.46,0
+Samoa: 37/20,185,3.15,0
+Sao Tome and Principe: 40/25,160,9999.0,0
+Saudi Arabia: 10982/3893,282,1.5,0
+Senegal: 3149/2045,153,7.38,0
+Serbia: 1776/824,215,1.39,0
+Seychelles: 20/9,222,12.74,0
+Sierra Leone: 1533/986,155,1.71,0
+Singapore: 1234/566,218,0.32,1
+Slovakia: 1204/521,231,1.05,0
+Slovenia: 411/163,252,0.48,0
+Solomon Islands: 129/74,174,3.77,0
+Somalia: 2706/1832,147,4.31,0
+South Africa: 13517/7591,178,33.97,0
+South America: 97764/51903,188,9999.0,0
+South Sudan: 2573/1648,156,13.9,0
+South-Central Asia: 462957/246494,187,9999.0,0
+South-Eastern Asia: 150497/79289,189,9999.0,0
+Southern Africa: 15443/8818,175,9999.0,0
+Southern Asia: 446580/237128,188,9999.0,0
+Southern Europe: 28777/11797,243,9999.0,0
+Spain: 9028/3409,264,0.63,1
+Sri Lanka: 4082/2220,183,2.55,1
+State of Palestine: 1090/679,160,9999.0,0
+Sub-Saharan Africa: 205596/130016,158,9999.0,0
+Sudan: 8154/5151,158,5.16,0
+Suriname: 126/67,188,8.35,0
+Swaziland: 301/210,143,17.29,0
+Sweden: 1971/962,204,1.08,0
+Switzerland: 1728/807,214,0.54,0
+Syrian Arab Republic: 3714/2090,177,9999.0,0
+TFYR Macedonia: 464/216,214,9999.0,0
+Tajikistan: 1990/1222,162,1.61,0
+Thailand: 14697/6981,210,3.24,1
+Timor-Leste: 240/155,154,9999.0,0
+Togo: 1616/982,164,9.0,0
+Tonga: 21/12,175,0.95,0
+Trinidad and Tobago: 304/144,211,30.88,0
+Tunisia: 2601/1366,190,3.05,0
+Turkey: 18713/9649,193,4.31,0
+Turkmenistan: 1325/763,173,4.22,0
+Uganda: 8193/5462,150,11.52,0
+Ukraine: 9099/4086,222,6.34,0
+United Arab Emirates: 5173/793,652,0.89,0
+United Kingdom: 12953/6325,204,1.2,1
+United Republic of Tanzania: 10981/7205,152,9999.0,0
+United States Virgin Islands: 16/8,200,9999.0,0
+United States of America: 65890/33742,195,1.0,1
+Upper-middle-income countries: 601193/291820,206,9999.0,0
+Uruguay: 718/371,193,7.69,0
+Uzbekistan: 7774/4431,175,3.0,0
+Vanuatu: 60/36,166,2.13,0
+Venezuela (Bolivarian Republic of): 7191/4021,178,9999.0,0
+Viet Nam: 22970/11930,192,1.0,1
+WORLD: 1688983/873353,193,9999.0,0
+Western Africa: 73479/45413,161,9999.0,0
+Western Asia: 69683/32437,214,9999.0,0
+Western Europe: 36574/17176,212,9999.0,0
+Western Sahara: 156/77,202,9999.0,0
+Yemen: 6296/4026,156,6.66,0
+Zambia: 3432/2243,153,5.3,0
+Zimbabwe: 3493/2324,150,6.67,0
