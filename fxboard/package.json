@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "datejs": "^1.0.0-rc3",
     "request": "^2.88.2"
   }
 }

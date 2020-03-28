@@ -1,8 +1,11 @@
 var request = require('request');
-var url = 'https://api.exchangeratesapi.io';
+var datejs = require('datejs');
+var url = 'https://api.exchangeratesapi.io/';
 var base = '?base=USD'
-var start = url + '/2020-01-31' + base;
-var end = url + '/latest' + base;
+var dateFormat = "yyyy-MM-dd";
+var startDate = Date.today().addDays(-180).toString(dateFormat);
+var start = url + startDate + base;
+var end = url + 'latest' + base;
 
 request.get({
     url: end,
