@@ -200,28 +200,58 @@ void MainWindow::fill_grid(quint32 columns_, quint32 rows_)
 }
 
 void MainWindow::check_grid() {
-    int countx = 0;
-    Fruit::FruitType kindx;
     quint32 j = 0;
     while (j < fruits_grid_.size()){
+        std::vector<Fruit*> to_remove;
+        Fruit::FruitType kind = Fruit::NUMBER_OF_FRUITS;
+        if (fruits_grid_.at(j).at(0) != nullptr){
+            kind = fruits_grid_.at(j).at(0)->fruitType_;
+            to_remove.push_back(fruits_grid_.at(j).at(0));
+        }
         quint32 i = 1;
-        countx = 1;
-        kindx = fruits_grid_.at(j).at(0)->fruitType_;
         while (i < fruits_grid_.at(j).size()) {
-            if (fruits_grid_.at(j).at(i)->fruitType_ == kindx) {
-                ++countx;
-            } else {
-                if (countx > 2) {
-                    printf("found %i\n", countx);
-                    assert(false);
+            if (fruits_grid_.at(j).at(i) == nullptr) {
+                ++i;
+                continue;
+            }
+            if (fruits_grid_.at(j).at(i)->fruitType_ == kind){
+                if (fruits_grid_.at(j).at(i) != nullptr) {
+                    to_remove.push_back(fruits_grid_.at(j).at(i));
                 }
-                countx = 1;
-                kindx = fruits_grid_.at(j).at(i)->fruitType_;
+                if (i == fruits_grid_.at(j).size()-1){
+                    if (to_remove.size() > 2){
+                        for (auto& vektorin_alkio : to_remove ) {
+                            Index ind = get_ind(*vektorin_alkio);
+                            if (fruits_grid_.at(ind.y).at(ind.x) != nullptr) {
+                                fruits_grid_.at(ind.y).at(ind.x) = nullptr;
+                                vektorin_alkio->deleteLater();
+                            }
+                        }
+                     }
+                    to_remove.clear();
+                }
+            } else {
+                if (to_remove.size() > 2){
+                    for (auto& vektorin_alkio : to_remove ) {
+                        Index ind = get_ind(*vektorin_alkio);
+                        if (fruits_grid_.at(ind.y).at(ind.x) != nullptr) {
+                            fruits_grid_.at(ind.y).at(ind.x) = nullptr;
+                            vektorin_alkio->deleteLater();
+                        }
+                    }
+                }
+                to_remove.clear();
+                if (fruits_grid_.at(j).at(i) != nullptr){
+                    kind = fruits_grid_.at(j).at(i)->fruitType_;
+                    to_remove.push_back(fruits_grid_.at(j).at(i));
+                }
             }
             ++i;
         }
         ++j;
     }
+
+    // TODO: check columns
 }
 
 void MainWindow::init_dataview()
