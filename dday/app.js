@@ -24,8 +24,8 @@ var remaining = function(name, dateStr, today, totalMonths) {
     var remDays = remDiff/1000/60/60/24;
     var remMonths = round(remDays/30.4, 1);
     var bwDate = new Date(today);
-    var totalMonthsStr = (totalMonths > 0) ? "/" + totalMonths + ".0" : "";
-    var ratioStr = (totalMonths > 0) ? " " + (remMonths/totalMonths * 100).toFixed(2) + "%" : "";
+    var totalMonthsStr = (totalMonths > 0) ? "/" + totalMonths : "";
+    var ratioStr = (totalMonths > 0) ? " " + ((1 - remMonths/totalMonths) * 100).toFixed(2) + "%" : "";
     bwDate.addDays(-remDays);
     console.log(Math.floor(remDays) +
                 " days (" + remMonths + totalMonthsStr +
