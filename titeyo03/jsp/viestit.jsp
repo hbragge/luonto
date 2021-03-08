@@ -1,7 +1,7 @@
 <%@page contentType="text/html"%>
 <%@page pageEncoding="UTF-8"%>
 <%@page import="java.sql.*, java.util.Vector" %> 
-<%@page import="fi.tty.pori.vo.Opettaja, fi.tty.pori.dao.*" %> 
+<%@page import="fi.tty.pori.vo.Viesti, fi.tty.pori.dao.*" %> 
 
 <%!
     String connectionURL = "";
@@ -40,33 +40,28 @@
     </head>
     <body>
 
-    <h1>Opettajat</h1>
+    <h1>Viestit</h1>
     
     <% 	
-    OpeDAO dao = new OpeDAO(getConnection());
-    Vector opettajaVector = dao.haeOpettajat();
+    ViestiDAO dao = new ViestiDAO(getConnection());
+    Vector viestiVector = dao.haeViestit();
 
     
-    Opettaja opettaja = new Opettaja();
-	for(int i = 0; i < opettajaVector.size(); i++) {
-		opettaja = (Opettaja)opettajaVector.elementAt(i); 
+    Viesti viesti = new Viesti();
+	for(int i = 0; i < viestiVector.size(); i++) {
+		viesti = (Viesti)viestiVector.elementAt(i); 
 
 %>
 <table>    
 <tr>
+
 <td width="10" align="center" valign="middle" bgcolor="#DDDDDD">
- <a href="editope.jsp?id=<%=opettaja.getOpenro()%>">
- <img width="12" height="13" src="images/button_edit.png" alt="Edit" title="Muokkaa" border="0" /></a>
-</td>
-<td width="10" align="center" valign="middle" bgcolor="#DDDDDD">
- <a href="delope.jsp?poista=<%=opettaja.getOpenro()%>">
+ <a href="delviesti.jsp?poista=<%=viesti.getViestinro()%>">
  <img width="12" height="13" src="images/button_remove.png" alt="Delete" title="Poista" border="0" /></a>
 </td>
 </td>
-    <td valign="top"  bgcolor="#DDDDDD"><%=opettaja.getSukunimi()%></td>
-    <td valign="top"  bgcolor="#DDDDDD"><%=opettaja.getEtunimi()%></td>
-    <td valign="top"  bgcolor="#DDDDDD"><%=opettaja.getEmail()%></td>
-    <td valign="top"  bgcolor="#DDDDDD"><%=opettaja.getHuone()%></td>
+    <td valign="top"  bgcolor="#DDDDDD"><%=viesti.getVastaanottaja()%></td>
+    <td valign="top"  bgcolor="#DDDDDD"><%=viesti.getViesti()%></td>
 
 </tr>
 <% }%>   

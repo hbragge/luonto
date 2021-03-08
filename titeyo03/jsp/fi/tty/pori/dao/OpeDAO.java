@@ -14,8 +14,8 @@ import fi.tty.pori.vo.Opettaja;
  */
 public class OpeDAO {
     Connection mConnection;
-    // Käytetään tällä kertaa virheen välittämiseen
-    // voishan tässä käyttää myös poikkeuksia!!!!
+    // Kytetn tll kertaa virheen vlittmiseen
+    // voishan tss kytt mys poikkeuksia!!!!
     String mErrorMessage ="";
     /** Creates a new instance of OpeDAO */
     public OpeDAO(Connection connection) {
@@ -65,6 +65,21 @@ public class OpeDAO {
 		return true;
     }
     
+    public boolean poista( int openro) {
+	try{
+		Connection connection = getConnection();
+		String sqlStr = "DELETE FROM OPETTAJA WHERE OPENRO=?";
+
+			PreparedStatement ps =  connection.prepareStatement(sqlStr);
+			ps.setInt(1,openro);
+			ps.executeUpdate();
+			ps.close();
+			connection.close();
+		}catch(SQLException se){
+			return false;
+		}
+		return true;
+    }
     public Opettaja haeOpettaja( int openro) {
 	Opettaja opettaja = null;
         try{

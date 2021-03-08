@@ -1,0 +1,56 @@
+CREATE DATABASE `ost2005`;
+USE `ost2005`;
+
+CREATE TABLE `OPETTAJA` (
+  `OPENRO` int(11) NOT NULL auto_increment,
+  `SUKUNIMI` varchar(40) NOT NULL default '',
+  `ETUNIMI` varchar(25) NOT NULL default '',
+  `EMAIL` varchar(40) default '',
+  `HUONE` varchar(20) default '',
+  PRIMARY KEY  (`OPENRO`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `OPPILAS` (
+  `OPPNRO` int(11) NOT NULL auto_increment,
+  `SALASANA` varchar(10) NOT NULL default '',
+  `NICK_NAME` varchar(10) NOT NULL default '',
+  `SUKUNIMI` varchar(40) NOT NULL default '',
+  `ETUNIMI` varchar(25) NOT NULL default '',
+  `EMAIL` varchar(40) NOT NULL default '',
+  `ALOITUSVUOSI` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`OPPNRO`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `KURSSI_KUVAUS` (
+  `KUVAUS_ID` int(11) NOT NULL default '0',
+  `KURSSIN_NIMI` varchar(100) NOT NULL default '',
+  `KURSSI_NRO` varchar(100) NOT NULL default '',
+  `OV_MAARA` varchar(100) NOT NULL default '',
+  `OPETTAJA_ID` int(11) NOT NULL default '0',
+  `LUENTO_MAARA` int(11) NOT NULL default '0',
+  `HARJOITUS_MAARA` varchar(100) NOT NULL default '',
+  `TAVOITTEET` varchar(100) NOT NULL default '',
+  `SISALTO` varchar(100) NOT NULL default '',
+  `TUTKINTOVAATIMUKSET` varchar(100) NOT NULL default '',
+  `KIRJALLISUUS` varchar(100) NOT NULL default '',
+  `KURSSIN_KOTISIVU` varchar(100) NOT NULL default ''
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `KURSSI` (
+  `KURSSI_ID` int(11) NOT NULL default '0',
+  `OPETTAJA_ID` int(11) NOT NULL default '0',
+  `KUVAUS_ID` int(11) NOT NULL default '0',
+  `VUOSI` varchar(100) NOT NULL default '',
+  PRIMARY KEY  (`KURSSI_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+
+
+
+CREATE TABLE `KURSSI_ILMOITTAUTUMINEN` (
+  `KURSSI_ID` int(11) NOT NULL default '0',
+  `OPPILAS_ID` int(11) NOT NULL default '0',
+  PRIMARY KEY  (`KURSSI_ID`,`OPPILAS_ID`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;

@@ -68,31 +68,31 @@
 <input type="hidden" name="openro" size="40" value="<%= opettaja.getOpenro()%>" >
 <tr>
 	<td width="40%"><div align="right">
-	<font color="#008080"face="Arial, Helvetica, sans-serif"><b>Sukunimi</b></font></div></td>
+	<font color="#048010"face="Arial, Helvetica, sans-serif"><b>Sukunimi</b></font></div></td>
 	<td width="60%"><input type="text" name="sukunimi" size="40" value="<%= opettaja.getSukunimi()%>" ></td>
 </tr>
 <tr>
 	<td width="40%"><div align="right">
-	<font color="#008080"face="Arial, Helvetica, sans-serif"><b>Etunimi</b></font></div></td>
+	<font color="#048010"face="Arial, Helvetica, sans-serif"><b>Etunimi</b></font></div></td>
 	<td width="60%"><input type="text" name="etunimi" size="25" value="<%= opettaja.getEtunimi()%>"></td>
 </tr>
 
 <tr>
 	<td width="40%"><div align="right">
-	<font color="#008080"face="Arial, Helvetica, sans-serif"><b>Sähköposti</b></font></div></td>
+	<font color="#048010"face="Arial, Helvetica, sans-serif"><b>Sahkposti</b></font></div></td>
 	<td width="60%"><input type="text" name="email" size="40" value="<%= opettaja.getEmail()%>"></td>
 </tr>
 
 <tr>
 	<td width="40%"><div align="right">
-	<font color="#008080"face="Arial, Helvetica, sans-serif"><b>Työhuone</b></font></div></td>
+	<font color="#048010"face="Arial, Helvetica, sans-serif"><b>Tyohuone</b></font></div></td>
 	<td width="60%"><input type="text" name="room" size="20" value="<%= opettaja.getHuone()%>"></td>
 </tr>
 
 <tr>
 	<td colspan="2"><div align="center">
         <INPUT type=submit value="Talleta" >
-        <INPUT type=reset  value="Tyhjennä" >
+        <INPUT type=reset  value="Tyhjenna" >
 	</td>
 </tr>
 </table>
