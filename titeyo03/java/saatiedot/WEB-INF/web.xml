@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<web-app xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+	http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
+	version="2.4">
+
+<display-name>Testiservletti</display-name>
+<description>
+Testataan toimiiko.
+</description>
+<servlet>
+    <servlet-name>soap</servlet-name>
+    <servlet-class>soap</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>soap</servlet-name>
+    <url-pattern>/soap</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>etusivu</servlet-name>
+    <servlet-class>etusivu</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>etusivu</servlet-name>
+    <url-pattern>/etusivu</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>rssread</servlet-name>
+    <servlet-class>rssread</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>rssread</servlet-name>
+    <url-pattern>/rssread</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>rssprint</servlet-name>
+    <servlet-class>rssprint</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>rssprint</servlet-name>
+    <url-pattern>/rssprint</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>rssprint1</servlet-name>
+    <servlet-class>rssprint1</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>rssprint1</servlet-name>
+    <url-pattern>/rssprint1</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>xtmprint1</servlet-name>
+    <servlet-class>xtmprint1</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>xtmprint1</servlet-name>
+    <url-pattern>/xtmprint1</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>xtmprint</servlet-name>
+    <servlet-class>xtmprint</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>xtmprint</servlet-name>
+    <url-pattern>/xtmprint</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>palvelu</servlet-name>
+    <servlet-class>palvelu</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>palvelu</servlet-name>
+    <url-pattern>/palvelu</url-pattern>
+</servlet-mapping>
+<servlet>
+    <servlet-name>TestMysql</servlet-name>
+    <servlet-class>TestMysql</servlet-class>
+</servlet>
+<servlet-mapping>
+    <servlet-name>TestMysql</servlet-name>
+    <url-pattern>/TestMysql</url-pattern>
+</servlet-mapping>
+</web-app>
+

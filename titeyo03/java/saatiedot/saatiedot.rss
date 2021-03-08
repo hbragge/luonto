@@ -1,0 +1,35 @@
+<rss version="2.0">
+<channel>
+<title>Weather information</title>
+<item>
+<title>
+      NULL and 77 degrees F at Perry-Foley Airport, FL
+      </title>
+<description>
+      Winds are South at 12 MPH.  The pressure is 29.90" (1012.5 mb) and the humidity is 77%. 
+      
+         The heat index is 79.
+         Last Updated on May 7, 3:53 pm EDT.  
+      </description>
+<link>
+     http://www.nws.noaa.gov/data/current_obs/
+     </link>
+<lastBuildDate>Sun, 7 May 2006 20:50:02 UT</lastBuildDate>
+</item>
+<item>
+<title>
+      Mostly Cloudy and 79 degrees F at Apalachicola, FL
+      </title>
+<description>
+      Winds are Southwest at 14 MPH.  The pressure is 29.91" (1012.7 mb) and the humidity is 77%. 
+      
+         The heat index is 82.
+         Last Updated on May 7, 3:56 pm EDT.  
+      </description>
+<link>
+     http://www.nws.noaa.gov/data/current_obs/
+     </link>
+<lastBuildDate>Sun, 7 May 2006 20:50:02 UT</lastBuildDate>
+</item>
+</channel>
+</rss>

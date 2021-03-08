@@ -1,0 +1,84 @@
+*
+	{
+	padding: 0;
+	margin: 0;
+	overflow: auto;
+	}
+
+body
+	{
+	background: #fff;
+	font: 10px/16px "Lucida Grande", Verdana, arial, sans-serif;
+	color: #000;
+	}
+	
+
+div#topnavcontainer
+	{
+	width: 562px;
+	height: 70px;
+	margin-left: 10%;
+	margin-right: 5%;
+	text-align: right;
+	background: url(../img/topheaderbg.gif) repeat-x bottom;
+	}
+
+div#mainnav
+	{
+	margin-top: 11px;
+	}
+	
+ul#mainnavlist
+	{
+	background: url(../img/mainnavbg.gif) no-repeat top right;
+	padding: 0 1px 0 0;
+	margin: 0;
+	list-style-type: none;
+	}
+	
+ul#mainnavlist li
+	{
+	display: inline;
+	margin:0;
+	padding:0;
+	}
+	
+ul#mainnavlist li.last
+	{
+	margin-right: 0px;
+	}
+	
+ul#mainnavlist li a, ul#mainnavlist li a:link
+	{
+	text-decoration: none;
+	color: #000;
+	font-weight: bold;
+	line-height: 18px;
+	padding: 3px 19px;
+	margin: 0;
+	background: url(../img/mainnavlink-bg.gif) no-repeat 0 0;
+	}
+	
+ul#mainnavlist li a:hover, ul#mainnavlist li a:focus
+	{
+	background: url(../img/mainnavlink-bg.gif) no-repeat 0 -20px;
+	}
+	
+ul#mainnavlist li.first a, ul#mainnavlist li.first a:link
+	{
+	background: url(../img/mainnavfirstbg.gif) no-repeat 0 0;
+	padding-left: 19px;
+	}
+	
+ul#mainnavlist li.first a:hover, ul#mainnavlist li.first a:focus
+	{
+	background: url(../img/mainnavfirstbg.gif) no-repeat 0 -20px;
+	}
+	
+
+	
+	
+	
+	
+	
+	

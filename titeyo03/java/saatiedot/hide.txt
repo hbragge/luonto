@@ -1,0 +1,21 @@
+<style type="text/css" media="all">
+		@import "style/hide.css";
+</style>
+	<script type="text/javascript">
+	
+  function flip(rid)
+  {
+    current=(document.getElementById(rid).style.display == 'none') ? 'block' : 'none';
+    document.getElementById(rid).style.display = current;
+  }
+	</script>
+
+<div class="posthide"><ul><li><a href="#" onClick="flip('results1'); return false;">Local Prizes</a></li></ul></div><div id="results1"><script type="text/javascript">flip('results1');</script><br />
+<blockquote>1st Place: Grand Final Auto-berth + SteelSound 5H <br />
+2nd Place: Grand Final Auto-berth + PNY 1 GB MP3 Player <br />
+3rd Place: Logitech G15 Gaming Keyboard <br />
+4th Place: Logitech G5 Gaming Mouse <br />
+5th Place: SteelPad 5L <br />
+6th Place: SteelPad 5L <br />
+7th Place: SteelPad QcK+ <br />
+8th Place: SteelPad QcK+</blockquote></div>

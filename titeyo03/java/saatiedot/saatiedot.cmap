@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<topicMap id="1" xmlns="http://www.topicmaps.org/xtm/1.0/" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<topic id="KAPF">
+		<instanceOf>
+			<topicRef xlink:type="simple" xlink:href="#topic"/>
+		</instanceOf>
+	<baseName>
+		<baseNameString>
+     Weather at Naples Municipal, FL - via NOAA's National Weather Service
+     		</baseNameString>
+	</baseName>
+	<occurrence>
+		<instanceOf>
+			<topicRef xlink:href="#occurrence"/>
+		</instanceOf>
+		<resourceRef xlink:type="simple" xlink:href="
+     http://www.nws.noaa.gov/data/current_obs/
+     "/>
+	</occurrence>
+	<occurrence>
+		<instanceOf>
+			<topicRef xlink:href="#plain-text-format"/>
+		</instanceOf>
+		<resourceData>
+      A Few Clouds and 85 degrees F at Naples Municipal, FL
+      		</resourceData>
+	</occurrence>
+	<association>
+		<instanceOf>
+			<topicRef xlink:href="#association"/>
+		</instanceOf>
+		<member>
+			<roleSpec>
+				<topicRef xlink:href="#author"/>
+				</roleSpec>
+			<topicRef xlink:href="#nws"/>
+		</member>
+	</association>
+	</topic>	<topic id="KBKV">
+		<instanceOf>
+			<topicRef xlink:type="simple" xlink:href="#topic"/>
+		</instanceOf>
+	<baseName>
+		<baseNameString>
+     Weather at Brooksville, Hernando County Airport, FL - via NOAA's National Weather Service
+     		</baseNameString>
+	</baseName>
+	<occurrence>
+		<instanceOf>
+			<topicRef xlink:href="#occurrence"/>
+		</instanceOf>
+		<resourceRef xlink:type="simple" xlink:href="
+     http://www.nws.noaa.gov/data/current_obs/
+     "/>
+	</occurrence>
+	<occurrence>
+		<instanceOf>
+			<topicRef xlink:href="#plain-text-format"/>
+		</instanceOf>
+		<resourceData>
+      Fair and 90 degrees F at Brooksville, Hernando County Airport, FL
+      		</resourceData>
+	</occurrence>
+	<association>
+		<instanceOf>
+			<topicRef xlink:href="#association"/>
+		</instanceOf>
+		<member>
+			<roleSpec>
+				<topicRef xlink:href="#author"/>
+				</roleSpec>
+			<topicRef xlink:href="#nws"/>
+		</member>
+	</association>
+	</topic>	<topic id="KBOW">
+		<instanceOf>
+			<topicRef xlink:type="simple" xlink:href="#topic"/>
+		</instanceOf>
+	<baseName>
+		<baseNameString>
+     Weather at Bartow Municipal, FL - via NOAA's National Weather Service
+     		</baseNameString>
+	</baseName>
+	<occurrence>
+		<instanceOf>
+			<topicRef xlink:href="#occurrence"/>
+		</instanceOf>
+		<resourceRef xlink:type="simple" xlink:href="
+     http://www.nws.noaa.gov/data/current_obs/
+     "/>
+	</occurrence>
+	<occurrence>
+		<instanceOf>
+			<topicRef xlink:href="#plain-text-format"/>
+		</instanceOf>
+		<resourceData>
+      Partly Cloudy and 90 degrees F at Bartow Municipal, FL
+      		</resourceData>
+	</occurrence>
+	<association>
+		<instanceOf>
+			<topicRef xlink:href="#association"/>
+		</instanceOf>
+		<member>
+			<roleSpec>
+				<topicRef xlink:href="#author"/>
+				</roleSpec>
+			<topicRef xlink:href="#nws"/>
+		</member>
+	</association>
+	</topic>
+</topicMap>
