@@ -1,0 +1,7 @@
+.qmake.stash
+Makefile
+*.o
+moc_mainwindow.cpp
+moc_predefs.h
+prg1
+ui_mainwindow.h
