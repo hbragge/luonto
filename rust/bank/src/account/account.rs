@@ -7,7 +7,7 @@ pub struct Account {
 pub trait Storage {
     fn withdraw(&mut self, amount: u32);
     fn deposit(&mut self, amount: u32);
-    fn transfer_from(&mut self, from: &mut Account, amount: u32) -> bool;
+    fn transfer_from(&mut self, from: &mut Account, amount: u32) -> Result<(), ()>;
 }
 
 impl Storage for Account {
@@ -21,15 +21,16 @@ impl Storage for Account {
         self.balance += amount;
     }
 
-    fn transfer_from(&mut self, from: &mut Account, amount: u32) -> bool {
+    fn transfer_from(&mut self, from: &mut Account, amount: u32) -> Result<(), ()> {
         if from.balance >= amount {
             println!("transferring {} to {} ({}) from {} ({})",
                      amount, self.owner, self.id, from.owner, from.id);
             from.withdraw(amount);
             self.deposit(amount);
-            true
+            Ok(())
         } else {
-            false
+            println!("error occurred");
+            Err(())
         }
     }
 }

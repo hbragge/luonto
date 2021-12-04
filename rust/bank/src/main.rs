@@ -13,9 +13,13 @@ fn main() {
         id: 1,
         balance: 20,
     };
-    if acc1.transfer_from(&mut acc0, 150) {
-        println!("success {} {}", acc0.balance, acc1.balance);
+    println!("balance ({}, {}): {} {}", acc0.owner, acc1.owner, acc0.balance, acc1.balance);
+    if acc1.transfer_from(&mut acc0, 150).is_ok() {
+        println!("success: {} {}", acc0.balance, acc1.balance);
     } else {
+        println!("failed");
+    }
+    if acc1.transfer_from(&mut acc0, 1).is_err() {
         println!("failed");
     }
 }
