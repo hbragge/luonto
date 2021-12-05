@@ -2,7 +2,7 @@ use piston_window::types::Color;
 use piston_window::Context;
 use piston_window::G2d;
 
-use drawing::draw_block;
+use crate::drawing::draw_block;
 
 const PLAYER_COLOR: Color = [0.2, 0.65, 0.5, 1.0];
 

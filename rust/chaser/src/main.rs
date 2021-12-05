@@ -9,8 +9,8 @@ mod enemy;
 use piston_window::types::Color;
 use piston_window::*;
 
-use drawing::to_gui_coord_u32;
-use game::Game;
+use crate::drawing::to_gui_coord_u32;
+use crate::game::Game;
 
 const BACKGROUND_COLOR: Color = [0.2, 0.3, 0.4, 1.0];
 
@@ -18,7 +18,7 @@ fn main() {
     let (width, height) = (25, 25);
 
     let mut window: PistonWindow = WindowSettings::new(
-        "Chase game",
+        "Chaser game",
         [to_gui_coord_u32(width), to_gui_coord_u32(height)],
     )
     .exit_on_esc(true)

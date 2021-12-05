@@ -1,9 +1,9 @@
 use piston_window::types::Color;
 use piston_window::*;
 
-use drawing::draw_rectange;
-use player::{Direction, Player};
-use enemy::Enemy;
+use crate::drawing::draw_rectange;
+use crate::player::{Direction, Player};
+use crate::enemy::Enemy;
 
 const EDGE_COLOR: Color = [0.72, 0.74, 0.8, 1.0];
 const END_COLOR: Color = [0.80, 0.30, 0.30, 0.6];

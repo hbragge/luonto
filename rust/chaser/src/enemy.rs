@@ -2,7 +2,7 @@ use piston_window::types::Color;
 use piston_window::Context;
 use piston_window::G2d;
 use soloud::*;
-use drawing::draw_block;
+use crate::drawing::draw_block;
 
 const ENEMY_COLOR: Color = [0.8, 0.25, 0.1, 1.0];
 

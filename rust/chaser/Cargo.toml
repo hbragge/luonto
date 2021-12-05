@@ -1,6 +1,7 @@
 [package]
-name = "chasegame"
+name = "chaser"
 version = "0.1.0"
+edition = "2021"
 authors = ["Henri Bragge"]
 
 [dependencies]
