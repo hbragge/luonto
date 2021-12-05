@@ -49,7 +49,7 @@ impl Game {
             _ => None,
         };
 
-        if dir.unwrap() == self.player.player_direction() {
+        if dir == None || dir.unwrap() == self.player.player_direction() {
             return;
         }
 
@@ -109,8 +109,8 @@ impl Game {
     }
 
     fn restart(&mut self) {
-        self.player = Player::new(2, 2);
-        self.enemy = Enemy::new(self.width - 3, self.height - 3);
+        self.player.restart();
+        self.enemy.restart();
         self.wait_time = 0.0;
         self.is_game_over = false;
     }

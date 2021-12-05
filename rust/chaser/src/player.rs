@@ -23,6 +23,7 @@ struct Block {
 pub struct Player {
     direction: Direction,
     pos: Block,
+    init_pos: Block,
 }
 
 impl Player {
@@ -34,8 +35,14 @@ impl Player {
 
         Player {
             direction: Direction::Right,
-            pos: pos,
+            pos: pos.clone(),
+            init_pos: pos,
         }
+    }
+
+    pub fn restart(&mut self) {
+        self.direction = Direction::Right;
+        self.pos = self.init_pos.clone();
     }
 
     pub fn draw(&self, con: &Context, g: &mut G2d) {

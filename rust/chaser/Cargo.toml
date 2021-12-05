@@ -5,5 +5,5 @@ edition = "2021"
 authors = ["Henri Bragge"]
 
 [dependencies]
-piston_window = "0.121.0"
-soloud = "1.0.0"
+piston_window = "0.121"
+soloud = "1.0"

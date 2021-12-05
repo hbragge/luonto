@@ -14,17 +14,11 @@ struct Block {
 
 pub struct Enemy {
     pos: Block,
+    init_pos: Block,
     move_count: u32,
-}
-
-fn react_sound() {
-    let sl = Soloud::default().unwrap();
-    let mut wav = audio::Wav::default();
-    wav.load_mem(include_bytes!("../react.wav")).unwrap();
-    sl.play(&wav);
-    while sl.voice_count() > 0 {
-        std::thread::sleep(std::time::Duration::from_millis(100));
-    }
+    yelling: bool,
+    sl: Soloud,
+    wav: audio::Wav,
 }
 
 impl Enemy {
@@ -35,9 +29,19 @@ impl Enemy {
         };
 
         Enemy {
-            pos: pos,
+            pos: pos.clone(),
+            init_pos: pos,
             move_count: 0,
+            yelling: false,
+            sl: Soloud::default().unwrap(),
+            wav: audio::Wav::default(),
         }
+    }
+
+    pub fn restart(&mut self) {
+        self.pos = self.init_pos.clone();
+        self.move_count = 0;
+        self.yelling = false;
     }
 
     pub fn draw(&self, con: &Context, g: &mut G2d) {
@@ -46,7 +50,10 @@ impl Enemy {
 
     pub fn follow(&mut self, player_pos: (i32, i32)) {
         if self.move_count == 0 {
-            react_sound();
+            self.start_react_sound();
+        }
+        if self.yelling {
+            self.play_react_sound();
         }
         self.move_count += 1;
         if self.move_count % 2 == 0 {
@@ -64,13 +71,27 @@ impl Enemy {
         }
     }
 
-    pub fn is_touching(&mut self, player_pos: (i32, i32)) -> bool {
+    pub fn is_touching(&self, player_pos: (i32, i32)) -> bool {
         let dist_x = (self.pos.x - player_pos.0).abs();
         let dist_y = (self.pos.y - player_pos.1).abs();
         if dist_x + dist_y <= 1 {
             return true;
         } else {
             return false;
+        }
+    }
+
+    fn start_react_sound(&mut self) {
+        self.wav.load_mem(include_bytes!("../react.wav")).unwrap();
+        self.sl.play(&self.wav);
+        self.yelling = true;
+    }
+
+    fn play_react_sound(&mut self) {
+        if self.sl.voice_count() > 0 {
+            std::thread::sleep(std::time::Duration::from_millis(10));
+        } else {
+            self.yelling = false;
         }
     }
 }
