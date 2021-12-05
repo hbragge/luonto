@@ -3,6 +3,7 @@ extern crate piston_window;
 mod drawing;
 mod game;
 mod player;
+mod enemy;
 
 use piston_window::types::Color;
 use piston_window::*;

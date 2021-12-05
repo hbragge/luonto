@@ -3,6 +3,7 @@ use piston_window::*;
 
 use drawing::draw_rectange;
 use player::{Direction, Player};
+use enemy::Enemy;
 
 const EDGE_COLOR: Color = [0.72, 0.74, 0.8, 1.0];
 const END_COLOR: Color = [0.80, 0.30, 0.30, 0.6];
@@ -12,6 +13,7 @@ const RESTART_TIME: f64 = 0.8;
 
 pub struct Game {
     player: Player,
+    enemy: Enemy,
 
     width: i32,
     height: i32,
@@ -26,6 +28,7 @@ impl Game {
     pub fn new(width: i32, height: i32) -> Game {
         Game {
             player: Player::new(2, 2),
+            enemy: Enemy::new(width - 3, height - 3),
             wait_time: 0.0,
             width: width,
             height: height,
@@ -56,6 +59,7 @@ impl Game {
 
     pub fn draw(&self, con: &Context, g: &mut G2d) {
         self.player.draw(con, g);
+        self.enemy.draw(con, g);
 
         draw_rectange(EDGE_COLOR, 0, 0, self.width, 1, con, g);
         draw_rectange(EDGE_COLOR, 0, self.height - 1, self.width, 1, con, g);
@@ -83,7 +87,7 @@ impl Game {
         }
     }
 
-    fn check_if_the_player_alive(&self, dir: Option<Direction>) -> bool {
+    fn is_player_alive(&self, dir: Option<Direction>) -> bool {
         let (next_x, next_y) = self.player.next_player_position(dir);
 
         // check that player within border
@@ -91,8 +95,13 @@ impl Game {
     }
 
     fn update_player(&mut self, dir: Option<Direction>) {
-        if self.check_if_the_player_alive(dir) {
+        if self.is_player_alive(dir) {
+            let next_pos = self.player.next_player_position(dir);
             self.player.move_forward(dir);
+            self.enemy.follow(next_pos);
+            if self.enemy.is_touching(next_pos) {
+                self.is_game_over = true;
+            }
         } else {
             self.is_game_over = true;
         }
@@ -101,6 +110,7 @@ impl Game {
 
     fn restart(&mut self) {
         self.player = Player::new(2, 2);
+        self.enemy = Enemy::new(self.width - 3, self.height - 3);
         self.wait_time = 0.0;
         self.is_game_over = false;
     }

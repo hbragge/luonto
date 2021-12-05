@@ -21,36 +21,36 @@ struct Block {
 }
 
 pub struct Player {
-    moving_direction: Direction,
-    body: Block,
+    direction: Direction,
+    pos: Block,
 }
 
 impl Player {
     pub fn new(init_x: i32, init_y: i32) -> Player {
-        let body: Block = Block {
+        let pos: Block = Block {
             x: init_x,
             y: init_y,
         };
 
         Player {
-            moving_direction: Direction::Right,
-            body: body,
+            direction: Direction::Right,
+            pos: pos,
         }
     }
 
     pub fn draw(&self, con: &Context, g: &mut G2d) {
-        draw_block(PLAYER_COLOR, self.body.x, self.body.y, con, g);
+        draw_block(PLAYER_COLOR, self.pos.x, self.pos.y, con, g);
     }
 
     pub fn move_forward(&mut self, dir: Option<Direction>) {
         match dir {
-            Some(d) => self.moving_direction = d,
+            Some(d) => self.direction = d,
             None => {}
         }
 
-        let (last_x, last_y): (i32, i32) = (self.body.x, self.body.y);
+        let (last_x, last_y): (i32, i32) = (self.pos.x, self.pos.y);
 
-        self.body = match self.moving_direction {
+        self.pos = match self.direction {
             Direction::Up => Block {x: last_x, y: last_y - 1},
             Direction::Down => Block {x: last_x, y: last_y + 1},
             Direction::Left => Block {x: last_x - 1, y: last_y},
@@ -59,13 +59,13 @@ impl Player {
     }
 
     pub fn player_direction(&self) -> Direction {
-        self.moving_direction
+        self.direction
     }
 
     pub fn next_player_position(&self, dir: Option<Direction>) -> (i32, i32) {
-        let (head_x, head_y): (i32, i32) = (self.body.x, self.body.y);
+        let (head_x, head_y): (i32, i32) = (self.pos.x, self.pos.y);
 
-        let mut moving_dir = self.moving_direction;
+        let mut moving_dir = self.direction;
         match dir {
             Some(d) => moving_dir = d,
             None => {}
