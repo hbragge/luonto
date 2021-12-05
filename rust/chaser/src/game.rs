@@ -87,7 +87,7 @@ impl Game {
         }
     }
 
-    fn is_player_alive(&self, dir: Option<Direction>) -> bool {
+    fn is_able_to_move(&self, dir: Option<Direction>) -> bool {
         let (next_x, next_y) = self.player.next_player_position(dir);
 
         // check that player within border
@@ -95,14 +95,12 @@ impl Game {
     }
 
     fn update_player(&mut self, dir: Option<Direction>) {
-        if self.is_player_alive(dir) {
-            let next_pos = self.player.next_player_position(dir);
+        if self.is_able_to_move(dir) {
             self.player.move_forward(dir);
-            self.enemy.follow(next_pos);
-            if self.enemy.is_touching(next_pos) {
-                self.is_game_over = true;
-            }
-        } else {
+        }
+        let curr_pos = self.player.player_position();
+        self.enemy.follow(curr_pos);
+        if self.enemy.is_touching(curr_pos) {
             self.is_game_over = true;
         }
         self.wait_time = 0.0;
