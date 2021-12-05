@@ -1,0 +1,7 @@
+[package]
+name = "chasegame"
+version = "0.1.0"
+authors = ["Henri Bragge"]
+
+[dependencies]
+piston_window = "0.121.0"
