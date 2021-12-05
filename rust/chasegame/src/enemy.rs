@@ -1,7 +1,7 @@
 use piston_window::types::Color;
 use piston_window::Context;
 use piston_window::G2d;
-
+use soloud::*;
 use drawing::draw_block;
 
 const ENEMY_COLOR: Color = [0.8, 0.25, 0.1, 1.0];
@@ -15,6 +15,16 @@ struct Block {
 pub struct Enemy {
     pos: Block,
     move_count: u32,
+}
+
+fn react_sound() {
+    let sl = Soloud::default().unwrap();
+    let mut wav = audio::Wav::default();
+    wav.load_mem(include_bytes!("../react.wav")).unwrap();
+    sl.play(&wav);
+    while sl.voice_count() > 0 {
+        std::thread::sleep(std::time::Duration::from_millis(100));
+    }
 }
 
 impl Enemy {
@@ -35,6 +45,9 @@ impl Enemy {
     }
 
     pub fn follow(&mut self, player_pos: (i32, i32)) {
+        if self.move_count == 0 {
+            react_sound();
+        }
         self.move_count += 1;
         if self.move_count % 2 == 0 {
             return;
