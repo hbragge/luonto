@@ -1,6 +1,6 @@
 use piston_window::types::Color;
 use piston_window::*;
-
+use crate::common::{Block, follow_pos};
 use crate::drawing::draw_rectange;
 use crate::player::{Direction, Player};
 use crate::enemy::Enemy;
@@ -8,7 +8,7 @@ use crate::enemy::Enemy;
 const EDGE_COLOR: Color = [0.72, 0.74, 0.8, 1.0];
 const END_COLOR: Color = [0.80, 0.30, 0.30, 0.6];
 
-const TICK_PERIOD: f64 = 0.15; // seconds
+const TICK_PERIOD: f64 = 0.10; // seconds
 const RESTART_TIME: f64 = 0.8;
 
 pub struct Game {
@@ -59,7 +59,7 @@ impl Game {
             _ => None,
         };
 
-        if dir == None || dir.unwrap() == self.player.player_direction() {
+        if dir == None || dir.unwrap() == self.player.direction() {
             return;
         }
 
@@ -100,29 +100,48 @@ impl Game {
         }
     }
 
-    fn is_free(&self, x: i32, y: i32) -> bool {
-        let within_borders = x > 0 && y > 0 && x < self.width - 1 && y < self.height - 1;
-        let in_obs0 = x == self.obs0_x && y >= self.obs0_y && y < (self.obs0_y + self.obs_height);
-        let in_obs1 = x == self.obs1_x && y >= self.obs1_y && y < (self.obs1_y + self.obs_height);
+    fn is_free(&self, pos: Block) -> bool {
+        let within_borders = pos.x > 0 && pos.y > 0 && pos.x < self.width - 1 && pos.y < self.height - 1;
+        let in_obs0 = pos.x == self.obs0_x && pos.y >= self.obs0_y && pos.y < (self.obs0_y + self.obs_height);
+        let in_obs1 = pos.x == self.obs1_x && pos.y >= self.obs1_y && pos.y < (self.obs1_y + self.obs_height);
         within_borders && !(in_obs0 || in_obs1)
     }
 
     fn is_able_to_move(&self, dir: Option<Direction>) -> bool {
-        let (next_x, next_y) = self.player.next_position(dir);
-        self.is_free(next_x, next_y)
+        self.is_free(self.player.next_position(dir))
     }
 
-    fn is_enemy_able_to_move(&self, pos: (i32, i32)) -> bool {
-        let (next_x, next_y) = self.enemy.next_position(pos);
-        self.is_free(next_x, next_y)
+    fn is_enemy_able_to_move(&self, pos: Block) -> bool {
+        self.is_free(self.enemy.next_position(pos))
+    }
+
+    fn follow_los(&self, pos: Block) -> Option<Block> {
+        let player_pos = self.player.position();
+        let new_pos = follow_pos(pos, player_pos);
+        if new_pos == player_pos {
+            return Some(player_pos)
+        } else if self.is_free(new_pos) {
+            return self.follow_los(new_pos)
+        } else {
+            return None
+        }
+    }
+
+    fn is_player_in_los(&self, pos: Block) -> bool {
+        let los = self.follow_los(pos);
+        if let Some(_) = los {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     fn update_player(&mut self, dir: Option<Direction>) {
         if self.is_able_to_move(dir) {
             self.player.move_forward(dir);
         }
-        let curr_pos = self.player.player_position();
-        if self.is_enemy_able_to_move(curr_pos) {
+        let curr_pos = self.player.position();
+        if self.is_player_in_los(self.enemy.position()) && self.is_enemy_able_to_move(curr_pos) {
             self.enemy.follow(curr_pos);
         }
         if self.enemy.is_touching(curr_pos) {

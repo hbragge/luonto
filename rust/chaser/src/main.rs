@@ -3,6 +3,7 @@ extern crate soloud;
 
 mod drawing;
 mod game;
+mod common;
 mod player;
 mod enemy;
 

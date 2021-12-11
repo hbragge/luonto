@@ -1,8 +1,8 @@
 use piston_window::types::Color;
 use piston_window::Context;
 use piston_window::G2d;
-
 use crate::drawing::draw_block;
+use crate::common::{Block};
 
 const PLAYER_COLOR: Color = [0.2, 0.65, 0.5, 1.0];
 
@@ -12,12 +12,6 @@ pub enum Direction {
     Down,
     Left,
     Right,
-}
-
-#[derive(Debug, Clone)]
-struct Block {
-    x: i32,
-    y: i32,
 }
 
 pub struct Player {
@@ -65,28 +59,27 @@ impl Player {
         };
     }
 
-    pub fn player_direction(&self) -> Direction {
+    pub fn direction(&self) -> Direction {
         self.direction
     }
 
-    pub fn player_position(&self) -> (i32, i32) {
-        (self.pos.x, self.pos.y)
+    pub fn position(&self) -> Block {
+        self.pos
     }
 
-    pub fn next_position(&self, dir: Option<Direction>) -> (i32, i32) {
-        let (head_x, head_y): (i32, i32) = (self.pos.x, self.pos.y);
-
+    pub fn next_position(&self, dir: Option<Direction>) -> Block {
         let mut moving_dir = self.direction;
-        match dir {
-            Some(d) => moving_dir = d,
-            None => {}
+        if let Some(d) = dir {
+            moving_dir = d;
         }
 
+        let mut res = self.pos;
         match moving_dir {
-            Direction::Up => (head_x, head_y - 1),
-            Direction::Down => (head_x, head_y + 1),
-            Direction::Left => (head_x - 1, head_y),
-            Direction::Right => (head_x + 1, head_y),
+            Direction::Up => res.y -= 1,
+            Direction::Down => res.y += 1,
+            Direction::Left => res.x -= 1,
+            Direction::Right => res.x += 1,
         }
+        res
     }
 }
