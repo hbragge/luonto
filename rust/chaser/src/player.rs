@@ -73,7 +73,7 @@ impl Player {
         (self.pos.x, self.pos.y)
     }
 
-    pub fn next_player_position(&self, dir: Option<Direction>) -> (i32, i32) {
+    pub fn next_position(&self, dir: Option<Direction>) -> (i32, i32) {
         let (head_x, head_y): (i32, i32) = (self.pos.x, self.pos.y);
 
         let mut moving_dir = self.direction;

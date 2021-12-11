@@ -48,6 +48,22 @@ impl Enemy {
         draw_block(ENEMY_COLOR, self.pos.x, self.pos.y, con, g);
     }
 
+    pub fn next_position(&self, player_pos: (i32, i32)) -> (i32, i32) {
+        let mut x = self.pos.x;
+        let mut y = self.pos.y;
+        if player_pos.0 > self.pos.x {
+            x += 1;
+        } else if player_pos.0 < self.pos.x {
+            x -= 1;
+        }
+        if player_pos.1 > self.pos.y {
+            y += 1;
+        } else if player_pos.1 < self.pos.y {
+            y -= 1;
+        }
+        (x, y)
+    }
+
     pub fn follow(&mut self, player_pos: (i32, i32)) {
         if self.move_count == 0 {
             self.start_react_sound();

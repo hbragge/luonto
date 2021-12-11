@@ -17,6 +17,11 @@ pub struct Game {
 
     width: i32,
     height: i32,
+    obs0_x: i32,
+    obs0_y: i32,
+    obs1_x: i32,
+    obs1_y: i32,
+    obs_height: i32,
 
     is_game_over: bool,
     // when game running, time is the time since the previous move,
@@ -32,6 +37,11 @@ impl Game {
             wait_time: 0.0,
             width: width,
             height: height,
+            obs0_x: width / 4,
+            obs0_y: height / 4,
+            obs1_x: 3 * (width / 4),
+            obs1_y: height / 2,
+            obs_height: height / 3,
             is_game_over: false,
         }
     }
@@ -66,6 +76,9 @@ impl Game {
         draw_rectange(EDGE_COLOR, 0, 0, 1, self.height, con, g);
         draw_rectange(EDGE_COLOR, self.width - 1, 0, 1, self.height, con, g);
 
+        draw_rectange(EDGE_COLOR, self.obs0_x, self.obs0_y, 1, self.obs_height, con, g);
+        draw_rectange(EDGE_COLOR, self.obs1_x, self.obs1_y, 1, self.obs_height, con, g);
+
         if self.is_game_over {
             draw_rectange(END_COLOR, 0, 0, self.width, self.height, con, g);
         }
@@ -87,11 +100,21 @@ impl Game {
         }
     }
 
-    fn is_able_to_move(&self, dir: Option<Direction>) -> bool {
-        let (next_x, next_y) = self.player.next_player_position(dir);
+    fn is_free(&self, x: i32, y: i32) -> bool {
+        let within_borders = x > 0 && y > 0 && x < self.width - 1 && y < self.height - 1;
+        let in_obs0 = x == self.obs0_x && y >= self.obs0_y && y < (self.obs0_y + self.obs_height);
+        let in_obs1 = x == self.obs1_x && y >= self.obs1_y && y < (self.obs1_y + self.obs_height);
+        within_borders && !(in_obs0 || in_obs1)
+    }
 
-        // check that player within border
-        next_x > 0 && next_y > 0 && next_x < self.width - 1 && next_y < self.height - 1
+    fn is_able_to_move(&self, dir: Option<Direction>) -> bool {
+        let (next_x, next_y) = self.player.next_position(dir);
+        self.is_free(next_x, next_y)
+    }
+
+    fn is_enemy_able_to_move(&self, pos: (i32, i32)) -> bool {
+        let (next_x, next_y) = self.enemy.next_position(pos);
+        self.is_free(next_x, next_y)
     }
 
     fn update_player(&mut self, dir: Option<Direction>) {
@@ -99,7 +122,9 @@ impl Game {
             self.player.move_forward(dir);
         }
         let curr_pos = self.player.player_position();
-        self.enemy.follow(curr_pos);
+        if self.is_enemy_able_to_move(curr_pos) {
+            self.enemy.follow(curr_pos);
+        }
         if self.enemy.is_touching(curr_pos) {
             self.is_game_over = true;
         }
