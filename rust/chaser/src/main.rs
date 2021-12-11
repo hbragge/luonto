@@ -1,4 +1,5 @@
 extern crate piston_window;
+extern crate png;
 extern crate soloud;
 
 mod drawing;

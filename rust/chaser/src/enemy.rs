@@ -80,9 +80,9 @@ impl Enemy {
     }
 
     fn start_react_sound(&mut self) {
-        self.wav.load_mem(include_bytes!("../react.wav")).unwrap();
-        //self.sl.play(&self.wav);
-        //self.yelling = true;
+        self.wav.load_mem(include_bytes!("../resources/react.wav")).unwrap();
+        self.sl.play(&self.wav);
+        self.yelling = true;
     }
 
     fn play_react_sound(&mut self) {
