@@ -1,60 +1,13 @@
 use piston_window::types::Color;
 use piston_window::*;
-extern crate minifb;
-extern crate png;
-use minifb::{ScaleMode, Window, WindowOptions};
 use crate::common::{Block, follow_pos};
 use crate::drawing::draw_rectange;
 use crate::player::{Direction, Player};
 use crate::enemy::Enemy;
 
 const EDGE_COLOR: Color = [0.72, 0.74, 0.8, 1.0];
-const END_COLOR: Color = [0.80, 0.30, 0.30, 0.6];
-
-const TICK_PERIOD: f64 = 0.10; // seconds
-const RESTART_TIME: f64 = 0.8;
-
-fn _display_png() {
-    use std::fs::File;
-    // The decoder is a build for reader and can be used to set various decoding options
-    // via `Transformations`. The default output transformation is `Transformations::EXPAND
-    // | Transformations::STRIP_ALPHA`.
-    let decoder = png::Decoder::new(File::open("resources/gameover.png").unwrap());
-    let mut reader = decoder.read_info().unwrap();
-    // Allocate the output buffer.
-    let mut buf = vec![0; reader.output_buffer_size()];
-    // Read the next frame. Currently this function should only called once.
-    // The default options
-    reader.next_frame(&mut buf).unwrap();
-    // convert buffer to u32
-
-    let u32_buffer: Vec<u32> = buf
-        .chunks(4) // 4 for RBGA
-        .map(|v| ((v[0] as u32) << 16) | ((v[1] as u32) << 8) | v[2] as u32)
-        .collect();
-
-    let mut window = Window::new(
-        "Noise Test - Press ESC to exit",
-        reader.info().width as usize,
-        reader.info().height as usize,
-        WindowOptions {
-            resize: true,
-            scale_mode: ScaleMode::Center,
-            ..WindowOptions::default()
-        },
-    )
-    .expect("Unable to open Window");
-
-    while window.is_open() && !window.is_key_down(minifb::Key::Escape) {
-        window
-            .update_with_buffer(
-                &u32_buffer,
-                reader.info().width as usize,
-                reader.info().height as usize,
-            )
-            .unwrap();
-    }
-}
+const TICK_PERIOD: f64 = 0.08; // seconds
+const RESTART_TIME: f64 = 1.2;
 
 pub struct Game {
     player: Player,
@@ -113,7 +66,6 @@ impl Game {
     }
 
     pub fn draw(&self, con: &Context, g: &mut G2d) {
-        //_display_png();
         self.player.draw(con, g);
         self.enemy.draw(con, g);
 
@@ -124,26 +76,23 @@ impl Game {
 
         draw_rectange(EDGE_COLOR, self.obs0_x, self.obs0_y, 1, self.obs_height, con, g);
         draw_rectange(EDGE_COLOR, self.obs1_x, self.obs1_y, 1, self.obs_height, con, g);
-
-        if self.is_game_over {
-            draw_rectange(END_COLOR, 0, 0, self.width, self.height, con, g);
-        }
     }
 
-    pub fn update(&mut self, delta_time: f64) {
+    pub fn update(&mut self, delta_time: f64) -> bool {
         self.wait_time += delta_time;
 
         if self.is_game_over {
             if self.wait_time > RESTART_TIME {
                 self.restart();
             }
-            return;
+            return false;
         }
 
         // move player
         if self.wait_time > TICK_PERIOD {
             self.update_player(None);
         }
+        true
     }
 
     fn is_free(&self, pos: Block) -> bool {

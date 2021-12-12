@@ -7,5 +7,5 @@ authors = ["Henri Bragge"]
 [dependencies]
 piston_window = "0.121"
 soloud = "1.0"
-minifb = "0.19"
+image = "0.23"
 png = "0.17"

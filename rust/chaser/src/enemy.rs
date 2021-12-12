@@ -7,10 +7,17 @@ use crate::common::{Block, follow_pos};
 
 const ENEMY_COLOR: Color = [0.8, 0.25, 0.1, 1.0];
 
+static REACT1: &[u8] = include_bytes!("../resources/react1.wav");
+static REACT2: &[u8] = include_bytes!("../resources/react2.wav");
+static REACT3: &[u8] = include_bytes!("../resources/react3.wav");
+static REACT4: &[u8] = include_bytes!("../resources/react4.wav");
+static REACT5: &[u8] = include_bytes!("../resources/react5.wav");
+
 pub struct Enemy {
     pos: Block,
     init_pos: Block,
     move_count: u32,
+    game_count: u32,
     yelling: bool,
     sl: Soloud,
     wav: audio::Wav,
@@ -27,6 +34,7 @@ impl Enemy {
             pos: pos.clone(),
             init_pos: pos,
             move_count: 0,
+            game_count: 0,
             yelling: false,
             sl: Soloud::default().unwrap(),
             wav: audio::Wav::default(),
@@ -36,6 +44,7 @@ impl Enemy {
     pub fn restart(&mut self) {
         self.pos = self.init_pos.clone();
         self.move_count = 0;
+        self.game_count += 1;
         self.yelling = false;
     }
 
@@ -80,7 +89,14 @@ impl Enemy {
     }
 
     fn start_react_sound(&mut self) {
-        self.wav.load_mem(include_bytes!("../resources/react.wav")).unwrap();
+        match self.game_count % 5 {
+            4 => self.wav.load_mem(REACT5).unwrap(),
+            3 => self.wav.load_mem(REACT4).unwrap(),
+            2 => self.wav.load_mem(REACT3).unwrap(),
+            1 => self.wav.load_mem(REACT2).unwrap(),
+            _ => self.wav.load_mem(REACT1).unwrap(),
+        }
+
         self.sl.play(&self.wav);
         self.yelling = true;
     }
