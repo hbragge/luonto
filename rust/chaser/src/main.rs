@@ -15,7 +15,8 @@ use piston_window::*;
 use crate::drawing::to_gui_coord_u32;
 use crate::game::Game;
 
-const BACKGROUND_COLOR: Color = [0.1, 0.1, 0.1, 1.0];
+const BACKGROUND_COLOR: Color = [0.2, 0.2, 0.2, 1.0];
+static FONT: &[u8] = include_bytes!("../resources/arial.ttf");
 
 fn main() {
     let (width, height) = (36, 36);
@@ -26,7 +27,6 @@ fn main() {
         .exit_on_esc(true)
         .build()
         .unwrap();
-
     let mut game = Game::new(width, height);
 
     use std::fs::File;
@@ -34,12 +34,10 @@ fn main() {
     let mut reader = decoder.read_info().unwrap();
     let mut buf = vec![0; reader.output_buffer_size()];
     reader.next_frame(&mut buf).unwrap();
-
     let mut texture_context = TextureContext {
         factory: window.factory.clone(),
         encoder: window.factory.create_command_buffer().into()
     };
-
     let mut img = image::ImageBuffer::new(x_size, y_size);
     let mut col = 0;
     let mut row = 0;
@@ -61,16 +59,31 @@ fn main() {
         &img,
         &TextureSettings::new()).unwrap();
 
-    let mut running = true;
+    let mut glyphs = Glyphs::from_bytes(
+	FONT,
+	window.create_texture_context(),
+	TextureSettings::new(),
+    ).unwrap();
 
+    let mut running = true;
+    let mut score = 0;
     while let Some(event) = window.next() {
         if let Some(Button::Keyboard(key)) = event.press_args() {
             game.key_pressed(key);
         }
 
-        window.draw_2d(&event, |c, g, _| {
+        window.draw_2d(&event, |c, g, d| {
             clear(BACKGROUND_COLOR, g);
             game.draw(&c, g);
+            Text::new_color([1.0, 1.0, 0.0, 1.0], 14).draw(
+		&score.to_string(),
+		&mut glyphs,
+		&c.draw_state,
+                c.transform.trans((x_size/2 - 20).into(), 75.0).scale(2.5, 2.5),
+		g
+	    ).unwrap();
+            glyphs.factory.encoder.flush(d);
+            score += 1;
             if !running {
                 image(&tx, c.transform.scale(1.1, 1.3), g);
             }
