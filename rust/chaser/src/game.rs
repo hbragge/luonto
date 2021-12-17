@@ -1,25 +1,28 @@
 use piston_window::types::Color;
 use piston_window::*;
 use crate::common::{Block, follow_pos};
-use crate::drawing::draw_rectange;
+use crate::drawing::{draw_block, draw_rectange};
 use crate::player::{Direction, Player};
 use crate::enemy::Enemy;
 
 const EDGE_COLOR: Color = [0.72, 0.74, 0.8, 1.0];
+const GOLD_COLOR: Color = [0.9, 0.9, 0.1, 1.0];
 const TICK_PERIOD: f64 = 0.08; // seconds
 const RESTART_TIME: f64 = 1.2;
 
 pub struct Game {
     player: Player,
     enemy: Enemy,
+    gold: Block,
 
-    width: i32,
-    height: i32,
-    obs0_x: i32,
-    obs0_y: i32,
-    obs1_x: i32,
-    obs1_y: i32,
-    obs_height: i32,
+    width: u32,
+    height: u32,
+    obs0_x: u32,
+    obs0_y: u32,
+    obs1_x: u32,
+    obs1_y: u32,
+    obs_height: u32,
+    score: u32,
 
     is_game_over: bool,
     // when game running, time is the time since the previous move,
@@ -28,10 +31,11 @@ pub struct Game {
 }
 
 impl Game {
-    pub fn new(width: i32, height: i32) -> Game {
+    pub fn new(width: u32, height: u32) -> Game {
         Game {
             player: Player::new(2, 2),
             enemy: Enemy::new(width - 3, height - 3),
+            gold: Block {x: 5, y: 5},
             wait_time: 0.0,
             width: width,
             height: height,
@@ -40,6 +44,7 @@ impl Game {
             obs1_x: 3 * (width / 4),
             obs1_y: height / 2,
             obs_height: height / 3,
+            score: 0,
             is_game_over: false,
         }
     }
@@ -69,6 +74,7 @@ impl Game {
         self.player.draw(con, g);
         self.enemy.draw(con, g);
 
+        draw_block(GOLD_COLOR, self.gold.x, self.gold.y, con, g);
         draw_rectange(EDGE_COLOR, 0, 0, self.width, 1, con, g);
         draw_rectange(EDGE_COLOR, 0, self.height - 1, self.width, 1, con, g);
         draw_rectange(EDGE_COLOR, 0, 0, 1, self.height, con, g);
@@ -93,6 +99,10 @@ impl Game {
             self.update_player(None);
         }
         true
+    }
+
+    pub fn get_score(&self) -> u32 {
+        self.score
     }
 
     fn is_free(&self, pos: Block) -> bool {
@@ -136,6 +146,9 @@ impl Game {
             self.player.move_forward(dir);
         }
         let curr_pos = self.player.position();
+        if curr_pos == self.gold {
+            self.score += 1
+        }
         if self.is_player_in_los(self.enemy.position()) && self.is_enemy_able_to_move(curr_pos) {
             self.enemy.follow(curr_pos);
         }

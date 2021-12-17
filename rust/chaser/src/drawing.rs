@@ -5,15 +5,15 @@ use piston_window::G2d;
 
 const BLOCK_SZ: f64 = 26.0;
 
-pub fn to_gui_coord(game_coord: i32) -> f64 {
+pub fn to_gui_coord(game_coord: u32) -> f64 {
     (game_coord as f64) * BLOCK_SZ
 }
 
-pub fn to_gui_coord_u32(game_coord: i32) -> u32 {
+pub fn to_gui_coord_u32(game_coord: u32) -> u32 {
     to_gui_coord(game_coord) as u32
 }
 
-pub fn draw_block(color: Color, x: i32, y: i32, con: &Context, g: &mut G2d) {
+pub fn draw_block(color: Color, x: u32, y: u32, con: &Context, g: &mut G2d) {
     let gui_x = to_gui_coord(x);
     let gui_y = to_gui_coord(y);
 
@@ -27,10 +27,10 @@ pub fn draw_block(color: Color, x: i32, y: i32, con: &Context, g: &mut G2d) {
 
 pub fn draw_rectange(
     color: Color,
-    start_x: i32,
-    start_y: i32,
-    width: i32,
-    height: i32,
+    start_x: u32,
+    start_y: u32,
+    width: u32,
+    height: u32,
     con: &Context,
     g: &mut G2d,
 ) {

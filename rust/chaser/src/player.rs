@@ -21,7 +21,7 @@ pub struct Player {
 }
 
 impl Player {
-    pub fn new(init_x: i32, init_y: i32) -> Player {
+    pub fn new(init_x: u32, init_y: u32) -> Player {
         let pos: Block = Block {
             x: init_x,
             y: init_y,
@@ -49,7 +49,7 @@ impl Player {
             None => {}
         }
 
-        let (last_x, last_y): (i32, i32) = (self.pos.x, self.pos.y);
+        let (last_x, last_y): (u32, u32) = (self.pos.x, self.pos.y);
 
         self.pos = match self.direction {
             Direction::Up => Block {x: last_x, y: last_y - 1},

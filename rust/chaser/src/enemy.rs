@@ -13,6 +13,14 @@ static REACT3: &[u8] = include_bytes!("../resources/react3.wav");
 static REACT4: &[u8] = include_bytes!("../resources/react4.wav");
 static REACT5: &[u8] = include_bytes!("../resources/react5.wav");
 
+fn dist(c1: u32, c2: u32) -> u32 {
+    if c1 > c2 {
+        return c1 - c2;
+    } else {
+        return c2 - c1;
+    }
+}
+
 pub struct Enemy {
     pos: Block,
     init_pos: Block,
@@ -24,7 +32,7 @@ pub struct Enemy {
 }
 
 impl Enemy {
-    pub fn new(init_x: i32, init_y: i32) -> Enemy {
+    pub fn new(init_x: u32, init_y: u32) -> Enemy {
         let pos: Block = Block {
             x: init_x,
             y: init_y,
@@ -79,8 +87,8 @@ impl Enemy {
     }
 
     pub fn is_touching(&self, player_pos: Block) -> bool {
-        let dist_x = (self.pos.x - player_pos.x).abs();
-        let dist_y = (self.pos.y - player_pos.y).abs();
+        let dist_x = dist(self.pos.x, player_pos.x);
+        let dist_y = dist(self.pos.y, player_pos.y);
         if dist_x + dist_y <= 1 {
             return true;
         } else {

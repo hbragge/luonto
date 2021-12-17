@@ -16,6 +16,7 @@ use crate::drawing::to_gui_coord_u32;
 use crate::game::Game;
 
 const BACKGROUND_COLOR: Color = [0.2, 0.2, 0.2, 1.0];
+const GOLD_COLOR: Color = [0.9, 0.9, 0.1, 1.0];
 static FONT: &[u8] = include_bytes!("../resources/arial.ttf");
 
 fn main() {
@@ -66,7 +67,6 @@ fn main() {
     ).unwrap();
 
     let mut running = true;
-    let mut score = 0;
     while let Some(event) = window.next() {
         if let Some(Button::Keyboard(key)) = event.press_args() {
             game.key_pressed(key);
@@ -75,15 +75,14 @@ fn main() {
         window.draw_2d(&event, |c, g, d| {
             clear(BACKGROUND_COLOR, g);
             game.draw(&c, g);
-            Text::new_color([1.0, 1.0, 0.0, 1.0], 14).draw(
-		&score.to_string(),
+            Text::new_color(GOLD_COLOR, 14).draw(
+		&game.get_score().to_string(),
 		&mut glyphs,
 		&c.draw_state,
                 c.transform.trans((x_size/2 - 20).into(), 75.0).scale(2.5, 2.5),
 		g
 	    ).unwrap();
             glyphs.factory.encoder.flush(d);
-            score += 1;
             if !running {
                 image(&tx, c.transform.scale(1.1, 1.3), g);
             }
