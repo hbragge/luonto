@@ -1,8 +1,8 @@
+use crate::common::Block;
+use crate::drawing::draw_block;
 use piston_window::types::Color;
 use piston_window::Context;
 use piston_window::G2d;
-use crate::drawing::draw_block;
-use crate::common::{Block};
 
 const PLAYER_COLOR: Color = [0.2, 0.65, 0.5, 1.0];
 
@@ -52,10 +52,22 @@ impl Player {
         let (last_x, last_y): (u32, u32) = (self.pos.x, self.pos.y);
 
         self.pos = match self.direction {
-            Direction::Up => Block {x: last_x, y: last_y - 1},
-            Direction::Down => Block {x: last_x, y: last_y + 1},
-            Direction::Left => Block {x: last_x - 1, y: last_y},
-            Direction::Right => Block {x: last_x + 1, y: last_y},
+            Direction::Up => Block {
+                x: last_x,
+                y: last_y - 1,
+            },
+            Direction::Down => Block {
+                x: last_x,
+                y: last_y + 1,
+            },
+            Direction::Left => Block {
+                x: last_x - 1,
+                y: last_y,
+            },
+            Direction::Right => Block {
+                x: last_x + 1,
+                y: last_y,
+            },
         };
     }
 

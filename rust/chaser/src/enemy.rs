@@ -1,9 +1,9 @@
+use crate::common::*;
+use crate::drawing::draw_block;
 use piston_window::types::Color;
 use piston_window::Context;
 use piston_window::G2d;
 use soloud::*;
-use crate::drawing::draw_block;
-use crate::common::{Block, follow_pos};
 
 const ENEMY_COLOR: Color = [0.8, 0.25, 0.1, 1.0];
 
@@ -12,14 +12,6 @@ static REACT2: &[u8] = include_bytes!("../resources/react2.wav");
 static REACT3: &[u8] = include_bytes!("../resources/react3.wav");
 static REACT4: &[u8] = include_bytes!("../resources/react4.wav");
 static REACT5: &[u8] = include_bytes!("../resources/react5.wav");
-
-fn dist(c1: u32, c2: u32) -> u32 {
-    if c1 > c2 {
-        return c1 - c2;
-    } else {
-        return c2 - c1;
-    }
-}
 
 pub struct Enemy {
     pos: Block,

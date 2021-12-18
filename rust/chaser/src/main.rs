@@ -1,13 +1,14 @@
-extern crate piston_window;
-extern crate soloud;
 extern crate image;
+extern crate piston_window;
 extern crate png;
+extern crate rand;
+extern crate soloud;
 
-mod drawing;
-mod game;
 mod common;
-mod player;
+mod drawing;
 mod enemy;
+mod game;
+mod player;
 
 use piston_window::types::Color;
 use piston_window::*;
@@ -37,7 +38,7 @@ fn main() {
     reader.next_frame(&mut buf).unwrap();
     let mut texture_context = TextureContext {
         factory: window.factory.clone(),
-        encoder: window.factory.create_command_buffer().into()
+        encoder: window.factory.create_command_buffer().into(),
     };
     let mut img = image::ImageBuffer::new(x_size, y_size);
     let mut col = 0;
@@ -55,16 +56,14 @@ fn main() {
             col += 1;
         }
     }
-    let tx = Texture::from_image(
-        &mut texture_context,
-        &img,
-        &TextureSettings::new()).unwrap();
+    let tx = Texture::from_image(&mut texture_context, &img, &TextureSettings::new()).unwrap();
 
     let mut glyphs = Glyphs::from_bytes(
-	FONT,
-	window.create_texture_context(),
-	TextureSettings::new(),
-    ).unwrap();
+        FONT,
+        window.create_texture_context(),
+        TextureSettings::new(),
+    )
+    .unwrap();
 
     let mut running = true;
     while let Some(event) = window.next() {
@@ -75,13 +74,17 @@ fn main() {
         window.draw_2d(&event, |c, g, d| {
             clear(BACKGROUND_COLOR, g);
             game.draw(&c, g);
-            Text::new_color(GOLD_COLOR, 14).draw(
-		&game.get_score().to_string(),
-		&mut glyphs,
-		&c.draw_state,
-                c.transform.trans((x_size/2 - 20).into(), 75.0).scale(2.5, 2.5),
-		g
-	    ).unwrap();
+            Text::new_color(GOLD_COLOR, 14)
+                .draw(
+                    &game.get_score().to_string(),
+                    &mut glyphs,
+                    &c.draw_state,
+                    c.transform
+                        .trans((x_size / 2 - 20).into(), 75.0)
+                        .scale(2.5, 2.5),
+                    g,
+                )
+                .unwrap();
             glyphs.factory.encoder.flush(d);
             if !running {
                 image(&tx, c.transform.scale(1.1, 1.3), g);

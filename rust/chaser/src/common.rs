@@ -18,3 +18,11 @@ pub fn follow_pos(curr: Block, dest: Block) -> Block {
     }
     res
 }
+
+pub fn dist(c1: u32, c2: u32) -> u32 {
+    if c1 > c2 {
+        return c1 - c2;
+    } else {
+        return c2 - c1;
+    }
+}
