@@ -198,5 +198,6 @@ impl Game {
         self.enemy.restart();
         self.wait_time = 0.0;
         self.is_game_over = false;
+        self.score = 0;
     }
 }
