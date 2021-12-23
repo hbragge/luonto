@@ -25,7 +25,7 @@ fn main() {
     let x_size = to_gui_coord_u32(width);
     let y_size = to_gui_coord_u32(height);
 
-    let mut window: PistonWindow = WindowSettings::new("Chaser game", [x_size, y_size])
+    let mut window: PistonWindow = WindowSettings::new("Stalker game", [x_size, y_size])
         .exit_on_esc(true)
         .build()
         .unwrap();
