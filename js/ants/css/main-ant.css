@@ -1,0 +1,82 @@
+body {
+    margin:0px;
+    padding:0px;
+    background-color: darkgreen;
+}
+
+.ant-toolbar {
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 10px;
+}
+
+#game-area {
+    margin:10px;
+    padding:0px;
+    background-color: lightgreen;
+}
+
+#mode-wrapper {
+    color: #ffffff;
+    font-family: Verdana, arial, helvetica, sans-serif;
+    font-size: 14px;
+}
+
+#game-area:focus { outline: none; }
+
+a.ant-link, a.ant-link:link, a.ant-link:visited {
+  color: black;
+}
+
+a.ant-link:hover {
+  color: #FfFf54;
+}
+
+.ant-panel-component {
+    position: absolute;
+    font-family: Verdana, arial, helvetica, sans-serif;
+    font-size: 14px;
+    color: black;
+    text-align: center;
+    background-color: white;
+    padding: 8px;
+    margin: 0px;
+}
+
+.ant-antbody-block {
+    margin: 0px;
+    padding: 0px;
+    background-color: #FF0000;
+    position: absolute;
+    border: 0px solid #000080;
+    background-repeat: no-repeat;
+}
+
+.ant-antbody-alive {
+   background-image: url('./images/antblock.png');
+}
+
+.ant-food-block {
+    margin: 0px;
+    padding: 0px;
+    background-color: black;
+    border: 0px solid #000080;
+    position: absolute;
+}
+
+.ant-playing-field {
+    margin: 0px;
+    padding: 0px;
+    position: absolute;
+    background-color: white;
+    border: 0px solid #0000A8;
+}
+
+.ant-game-container {
+    margin: 0px;
+    padding: 0px;
+    border-width: 0px;
+    border-style: none;
+    zoom: 1;
+    background-color: #FC5454;
+    position: relative;
+}
