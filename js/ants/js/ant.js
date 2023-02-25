@@ -28,22 +28,22 @@ ANT.removeEventListener = (function() {
 ANT.Board = ANT.Board || (function() {
     var instanceNumber = 0;
 
-    function getClientWidth(){
+    function getClientWidth() {
         return window.innerWidth;
     }
 
-    function getClientHeight(){
+    function getClientHeight() {
         return window.innerHeight;
     }
 
     // constructor
     return function(inputConfig) {
-        const MAX_BOARD_COLS = 150,
-            MAX_BOARD_ROWS = 150,
-            BLOCK_WIDTH = 12,
-            BLOCK_HEIGHT = 12,
-            NUM_ANTS = 8,
-            NUM_FOODS = 6;
+        const MAX_BOARD_COLS = 1500,
+            MAX_BOARD_ROWS = 1500,
+            BLOCK_WIDTH = 6,
+            BLOCK_HEIGHT = 6,
+            NUM_ANTS = 10,
+            NUM_FOODS = 150;
         var me = this,
             myId = instanceNumber++,
             config = inputConfig || {},
@@ -77,13 +77,6 @@ ANT.Board = ANT.Board || (function() {
 
             elmContainer.className = "ant-game-container";
             elmContainer.appendChild(elmPlayingField);
-
-            for (var i = 0; i < NUM_ANTS; i++) {
-                ants[i] = new ANT.Ant({board: me, startRow: 1 + (i * 4), startCol: 1 + (i * 4)});
-            }
-            for (var i = 0; i < NUM_FOODS; i++) {
-                foods[i] = new ANT.Food({board: me});
-            }
         }
 
         function maxBoardWidth() {
@@ -95,27 +88,37 @@ ANT.Board = ANT.Board || (function() {
         }
 
         // public
-        me.getFoodCoord = function(col, row) {
-            var shortest = null;
-            var shortestDist;
+        me.getRandPos = function() {
+            var maxRows = me.grid.length - 2;
+            var maxCols = me.grid[0].length - 2;
+            return [Math.floor(Math.random() * maxCols + 1), Math.floor(Math.random() * maxRows + 1)];
+        }
+
+        me.getTarget = function(col, row) {
+            if (foods.length === 0) {
+                return [col, row];
+            }
+            var shortest = [];
+            var shortestDists = [];
+            const MAX_DISTS = 5;
             for (var i = 0; i < foods.length; i++) {
                 dist = Math.abs(col - foods[i].getCol()) + Math.abs(row - foods[i].getRow())
-                if (shortest === null || dist < shortestDist) {
-                    shortest = i;
-                    shortestDist = dist;
+                if (shortest.length < MAX_DISTS) {
+                    shortest.push(i);
+                    shortestDists.push(dist);
+                } else {
+                    for (var j = 0; j < shortest.length; j++) {
+                        if (dist < shortestDists[j]) {
+                            shortest[j] = i;
+                            shortestDists[j] = dist;
+                        }
+                    }
                 }
             }
-            return [foods[shortest].getCol(), foods[shortest].getRow()];
+            var rand = Math.floor(Math.random() * shortest.length);
+            //return [foods[shortest[rand]].getCol(), foods[shortest[rand]].getRow()];
+            return foods[shortest[rand]];
         };
-
-        me.addFood = function(col, row) {
-            for (var i = 0; i < foods.length; i++) {
-                if (foods[i].getCol() === col && foods[i].getRow() === row) {
-                    foods[i].addFood();
-                    break;
-                }
-            }
-        }
 
         me.setBoardContainer = function(myContainer) {
             if (typeof myContainer === "string") {
@@ -150,9 +153,9 @@ ANT.Board = ANT.Board || (function() {
             var cHeight = config.height;
 
             var wEdgeSpace = me.getBlockWidth() * 2 + (cWidth % me.getBlockWidth());
-            var fWidth = Math.min(maxBoardWidth() - wEdgeSpace, cWidth-wEdgeSpace);
+            var fWidth = Math.min(maxBoardWidth() - wEdgeSpace, cWidth - wEdgeSpace);
             var hEdgeSpace = me.getBlockHeight() * 3 + (cHeight % me.getBlockHeight());
-            var fHeight = Math.min(maxBoardHeight() - hEdgeSpace, cHeight-hEdgeSpace);
+            var fHeight = Math.min(maxBoardHeight() - hEdgeSpace, cHeight - hEdgeSpace);
 
             elmContainer.style.left = cLeft + "px";
             elmContainer.style.top = cTop + "px";
@@ -173,15 +176,16 @@ ANT.Board = ANT.Board || (function() {
             for (var row = 0; row < numBoardRows; row++) {
                 me.grid[row] = [];
                 for (var col = 0; col < numBoardCols; col++) {
-                    if (col === 0 || row === 0 || col === (numBoardCols-1) || row === (numBoardRows-1)) {
-                        me.grid[row][col] = 1; // edge
-                    } else {
-                        me.grid[row][col] = 0; // empty
-                    }
+                    me.grid[row][col] = 0;
                 }
             }
 
-            for (var i = 0; i < foods.length; i++) {
+            for (var i = 0; i < NUM_ANTS; i++) {
+                var pos = me.getRandPos();
+                ants[i] = new ANT.Ant({board: me, startCol: pos[0], startRow: pos[1]});
+            }
+            for (var i = 0; i < NUM_FOODS; i++) {
+                foods[i] = new ANT.Food({board: me});
                 foods[i].addFood();
             }
         };
@@ -214,9 +218,9 @@ ANT.Ant = ANT.Ant || (function() {
     // constructor
     return function(config) {
         if (!config || !config.board) { return; }
-        const DIR_DOWN = 0,
+        const DIR_UP = 0,
               DIR_RIGHT = 1,
-              DIR_UP = 2,
+              DIR_DOWN = 2,
               DIR_LEFT = 3;
         var me = this,
             board = config.board,
@@ -227,18 +231,21 @@ ANT.Ant = ANT.Ant || (function() {
             rowShift = [-1, 0, 1, 0],
             xPosShift = [],
             yPosShift = [],
-            antSpeed = 1;
+            antSpeed = 1,
+            targetFood,
+            targetRow,
+            targetCol;
 
-            function setModeListener (mode, speed) {
+            function setModeListener(mode, speed) {
                 document.getElementById(mode).addEventListener('click', function () { antSpeed = speed; });
             }
 
         me.antBody = {};
         me.antBody["b0"] = new AntBlock();
-        me.antBody["b0"].row = config.startRow || 1;
         me.antBody["b0"].col = config.startCol || 1;
-        me.antBody["b0"].xPos = me.antBody["b0"].row * board.getBlockWidth();
-        me.antBody["b0"].yPos = me.antBody["b0"].col * board.getBlockHeight();
+        me.antBody["b0"].row = config.startRow || 1;
+        me.antBody["b0"].yPos = me.antBody["b0"].row * board.getBlockHeight();
+        me.antBody["b0"].xPos = me.antBody["b0"].col * board.getBlockWidth();
         me.antBody["b0"].elm = createAntElement();
         me.antBody["b0"].elmStyle = me.antBody["b0"].elm.style;
         board.getBoardContainer().appendChild(me.antBody["b0"].elm);
@@ -250,7 +257,7 @@ ANT.Ant = ANT.Ant || (function() {
         me.antPos = me.antBody["b0"];
         me.antPos.elm.id = "ant-anthead-alive";
         me.antPos.elm.className += " ant-antbody-alive";
-        setTimeout(function(){ me.go(); }, antSpeed);
+        setTimeout(function() { me.go(); }, antSpeed);
 
         function createAntElement() {
             var tempNode = document.createElement("div");
@@ -272,30 +279,49 @@ ANT.Ant = ANT.Ant || (function() {
         me.go = function() {
             var oldCol = me.antPos.col
             var oldRow = me.antPos.row
-            var foodCoord = board.getFoodCoord(oldCol, oldRow);
-            if (oldCol == foodCoord[0] && oldRow == foodCoord[1]) {
-                me.eatFood(foodCoord[0], foodCoord[1]);
+            if (me.targetFood === undefined || me.targetCol !== me.targetFood.getCol() || me.targetRow !== me.targetFood.getRow()) {
+                me.targetFood = board.getTarget(oldCol, oldRow);
+                me.targetCol = me.targetFood.getCol();
+                me.targetRow = me.targetFood.getRow();
+            }
+            var food = me.targetFood;
+
+            if (oldCol == food.getCol() && oldRow == food.getRow()) {
+                // found
+                food.addFood();
+                me.targetFood = undefined
             }
 
-            if (oldRow > foodCoord[1]) {
-                currDir = DIR_DOWN;
-            } else if (oldRow < foodCoord[1]) {
-                currDir = DIR_UP;
-            } else if (oldCol > foodCoord[0]) {
-                currDir = DIR_LEFT;
-            } else if (oldCol < foodCoord[0]) {
-                currDir = DIR_RIGHT;
+            var dist_x = Math.abs(oldCol - food.getCol());
+            var dist_y = Math.abs(oldRow - food.getRow());
+            if (dist_x > dist_y) {
+                if (oldCol > food.getCol()) {
+                    currDir = DIR_LEFT;
+                } else if (oldCol < food.getCol()) {
+                    currDir = DIR_RIGHT;
+                }
+            } else {
+                if (oldRow > food.getRow()) {
+                    currDir = DIR_UP;
+                } else if (oldRow < food.getRow()) {
+                    currDir = DIR_DOWN;
+                }
             }
 
             while (true) {
-                newCol = oldCol + colShift[currDir];
-                newRow = oldRow + rowShift[currDir];
-                newxPos = me.antPos.xPos + xPosShift[currDir];
-                newyPos = me.antPos.yPos + yPosShift[currDir];
+                var newCol = oldCol + colShift[currDir];
+                var newRow = oldRow + rowShift[currDir];
+                var newxPos = me.antPos.xPos + xPosShift[currDir];
+                var newyPos = me.antPos.yPos + yPosShift[currDir];
 
-                // check new pos
-                if (board.grid[newRow][newCol] > 0) {
-                    currDir = (currDir + 1) % 4;
+                if (currDir === DIR_DOWN && newRow >= board.grid.length - 1) {
+                    currDir = DIR_LEFT;
+                } else if (currDir === DIR_LEFT && newCol === 0) {
+                    currDir = DIR_UP;
+                } else if (currDir === DIR_UP && newRow === 0) {
+                    currDir = DIR_RIGHT;
+                } else if (currDir === DIR_RIGHT && newCol >= board.grid[0].length - 1) {
+                    currDir = DIR_DOWN;
                 } else {
                     me.antPos.col = newCol;
                     me.antPos.row = newRow;
@@ -307,11 +333,7 @@ ANT.Ant = ANT.Ant || (function() {
                 }
             }
             
-            setTimeout(function(){ me.go(); }, antSpeed);
-        };
-
-        me.eatFood = function(col, row) {
-            board.addFood(col, row);
+            setTimeout(function() { me.go(); }, antSpeed);
         };
 
         // init
@@ -330,10 +352,6 @@ ANT.Ant = ANT.Ant || (function() {
 
 ANT.Food = ANT.Food || (function() {
     var instanceNumber = 0;
-
-    function getRandPos(x, y){
-        return Math.floor(Math.random() * (y + 1 - x)) + x;
-    }
 
     // constructor
     return function(config) {
@@ -365,18 +383,15 @@ ANT.Food = ANT.Food || (function() {
 
         me.addFood = function() {
             // clear first
-            if (board.grid[row] && board.grid[row][col] === GRID_FOOD_VALUE){
+            if (board.grid[row] && board.grid[row][col] === GRID_FOOD_VALUE) {
                 board.grid[row][col] = 0;
             }
 
-            var newCol = 0, newRow = 0;
-            var maxRows = board.grid.length - 1;
-            var maxCols = board.grid[0].length - 1;
-
-            while (board.grid[newRow][newCol] !== 0){
-                newRow = getRandPos(1, maxRows);
-                newCol = getRandPos(1, maxCols);
-            }
+            do {
+                newCoord = board.getRandPos();
+                newCol = newCoord[0];
+                newRow = newCoord[1];
+            } while (board.grid[newRow][newCol] !== 0)
 
             col = newCol;
             row = newRow;
