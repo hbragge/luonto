@@ -400,10 +400,10 @@ ANT.Food = ANT.Food || (function() {
         };
 
         me.take = function() {
-            col = 0;
-            row = 0;
             board.grid[row][col] = 0;
             htmlFood.className = "ant-playing-field";
+            col = 0;
+            row = 0;
         }
 
         me.isTaken = function() {
