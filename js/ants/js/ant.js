@@ -40,10 +40,10 @@ ANT.Board = ANT.Board || (function() {
     return function(inputConfig) {
         const MAX_BOARD_COLS = 1500,
             MAX_BOARD_ROWS = 1500,
-            BLOCK_WIDTH = 6,
-            BLOCK_HEIGHT = 6,
+            BLOCK_WIDTH = 8,
+            BLOCK_HEIGHT = 8,
             NUM_ANTS = 10,
-            NUM_FOODS = 150;
+            NUM_FOODS = 50;
         var me = this,
             myId = instanceNumber++,
             config = inputConfig || {},
@@ -95,13 +95,13 @@ ANT.Board = ANT.Board || (function() {
         }
 
         me.getTarget = function(col, row) {
-            if (foods.length === 0) {
-                return [col, row];
-            }
             var shortest = [];
             var shortestDists = [];
             const MAX_DISTS = 5;
             for (var i = 0; i < foods.length; i++) {
+                if (foods[i].isTaken()) {
+                    continue;
+                }
                 dist = Math.abs(col - foods[i].getCol()) + Math.abs(row - foods[i].getRow())
                 if (shortest.length < MAX_DISTS) {
                     shortest.push(i);
@@ -115,8 +115,10 @@ ANT.Board = ANT.Board || (function() {
                     }
                 }
             }
+            if (shortest.length === 0) {
+                return undefined;
+            }
             var rand = Math.floor(Math.random() * shortest.length);
-            //return [foods[shortest[rand]].getCol(), foods[shortest[rand]].getRow()];
             return foods[shortest[rand]];
         };
 
@@ -186,7 +188,7 @@ ANT.Board = ANT.Board || (function() {
             }
             for (var i = 0; i < NUM_FOODS; i++) {
                 foods[i] = new ANT.Food({board: me});
-                foods[i].addFood();
+                foods[i].release();
             }
         };
 
@@ -231,10 +233,9 @@ ANT.Ant = ANT.Ant || (function() {
             rowShift = [-1, 0, 1, 0],
             xPosShift = [],
             yPosShift = [],
-            antSpeed = 1,
+            antSpeed = 4,
             targetFood,
-            targetRow,
-            targetCol;
+            gotFood = false;
 
             function setModeListener(mode, speed) {
                 document.getElementById(mode).addEventListener('click', function () { antSpeed = speed; });
@@ -279,31 +280,47 @@ ANT.Ant = ANT.Ant || (function() {
         me.go = function() {
             var oldCol = me.antPos.col
             var oldRow = me.antPos.row
-            if (me.targetFood === undefined || me.targetCol !== me.targetFood.getCol() || me.targetRow !== me.targetFood.getRow()) {
+            if (!me.gotFood && (me.targetFood === undefined || me.targetFood.isTaken())) {
                 me.targetFood = board.getTarget(oldCol, oldRow);
-                me.targetCol = me.targetFood.getCol();
-                me.targetRow = me.targetFood.getRow();
+                if (me.targetFood === undefined) {
+                    return;
+                }
             }
+
             var food = me.targetFood;
-
-            if (oldCol == food.getCol() && oldRow == food.getRow()) {
-                // found
-                food.addFood();
-                me.targetFood = undefined
+            var targetCol = food.getCol();
+            var targetRow = food.getRow();
+            if (me.gotFood) {
+                targetCol = 1;
+                targetRow = 1;
+                if (oldCol == targetCol && oldRow == targetRow) {
+                    // found base
+                    food.release();
+                    me.targetFood = undefined;
+                    me.gotFood = false
+                }
+            } else {
+                if (oldCol == targetCol && oldRow == targetRow) {
+                    // found food
+                    food.take();
+                    me.gotFood = true
+                    targetCol = 1;
+                    targetRow = 1;
+                }
             }
 
-            var dist_x = Math.abs(oldCol - food.getCol());
-            var dist_y = Math.abs(oldRow - food.getRow());
+            var dist_x = Math.abs(oldCol - targetCol);
+            var dist_y = Math.abs(oldRow - targetRow);
             if (dist_x > dist_y) {
-                if (oldCol > food.getCol()) {
+                if (oldCol > targetCol) {
                     currDir = DIR_LEFT;
-                } else if (oldCol < food.getCol()) {
+                } else if (oldCol < targetCol) {
                     currDir = DIR_RIGHT;
                 }
             } else {
-                if (oldRow > food.getRow()) {
+                if (oldRow > targetRow) {
                     currDir = DIR_UP;
-                } else if (oldRow < food.getRow()) {
+                } else if (oldRow < targetRow) {
                     currDir = DIR_DOWN;
                 }
             }
@@ -362,9 +379,10 @@ ANT.Food = ANT.Food || (function() {
         var col, row;
         var myId = instanceNumber++;
         var GRID_FOOD_VALUE = -1;
+        var taken = false;
 
         var htmlFood = document.createElement("div");
-        htmlFood.setAttribute("id", "ant-food-"+myId);
+        htmlFood.setAttribute("id", "ant-food-" + myId);
         htmlFood.className = "ant-food-block";
         htmlFood.style.width = board.getBlockWidth() + "px";
         htmlFood.style.height = board.getBlockHeight() + "px";
@@ -381,7 +399,18 @@ ANT.Food = ANT.Food || (function() {
             return row;
         };
 
-        me.addFood = function() {
+        me.take = function() {
+            col = 0;
+            row = 0;
+            board.grid[row][col] = 0;
+            htmlFood.className = "ant-playing-field";
+        }
+
+        me.isTaken = function() {
+            return col === 0 && row === 0;
+        }
+
+        me.release = function() {
             // clear first
             if (board.grid[row] && board.grid[row][col] === GRID_FOOD_VALUE) {
                 board.grid[row][col] = 0;
@@ -398,6 +427,7 @@ ANT.Food = ANT.Food || (function() {
             board.grid[row][col] = GRID_FOOD_VALUE;
             htmlFood.style.top = row * board.getBlockHeight() + "px";
             htmlFood.style.left = col * board.getBlockWidth() + "px";
+            htmlFood.className = "ant-food-block";
         };
     };
 })(); // ANT.Food
