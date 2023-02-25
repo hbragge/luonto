@@ -50,24 +50,24 @@ ANT.Board = ANT.Board || (function() {
             foods = [],
             ants = [],
             myKeyListener,
-            elmContainer, elmPlayingField;
+            htmlContainer, htmlBoard;
 
         me.grid = [];
 
         function createBoardElements() {
-            elmPlayingField = document.createElement("div");
-            elmPlayingField.setAttribute("id", "playingField");
-            elmPlayingField.className = "ant-playing-field";
+            htmlBoard = document.createElement("div");
+            htmlBoard.setAttribute("id", "playingField");
+            htmlBoard.className = "ant-playing-field";
 
-            ANT.addEventListener(elmPlayingField, "click", function() {
-                elmContainer.focus();
+            ANT.addEventListener(htmlBoard, "click", function() {
+                htmlContainer.focus();
             }, false);
 
-            elmLengthPanel = document.createElement("div");
-            elmLengthPanel.className = "ant-panel-component";
-            elmLengthPanel.innerHTML = "Length: 1";
+            htmlLengthPanel = document.createElement("div");
+            htmlLengthPanel.className = "ant-panel-component";
+            htmlLengthPanel.innerHTML = "Length: 1";
 
-            ANT.addEventListener( elmContainer, "keyup", function(evt) {
+            ANT.addEventListener( htmlContainer, "keyup", function(evt) {
                 if (!evt) var evt = window.event;
                 evt.cancelBubble = true;
                 if (evt.stopPropagation) { evt.stopPropagation(); }
@@ -75,8 +75,8 @@ ANT.Board = ANT.Board || (function() {
                 return false;
             }, false);
 
-            elmContainer.className = "ant-game-container";
-            elmContainer.appendChild(elmPlayingField);
+            htmlContainer.className = "ant-game-container";
+            htmlContainer.appendChild(htmlBoard);
         }
 
         function maxBoardWidth() {
@@ -124,16 +124,16 @@ ANT.Board = ANT.Board || (function() {
             if (typeof myContainer === "string") {
                 myContainer = document.getElementById(myContainer);
             }
-            if (myContainer === elmContainer) { return; }
+            if (myContainer === htmlContainer) { return; }
 
-            elmContainer = myContainer;
-            elmPlayingField = null;
+            htmlContainer = myContainer;
+            htmlBoard = null;
 
             me.setupPlayingField();
         };
 
         me.getBoardContainer = function() {
-            return elmContainer;
+            return htmlContainer;
         };
 
         me.getBlockWidth = function() {
@@ -145,7 +145,7 @@ ANT.Board = ANT.Board || (function() {
         };
 
         me.setupPlayingField = function () {
-            if (!elmPlayingField) { createBoardElements(); }
+            if (!htmlBoard) { createBoardElements(); }
 
             var cTop = config.top;
             var cLeft = config.left;
@@ -157,14 +157,14 @@ ANT.Board = ANT.Board || (function() {
             var hEdgeSpace = me.getBlockHeight() * 3 + (cHeight % me.getBlockHeight());
             var fHeight = Math.min(maxBoardHeight() - hEdgeSpace, cHeight - hEdgeSpace);
 
-            elmContainer.style.left = cLeft + "px";
-            elmContainer.style.top = cTop + "px";
-            elmContainer.style.width = cWidth + "px";
-            elmContainer.style.height = cHeight + "px";
-            elmPlayingField.style.left = me.getBlockWidth() + "px";
-            elmPlayingField.style.top  = me.getBlockHeight() + "px";
-            elmPlayingField.style.width = fWidth + "px";
-            elmPlayingField.style.height = fHeight + "px";
+            htmlContainer.style.left = cLeft + "px";
+            htmlContainer.style.top = cTop + "px";
+            htmlContainer.style.width = cWidth + "px";
+            htmlContainer.style.height = cHeight + "px";
+            htmlBoard.style.left = me.getBlockWidth() + "px";
+            htmlBoard.style.top  = me.getBlockHeight() + "px";
+            htmlBoard.style.width = fWidth + "px";
+            htmlBoard.style.height = fHeight + "px";
 
             var bottomPanelHeight = hEdgeSpace - me.getBlockHeight();
             var pLabelTop = me.getBlockHeight() + fHeight + Math.round((bottomPanelHeight - 30)/2) + "px";
@@ -205,8 +205,8 @@ ANT.Board = ANT.Board || (function() {
 ANT.Ant = ANT.Ant || (function() {
     var instanceNumber = 0;
     var AntBlock = function() {
-        this.elm = null;
-        this.elmStyle = null;
+        this.html = null;
+        this.htmlStyle = null;
         this.row = -1;
         this.col = -1;
         this.xPos = -1000;
@@ -246,17 +246,17 @@ ANT.Ant = ANT.Ant || (function() {
         me.antBody["b0"].row = config.startRow || 1;
         me.antBody["b0"].yPos = me.antBody["b0"].row * board.getBlockHeight();
         me.antBody["b0"].xPos = me.antBody["b0"].col * board.getBlockWidth();
-        me.antBody["b0"].elm = createAntElement();
-        me.antBody["b0"].elmStyle = me.antBody["b0"].elm.style;
-        board.getBoardContainer().appendChild(me.antBody["b0"].elm);
-        me.antBody["b0"].elm.style.left = me.antBody["b0"].xPos + "px";
-        me.antBody["b0"].elm.style.top = me.antBody["b0"].yPos + "px";
+        me.antBody["b0"].html = createAntElement();
+        me.antBody["b0"].htmlStyle = me.antBody["b0"].html.style;
+        board.getBoardContainer().appendChild(me.antBody["b0"].html);
+        me.antBody["b0"].html.style.left = me.antBody["b0"].xPos + "px";
+        me.antBody["b0"].html.style.top = me.antBody["b0"].yPos + "px";
         me.antBody["b0"].next = me.antBody["b0"];
         me.antBody["b0"].prev = me.antBody["b0"];
 
         me.antPos = me.antBody["b0"];
-        me.antPos.elm.id = "ant-anthead-alive";
-        me.antPos.elm.className += " ant-antbody-alive";
+        me.antPos.html.id = "ant-anthead-alive";
+        me.antPos.html.className += " ant-antbody-alive";
         setTimeout(function() { me.go(); }, antSpeed);
 
         function createAntElement() {
@@ -272,8 +272,8 @@ ANT.Ant = ANT.Ant || (function() {
         function createBlocks() {
             var tempBlock = new AntBlock();
             var tempNode = createAntElement();
-            tempBlock.elm = tempNode;
-            board.getBoardContainer().appendChild(tempBlock.elm);
+            tempBlock.html = tempNode;
+            board.getBoardContainer().appendChild(tempBlock.html);
         }
 
         me.go = function() {
@@ -327,8 +327,8 @@ ANT.Ant = ANT.Ant || (function() {
                     me.antPos.row = newRow;
                     me.antPos.xPos = newxPos;
                     me.antPos.yPos = newyPos;
-                    me.antPos.elmStyle.left = me.antPos.xPos + "px";
-                    me.antPos.elmStyle.top = me.antPos.yPos + "px";
+                    me.antPos.htmlStyle.left = me.antPos.xPos + "px";
+                    me.antPos.htmlStyle.top = me.antPos.yPos + "px";
                     break;
                 }
             }
@@ -363,14 +363,14 @@ ANT.Food = ANT.Food || (function() {
         var myId = instanceNumber++;
         var GRID_FOOD_VALUE = -1;
 
-        var elmFood = document.createElement("div");
-        elmFood.setAttribute("id", "ant-food-"+myId);
-        elmFood.className = "ant-food-block";
-        elmFood.style.width = board.getBlockWidth() + "px";
-        elmFood.style.height = board.getBlockHeight() + "px";
-        elmFood.style.left = "-1000px";
-        elmFood.style.top = "-1000px";
-        board.getBoardContainer().appendChild(elmFood);
+        var htmlFood = document.createElement("div");
+        htmlFood.setAttribute("id", "ant-food-"+myId);
+        htmlFood.className = "ant-food-block";
+        htmlFood.style.width = board.getBlockWidth() + "px";
+        htmlFood.style.height = board.getBlockHeight() + "px";
+        htmlFood.style.left = "-1000px";
+        htmlFood.style.top = "-1000px";
+        board.getBoardContainer().appendChild(htmlFood);
 
         // public
         me.getCol = function() {
@@ -396,8 +396,8 @@ ANT.Food = ANT.Food || (function() {
             col = newCol;
             row = newRow;
             board.grid[row][col] = GRID_FOOD_VALUE;
-            elmFood.style.top = row * board.getBlockHeight() + "px";
-            elmFood.style.left = col * board.getBlockWidth() + "px";
+            htmlFood.style.top = row * board.getBlockHeight() + "px";
+            htmlFood.style.left = col * board.getBlockWidth() + "px";
         };
     };
 })(); // ANT.Food
