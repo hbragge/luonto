@@ -42,8 +42,9 @@ ANT.Board = ANT.Board || (function() {
             MAX_BOARD_ROWS = 1500,
             BLOCK_WIDTH = 8,
             BLOCK_HEIGHT = 8,
-            NUM_ANTS = 10,
-            NUM_FOODS = 50;
+            NUM_ANTS = 5,
+            NUM_FOODS = 50,
+            NUM_TEAMS = 2;
         var me = this,
             myId = instanceNumber++,
             config = inputConfig || {},
@@ -122,6 +123,10 @@ ANT.Board = ANT.Board || (function() {
             return foods[shortest[rand]];
         };
 
+        me.score = function(team) {
+            me.scores[team]++;
+        }
+
         me.setBoardContainer = function(myContainer) {
             if (typeof myContainer === "string") {
                 myContainer = document.getElementById(myContainer);
@@ -182,9 +187,16 @@ ANT.Board = ANT.Board || (function() {
                 }
             }
 
+            me.scores = []
+            for (var i = 0; i < NUM_TEAMS; i++) {
+                me.scores[i] = 0;
+            }
+
             for (var i = 0; i < NUM_ANTS; i++) {
-                var pos = me.getRandPos();
-                ants[i] = new ANT.Ant({board: me, startCol: pos[0], startRow: pos[1]});
+                for (var j = 0; j < NUM_TEAMS; j++) {
+                    var pos = me.getRandPos();
+                    ants[i] = new ANT.Ant({board: me, team: j, startCol: pos[0], startRow: pos[1]});
+                }
             }
             for (var i = 0; i < NUM_FOODS; i++) {
                 foods[i] = new ANT.Food({board: me});
@@ -235,7 +247,8 @@ ANT.Ant = ANT.Ant || (function() {
             yPosShift = [],
             antSpeed = 4,
             targetFood,
-            gotFood = false;
+            gotFood = false,
+            team;
 
             function setModeListener(mode, speed) {
                 document.getElementById(mode).addEventListener('click', function () { antSpeed = speed; });
@@ -254,6 +267,7 @@ ANT.Ant = ANT.Ant || (function() {
         me.antBody["b0"].html.style.top = me.antBody["b0"].yPos + "px";
         me.antBody["b0"].next = me.antBody["b0"];
         me.antBody["b0"].prev = me.antBody["b0"];
+        me.team = config.team || 0;
 
         me.antPos = me.antBody["b0"];
         me.antPos.html.id = "ant-anthead-alive";
@@ -290,22 +304,29 @@ ANT.Ant = ANT.Ant || (function() {
             var food = me.targetFood;
             var targetCol = food.getCol();
             var targetRow = food.getRow();
+            var baseCol = 1;
+            var baseRow = 1;
+            if (me.team === 1) {
+                baseCol = board.grid[0].length - 2;
+                baseRow = board.grid.length - 2;
+            }
             if (me.gotFood) {
-                targetCol = 1;
-                targetRow = 1;
+                targetCol = baseCol;
+                targetRow = baseRow;
                 if (oldCol == targetCol && oldRow == targetRow) {
                     // found base
                     food.release();
                     me.targetFood = undefined;
                     me.gotFood = false
+                    board.score(me.team);
                 }
             } else {
                 if (oldCol == targetCol && oldRow == targetRow) {
                     // found food
                     food.take();
                     me.gotFood = true
-                    targetCol = 1;
-                    targetRow = 1;
+                    targetCol = baseCol;
+                    targetRow = baseRow;
                 }
             }
 
