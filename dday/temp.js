@@ -5,6 +5,8 @@ var request = require('request').defaults({strictSSL: false});
 
 let now = 0.0;
 let mean = 0.0;
+let now_y = 0.0;
+let mean_y = 0.0;
 let numday = 0;
 //const cmp_label = "1979-2000 mean";
 //const cmp_offset = 1;
@@ -27,13 +29,16 @@ request.get({
                     if (val === null) {
                         numday = j-1;
                         now = data_now[numday];
+                        now_y = data_now[numday-1];
                         return false;
                     }
                     return true;
                 });
                 mean = row["data"][numday];
+                mean_y = row["data"][numday-1];
             }
         });
-        console.log("now: " + now.toString() + ", mean: " + mean.toString() + ", diff: " + (now - mean).toString());
+        console.log("yesterday: " + now_y.toString() + ", mean: " + mean_y.toString() + ", diff: " + (now_y - mean_y).toString());
+        console.log("today:     " + now.toString() + ", mean: " + mean.toString() + ", diff: " + (now - mean).toString());
     }
 });
