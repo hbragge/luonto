@@ -1,0 +1,39 @@
+#!/bin/sh
+DAEMON=/usr/bin/daemonlibd
+NAME=daemonlibd
+DESC="Daemon lib"
+ARGS=""
+
+test -f $DAEMON || exit 0
+
+set -e
+
+case "$1" in
+    start)
+        echo -n "* starting $DESC: $NAME... "
+        start-stop-daemon -S -b -x $DAEMON -- $ARGS
+        echo "done."
+        ;;
+    stop)
+        echo -n "* stopping $DESC: $NAME... "
+        start-stop-daemon -K -x $DAEMON
+        echo "done."
+        ;;
+    reload)
+        echo -n "* reloading $DESC: $NAME... "
+        start-stop-daemon -K -s HUP -x $DAEMON
+        echo "done."
+        ;;
+    restart)
+        echo "* restarting $DESC: $NAME... "
+        $0 stop
+        $0 start
+        echo "done."
+        ;;
+    *)
+        echo "Usage: $0 {start|stop|reload|restart}"
+        exit 1
+        ;;
+esac
+
+exit 0
