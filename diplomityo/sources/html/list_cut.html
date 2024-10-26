@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Iris 24</title>
+</head>
+
+<body>
+
+<div class="view_title"><h3>[fltattrval] %{eval:objnm}% list</h3></div>
+
+<table>
+<div class="obj"><span class="objattrnm">
+<tr><td />
+%{loop:attrs}%
+%{if:loop-counter-lt to=6}%
+<td>%{eval:name}%</td>
+%{endif}%
+%{endloop}%
+</tr>
+</span></div>
+
+
+%{loop:objs}%
+<form id="obj" name="obj" method="get" action="/">
+<div class="obj"><span class="objnm">
+<tr>
+<td><b>%{eval:objnm}%:&nbsp;</b></td></span><span class="objattrval">%{loop:attrs}%%{if:loop-counter-lt to=6}%<td>%{eval:value}%&nbsp;</td>%{endif}%%{endloop}%</span>
+<input type="hidden" name="objnm" value="%{eval:objnm}%" />
+%{loop:attrs}%%{if:key}%<input type="hidden" name="%{eval:name}%" value="%{eval:value}%"/>%{endif}%%{endloop}%
+
+<td><input type="submit" class="input" name="action" value="show" />
+<input type="submit" class="input" name="action" value="delete" />
+</td>
+</tr>
+</div>
+</form>
+%{endloop}%
+</table>
+<br /><a href="http://saara:8999">index</a>
+</body>
+
+</html>
+

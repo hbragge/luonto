@@ -1,0 +1,34 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Iris 24</title>
+</head>
+
+<body>
+<div class="view_title"><h3>%{eval:objnm}%</h3></div>
+<form id="obj" name="obj" method="get" action="/">
+<div class="obj">
+
+<table border="0">
+
+%{loop:attrs}%
+<tr><td>%{eval:name}%:</td><td>%{eval:value}%</td></tr>
+%{if:key}%<input type="hidden" name="%{eval:name}%" value="%{eval:value}%" />%{endif}%
+%{endloop}%
+<input type="hidden" name="objnm" value="%{eval:objnm}%" />
+
+</table>
+<br />
+<input type="submit" class="input" name="action" value="edit" /> 
+<a href="http://saara:8999">index</a>
+</div>
+</form><br />
+<!--
+<a href="http://localhost:8999/?action=action&kattrnm1=kattrval1&kattrnm2=kattrval2&kattrnmN=kattrvalN">link[1]</a><br />
+<a href="http://localhost:8999/?action=action&kattrnm1=kattrval1&kattrnm2=kattrval2&kattrnmN=kattrvalN">link[2]</a><br />
+<a href="http://localhost:8999/?action=action&kattrnm1=kattrval1&kattrnm2=kattrval2&kattrnmN=kattrvalN">link[n]</a>
+-->
+
+</html>

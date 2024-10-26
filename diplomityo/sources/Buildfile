@@ -1,0 +1,16 @@
+
+default => sub
+{
+  my $cpack_o   = app_content(symbol => 'SemWeb' , filename => 'sitedata');
+  my @appout    = app_sources();
+  my @finaldeps = ($cpack_o , @appout);
+
+  die "target_binary not defined!\n"
+    if (!defined $target_binary);
+
+  my $demobin = $target_binary->('shttpd');
+
+  stale([$demobin],[$SEMLIB, @finaldeps])
+    and $target_link->($demobin,[$SEMLIB,$SDKLIB],@finaldeps);
+}
+

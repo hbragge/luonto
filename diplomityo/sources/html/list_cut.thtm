@@ -1,0 +1,56 @@
+%[include "header.html"]%
+
+<table border="0">
+<tr>
+<td>
+%{eval:menu}%
+</td>
+<td>
+<div class="view_title"><h3>%{eval:objnm}% list</h3></div>
+
+<table>
+<div class="obj"><span class="objattrnm">
+<tr><td />
+%{loop:attrs}%
+%{if:loop-counter-lt}%
+<td>%{eval:name}%</td>
+%{endif}%
+%{endloop}%
+</tr>
+</span></div>
+
+%{loop:objs}%
+<form id="obj" name="obj" method="get" action="/">
+<div class="obj"><span class="objnm">
+<tr>
+<td><b>%{eval:objnm}%:&nbsp;</b></td></span><span class="objattrval">%{loop:attrs}%%{if:loop-counter-lt to=6}%<td>%{eval:value}%&nbsp;</td>%{endif}%%{endloop}%</span>
+<input type="hidden" name="objnm" value="%{eval:objnm}%" />
+%{loop:attrs}%%{if:key}%<input type="hidden" name="%{eval:name}%" value="%{eval:value}%"/>%{endif}%%{endloop}%
+
+<td><input type="submit" class="input" name="action" value="show" />
+<input type="submit" class="input" name="action" value="delete" />
+</td>
+</tr>
+</div>
+</form>
+%{endloop}%
+</table>
+<br />
+<form method="get" action="/">
+%{loop:fltattrs}%
+<input type="hidden" name="%{eval:fltname}%" value="%{eval:fltvalue}%" />
+%{endloop}%
+
+<input type="hidden" name="objnm" value="%{eval:objnm}%" />
+<input type="hidden" name="action" value="openadd" />
+
+
+
+<input type="submit" value="add" />
+</form>
+</td>
+</tr>
+</table>
+
+%[include "footer.html"]%
+

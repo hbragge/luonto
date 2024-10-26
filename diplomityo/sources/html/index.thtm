@@ -1,0 +1,14 @@
+%[include "header.html"]%
+
+<table width="400" border="0">
+<tr>
+<td>
+%{eval:menu}%
+</td>
+<td>
+<h3>Iris 24</h3>
+</td>
+</tr>
+</table>
+
+%[include "footer.html"]%

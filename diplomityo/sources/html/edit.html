@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<title>Iris 24</title>
+</head>
+
+<body>
+<div class="view_title"><h3>Edit %{eval:objnm}%</h3></div>
+<form id="obj" name="obj" method="get" action="/">
+%{loop:attrs}%
+%{eval:name}%:&nbsp;
+%{if:key}%
+%{eval:value}%<input type="hidden" name="%{eval:name}%" value="%{eval:value}%" />
+%{else}%
+%{if:isset}%
+<select name="%{eval:name}%">
+%{loop:set}%
+<option value="%{eval:tok}%" %{if:selected}%selected="selected"%{endif}%>%{eval:tok}%</option>
+%{endloop}%
+</select>
+
+
+%{else}%
+<input type="%{eval:type}%" name="%{eval:name}%" %{if:notbool}%value="%{eval:value}%"%{endif}%%{if:checked}%checked%{endif}% />&nbsp;%{if:notbool}%%{eval:format}%%{endif}%
+%{endif}%
+%{endif}%
+<br />
+%{endloop}%
+<input type="hidden" name="objnm" value="%{eval:objnm}%" />
+<input type="submit" class="input" name="action" value="update" />
+<input type="submit" class="input" name="action" value="cancel" />
+</form>
+
+</body>
+</html>
+

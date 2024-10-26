@@ -1,0 +1,85 @@
+<table border="0">
+<tr>
+<td colspan="3">
+<form method="get" action="/">
+<input type="hidden" name="objnm" value="bridge" />
+<input type="hidden" name="action" value="list" />
+<input type="submit" value="bridges" />
+</form>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<form method="get" action="/">
+<input type="hidden" name="objnm" value="device_interface" />
+<input type="hidden" name="action" value="list" />
+<input type="hidden" name="type" value="ethernet" />
+<input type="submit" value="interfaces" />
+</form>
+</td>
+</tr>
+
+<tr>
+<td colspan="3">
+<form method="get" action="/">
+<input type="hidden" name="objnm" value="ip_nameserver" />
+<input type="hidden" name="action" value="list" />
+<input type="submit" value="device manager" />
+</form>
+</td>
+</tr>
+
+<tr>
+<td>
+&nbsp;
+</td>
+<td colspan="2">
+<form method="get" action="/">
+<input type="hidden" name="objnm" value="ip_nameserver" />
+<input type="hidden" name="action" value="list" />
+<input type="submit" value="manager" />
+</form>
+</td>
+<tr>
+<td>
+&nbsp;
+</td>
+<td>
+&nbsp;
+</td>
+<td>
+<form method="get" action="/">
+<input type="hidden" name="objnm" value="ip_nameserver" />
+<input type="hidden" name="action" value="list" />
+<input type="submit" value="dns" />
+</form>
+</td>
+</tr>
+<tr>
+<td>
+&nbsp;
+</td>
+<td>
+&nbsp;
+</td>
+<td>
+<form method="get" action="/">
+<input type="hidden" name="objnm" value="ip_static_route" />
+<input type="hidden" name="action" value="show" />
+<input type="submit" value="gateway ip" />
+</form>
+</td>
+</tr>
+<tr>
+<td colspan="3">
+<form method="get" action="/">
+<input type="hidden" name="objnm" value="snmp_community" />
+<input type="hidden" name="action" value="list" />
+<input type="submit" value="snmp" />
+</form>
+</td>
+</tr>
+<tr>
+ <td height="300"></td> 
+</tr>
+</table>

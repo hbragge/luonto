@@ -1,0 +1,18 @@
+<html>
+<head>
+  <title>Table</title>
+</head>
+
+<body>
+
+<h3>%{eval:objnm}% list</h3>
+<form method="get" action="/">
+
+%{loop:objects}% 
+%{eval:name}%: %{eval:value}%
+<br />
+%{endloop}%
+<input type=submit value="Back">
+</form>
+</body>
+</html>

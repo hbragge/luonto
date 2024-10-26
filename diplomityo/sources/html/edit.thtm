@@ -1,0 +1,43 @@
+%[include "header.html"]%
+
+<table border="0">
+<tr>
+<td>
+%{eval:menu}%
+</td>
+<td>
+<div class="view_title"><h3>Edit %{eval:objnm}%</h3></div>
+<form id="obj" name="obj" method="get" action="/">
+%{loop:attrs}%
+%{ifnot:hidden}%
+%{eval:name}%:&nbsp;
+
+%{if:key}%
+%{eval:value}%<input type="hidden" name="%{eval:name}%" value="%{eval:value}%" />
+
+%{elseif:isset}%
+<select name="%{eval:name}%">
+%{loop:set}%
+<option value="%{eval:tok}%" %{if:selected}%selected="selected"%{endif}%>%{eval:tok}%</option>
+%{endloop}%
+</select>
+
+%{else}%
+<input type="%{eval:type}%" name="%{eval:name}%" %{if:notbool}%value="%{eval:value}%"%{endif}%
+%{if:checked}%checked%{endif}%/>&nbsp;%{if:notbool}%%{eval:format}%%{endif}%
+%{if:error}%&nbsp;<font color="#FF0000">Bad value!</font>%{endif}%
+
+%{endif}%
+<br />
+%{endif}%
+%{endloop}%
+<input type="hidden" name="objnm" value="%{eval:objnm}%" />
+<input type="submit" class="input" name="action" value="update" />
+<input type="submit" class="input" name="action" value="cancel" />
+</form>
+</td>
+</tr>
+</table>
+
+%[include "footer.html"]%
+
