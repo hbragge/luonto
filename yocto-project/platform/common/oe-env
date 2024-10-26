@@ -1,0 +1,31 @@
+#!/bin/sh
+
+if [ -z "$ZSH_NAME" ] && [ "x$0" = "x./oe-env" ]; then
+   echo "Error: This script needs to be sourced. Please run as '. ./oe-env'"
+elif [ "x$PLAT" = "x" ]; then
+   echo "Platform (PLAT) not defined"
+else
+   if [ -n "$BASH_SOURCE" ]; then
+      OEROOT="`dirname $BASH_SOURCE`"
+   elif [ -n "$ZSH_NAME" ]; then
+      OEROOT="`dirname $0`"
+   else
+      OEROOT="`pwd`"
+   fi
+   OEROOT=`readlink -f "$OEROOT"`
+   OEROOT="$OEROOT/../../poky"
+   export OEROOT
+   BDIR="$OEROOT/../platform/$PLAT/build"
+   export BDIR
+   . $OEROOT/scripts/oe-buildenv-internal && \
+        $OEROOT/scripts/oe-setup-builddir && \
+        [ -n "$BUILDDIR" ] && cd $BUILDDIR && \
+        cp ../bblayers.conf conf && \
+        cp ../local.conf conf && \
+        sed -i "s|BASEDIR|$OEROOT/..|g" conf/bblayers.conf
+
+   unset OEROOT
+   unset BBPATH
+fi
+
+

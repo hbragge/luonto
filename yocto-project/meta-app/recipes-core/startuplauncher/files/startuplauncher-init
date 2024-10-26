@@ -1,0 +1,38 @@
+#
+# StartupLauncher init-script
+#
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+case "$1" in
+    start)
+    DISPLAY=":0.0" StartupLauncherGui &
+    ;;
+
+
+    stop)    
+    killall StartupLauncherGui
+    ;;
+
+    restart)
+    killall StartupLauncherGui
+    DISPLAY=":0.0" StartupLauncherGui &
+    B=2
+    ;;
+
+    force-reload)
+    B=3
+    ;;
+
+    force-stop)
+    B=4
+    ;;
+
+    *)
+    N=/etc/init.d/$NAME
+    echo "Usage: $N {start}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

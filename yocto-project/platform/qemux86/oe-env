@@ -1,0 +1,9 @@
+#!/bin/sh
+
+if [ ! -e ../common/oe-env ]
+then
+	echo "Must be sourced from platfrom/<plat> directory"
+else
+	PLAT=`basename $PWD`
+	. ../common/oe-env
+fi

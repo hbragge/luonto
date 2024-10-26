@@ -1,0 +1,47 @@
+# Configuration file for /sbin/dhclient, which is included in Debian's
+#	dhcp3-client package.
+#
+# This is a sample configuration file for dhclient. See dhclient.conf's
+#	man page for more information about the syntax of this file
+#	and a more comprehensive list of the parameters understood by
+#	dhclient.
+#
+# Normally, if the DHCP server provides reasonable information and does
+#	not leave anything out (like the domain name, for example), then
+#	few changes must be made to this file, if any.
+#
+
+# Wait very long time, approx 3,5 days is 300000 seconds
+timeout 300000;
+retry 0;
+reboot 0;
+backoff-cutoff 4;
+#select-timeout 5;
+#initial-interval 2;
+script "/sbin/dhclient-script";
+send host-name "Cross_eth0";
+# This makes the dhcp-parameter-request-option
+request subnet-mask, broadcast-address, host-name, routers,
+	domain-name, domain-name-servers, ntp-servers, dhcp-lease-time,
+        dhcp-message-type, vendor-encapsulated-options;
+
+
+#
+# Code below here illustrates an example on how to get different setups with different host names
+# on each interface. Unfortunately, this configuraiton doesn't match the ifplugd configuration, and
+# thus it had to be removed. So, only one host name exists for each device.
+#
+
+#interface "eth0" {
+#send host-name "Cross_eth0";
+#request subnet-mask, broadcast-address, time-offset, routers,
+#	domain-name, domain-name-servers,
+#	netbios-name-servers, netbios-scope, interface-mtu, ntp-servers;
+#}
+
+#interface "eth1" {
+#send host-name "Cross_eth1";
+#request subnet-mask, broadcast-address, time-offset, routers,
+#	domain-name, domain-name-servers,
+#	netbios-name-servers, netbios-scope, interface-mtu;
+#}

@@ -1,0 +1,79 @@
+#! /bin/sh
+
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+NAME=ss
+
+# I2C devices
+device0="ss-version"
+device1="adc-id"
+device2="conf-id"
+device3="diag-id"
+device4="power-id"
+ 
+mode="666"
+group="root"
+path="/dev"
+kernel=`uname -r`
+
+case "$1" in
+    start)
+# Remove stale nodes and replace them, then give gid and perms
+    rm -f $path/$device0
+    rm -f $path/$device1
+    rm -f $path/$device2
+    rm -f $path/$device3
+    rm -f $path/$device4
+
+    # Check that module is really loaded
+    lsmod | grep -q $NAME
+
+    if [ $? -ne 0 ] ; then
+	modprobe $NAME
+    fi
+
+    # retrieve major number
+    major=$(awk "\$2==\"$NAME\" {print \$1}" /proc/devices)
+
+    mknod $path/$device0 c $major 0
+    mknod $path/$device1 c $major 46
+    mknod $path/$device2 c $major 48
+    mknod $path/$device3 c $major 49
+    mknod $path/$device4 c $major 50
+
+    chgrp $group $path/$device0
+    chmod $mode  $path/$device0
+    chgrp $group $path/$device1
+    chmod $mode  $path/$device1
+    chgrp $group $path/$device2
+    chmod $mode  $path/$device2
+    chgrp $group $path/$device3
+    chmod $mode  $path/$device3
+    chgrp $group $path/$device4
+    chmod $mode  $path/$device4
+    ;;
+
+    # These here are just to make script LSB compliant (hopefully!)
+    stop)    
+    B=1
+    ;;
+
+    restart)
+    B=2
+    ;;
+
+    force-reload)
+    B=3
+    ;;
+
+    force-stop)
+    B=4
+    ;;
+
+    *)
+    N=/etc/init.d/$NAME
+    echo "Usage: $N {start}" >&2
+    exit 1
+    ;;
+esac
+
+exit 0

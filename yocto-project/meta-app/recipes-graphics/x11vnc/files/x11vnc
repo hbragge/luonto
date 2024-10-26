@@ -1,0 +1,48 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:         
+# Required-Start:
+# Required-Stop:
+# Default-Start:     S
+# Default-Stop:
+# Short-Description: Start VNC server
+# Description:
+### END INIT INFO
+
+#
+# END USER: To enable VNC, change following value from 0 to 1
+#
+# There will be performance penalty when VNC is enabled even if VNC
+# connection is not open.
+#
+####
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+
+case "$1" in
+  start|"")
+	if [ -f /opt/etc/vnc.cfg ]; then
+ 		VNC_ENABLED=`cat /opt/etc/vnc.cfg | grep "^VNC_ENABLED" | cut -f 2 -d'='`
+        	VNC_OPTS=`cat /opt/etc/vnc.cfg | grep "^VNC_OPTS" | cut -f 2 -d'='`
+
+		if [ "$VNC_ENABLED" != "0" ] ; then
+			x11vnc $VNC_OPTS &
+		fi
+	fi
+
+# All done!
+	;;
+
+  stop)
+	killall x11vnc
+	;;
+
+  restart|reload|force-reload)
+	echo "Error: argument '$1' not supported" >&2
+	exit 3
+	;;
+  *)
+	echo "Usage: create-opt.sh [start|stop]" >&2
+	exit 3
+	;;
+esac
