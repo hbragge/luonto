@@ -1,5 +1,7 @@
 #!/bin/sh
 
+# check out and build new version from svn if available
+
 set -e
 
 if [ "$#" -ne "3" ]
