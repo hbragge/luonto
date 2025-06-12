@@ -9,7 +9,9 @@ Examiner: Professor Pekka Loula (TUT)
 
 Preamble
 
-I completed my master's thesis while working as a software developer at Design Combus Oy in Tampere. The thesis deals with the creation of a graphical user interface for a company's product, and its purpose is to facilitate the use of the product.
+I completed my master's thesis while working as a software developer at Design Combus Oy in
+Tampere. The thesis deals with the creation of a graphical user interface for a company's
+product, and its purpose is to facilitate the use of the product.
 
 Tampere, April 1, 2007
 Henri Bragge
@@ -28,11 +30,28 @@ April 2007
 Keywords: HTTP, server, SHDSL, web
 UDK: 004.455.2
 
-Network terminal devices, like routers, switches and modems are devices that interconnect computer networks. Their main features include controlling and adapting the network traffic and communication to other network devices. Terminal devices often require management from the owner or the administrator of the device. Management includes tasks like configuring the initial settings, configuring settings to adapt to changes in the environment or upgrading the device’s software. Terminal devices offer different management possibilities, depending on the application environment of the device. Most devices offer terminal or Web-based management applications or both of them.
+Network terminal devices, like routers, switches and modems are devices that interconnect computer
+networks. Their main features include controlling and adapting the network traffic and
+communication to other network devices. Terminal devices often require management from the owner
+or the administrator of the device. Management includes tasks like configuring the initial
+settings, configuring settings to adapt to changes in the environment or upgrading the device’s
+software. Terminal devices offer different management possibilities, depending on the application
+environment of the device. Most devices offer terminal or Web-based management applications or both
+of them.
 
-This thesis describes the developing of Web-based management software for an SHDSL (Symmetric High-speed Digital Subscriber Line) terminal device. The main emphasis is on the theory behind the problems confronted, the most important of which are the operation of HTTP server software and the software and hardware environments of the target device. The thesis also describes the structure, operation and further concerns of the management software. Before the implementation it is essential to study Web server theory and the features of the target environment and to consider frameworks, management software and Web servers created before. Thus it is possible to utilize existing knowledge and to ensure that the implemented application is modern and appropriate.
+This thesis describes the developing of Web-based management software for an SHDSL (Symmetric
+High-speed Digital Subscriber Line) terminal device. The main emphasis is on the theory behind the
+problems confronted, the most important of which are the operation of HTTP server software and the
+software and hardware environments of the target device. The thesis also describes the structure,
+operation and further concerns of the management software. Before the implementation it is
+essential to study Web server theory and the features of the target environment and to consider
+frameworks, management software and Web servers created before. Thus it is possible to utilize
+existing knowledge and to ensure that the implemented application is modern and appropriate.
 
-The implementation phase was challenging and demanded careful planning because of the requirements for versatile and general-purpose software and the limitations of the target environment. The final product was preceded by numerous different prototypes, from which the application slowly took its final shape.
+The implementation phase was challenging and demanded careful planning because of the requirements
+for versatile and general-purpose software and the limitations of the target environment. The final
+product was preceded by numerous different prototypes, from which the application slowly took its
+final shape.
 
 Abbreviations
 
@@ -109,25 +128,79 @@ XSL	Extensible Stylesheet Language
 
 1 Introduction
 
-The management capability of network terminal equipment is an essential part of the device because the devices rarely operate with the default settings pre-stored in them. Terminal equipment designed for businesses, such as the SHDSL terminal equipment targeted in this project, differs from ADSL (Asymmetric Digital Subscriber Line) modems designed for private customers, for example, in that the target group responsible for their management can generally be assumed to be more technically savvy than a private customer. In this case, adding so-called wizard features and hiding extra technical information can be given less attention. However, this does not diminish the importance of good usability. On the contrary, usability problems may bother an expert in the field more than a casual user who only occasionally handles the device's features. In addition, learnability and memorability are important features regardless of the user's level.
+The management capability of network terminal equipment is an essential part of the device because
+they rarely operate well with the default settings. Terminal equipment designed for businesses,
+such as the SHDSL terminal equipment targeted in this project, differs from ADSL (Asymmetric
+Digital Subscriber Line) modems designed for private customers, for example, in that the target
+group responsible for their management can generally be assumed to be more technically savvy than a
+private customer. In this case, adding so-called wizard features and hiding extra technical
+information can be given less attention. However, this does not diminish the importance of good
+usability. On the contrary, usability problems may bother an expert in the field more than a casual
+user who only occasionally changes the device settings. In addition, learnability and memorability
+are important features regardless of the user's level.
 
-In addition to usability, two important aspects must be considered when designing a web application for an embedded device: the criticality of the target environment and the flexible design of the application. The memory capacity and computing power of an embedded device are limited, so the program must be lightweight and also take into account other, perhaps more important, processes on the device. It must also not stop functioning in the event of an error, and must under no circumstances endanger the device's functionality. The program should be flexible, as it is likely that a similar application will also be needed in future product projects when they become relevant.
+In addition to usability, two important aspects must be considered when designing a web application
+for an embedded device: the criticality of the target environment and the flexible design of the
+application. The memory capacity and computing power of an embedded device are limited, so the
+program must be lightweight and also take into account other, perhaps more important processes on
+the device. It must also not stop functioning in the event of an error, and must under no
+circumstances endanger the device functionality. The application should be flexible, as it is
+likely that a similar application will also be needed in future products as well.
 
-This work explores the aforementioned design principles and the theory behind them, based on which the web management application presented in the work is created. The application's ultimate goal is to be user-friendly, reusable, and well-integrated into its target environment. The application will not be the sole means of managing the Iris 440 SHDSL terminal; instead, it will operate alongside the previously implemented command-line-based CLI (Command Line Interface) management application. Additionally, the device's features can be viewed using an SNMP (Simple Network Management Protocol) manager. The web management application is intended to function alongside these, providing the user with a graphical and easy-to-use alternative for managing the device.
+This thesis explores the aforementioned design principles and the theory behind them, based on
+which the web management application presented in the thesis is created. The application's ultimate
+goal is to be user-friendly, reusable, and well-integrated into its target environment. The
+application will not be the sole means of managing the Iris 440 SHDSL terminal; instead, it will
+operate alongside the previously implemented CLI (Command Line Interface) management application.
+Additionally, the device settings can be viewed using an SNMP (Simple Network Management Protocol)
+manager. The web-based management application is intended to function alongside these, providing
+the user with a graphical and easy-to-use alternative for managing the device.
 
-Chapter two deals with the theory related to HTTP servers: the protocol itself, inter-process communication, dynamic content creation, process models, security, and application architectures. The chapter covers the background theory of server applications required for the project. The theory discussed in the chapter is important in order to understand the operating principles of the application being implemented and its communication methods with the user and the rest of the environment.
+Chapter two deals with the theory related to HTTP servers: the protocol itself, inter-process
+communication, dynamic content creation, process models, security and software architecture. The
+chapter covers the background theory of server applications required for the project. The theory
+discussed in the chapter is important in order to understand the operating principles of the
+application being implemented and its communication methods with the user and the rest of the
+environment.
 
-Chapter three examines the target environment of the project, which is the Iris 440 SHDSL terminal device designed for business use. In addition to hardware and performance aspects, the focus is on the device's operating system and application environment, as well as the existing CLI management application that runs alongside the web management application. When implementing a new application, it is advisable to examine the weaknesses and strengths of the previous solution and, where possible, reuse the program code created for it. Regarding the application development environment, we will familiarize ourselves with the compilation tools and version control methods used.
+Chapter three examines the target environment of the project, which is the Iris 440 SHDSL terminal
+device designed for business use. In addition to hardware and performance aspects, the focus is on
+the device's operating system and application environment, as well as the existing CLI management
+application that runs alongside the web management application. When implementing a new
+application, it is advisable to examine the weaknesses and strengths of the previous solution and,
+where possible, reuse the program code created for it. Regarding the application development
+environment, the compilation tools and version control methods used will be introduced.
 
-Chapter four presents the server mapping conducted during the preliminary research phase of the project. It examines a set of HTTP server applications that could be suitable for the task of the server acting as the core of the management application. The server applications are classified according to certain classification criteria, and the most suitable option for this purpose is selected from among them. The classification criteria are based on the understanding developed in the preceding chapters regarding the requirements of a server application in terms of its features and functionality.
+Chapter four presents the server implementation survey conducted during the preliminary research
+phase of the project. It examines a set of HTTP server applications that could be suitable for the
+task of the server running at the core of the management application. The server implementations
+are classified according to certain classification criteria, and the most suitable option for this
+purpose is selected from among them. The classification criteria are based on the understanding
+developed in the preceding chapters regarding the requirements of a server application in terms of
+its features.
 
-Chapter five discusses the design and implementation of the administrative application. The main focus of the chapter is on the design of the application's views and internal functionality. The implementation of the application is not covered step-by-step, but rather focuses on examining the final result within a suitable scope. The chapter progresses in a sequence corresponding to the workflow, first addressing the design of the user interface and its functions, then the class architecture of the web application and the internal operation of the classes, and finally, the practical formation of the server response.
+Chapter five discusses the design and implementation of the management application. The main focus
+of the chapter is on the design of the application's views and internal functionality. The
+implementation of the application is not covered step-by-step, but rather focuses on examining the
+final result within a suitable scope. The chapter progresses in a sequence corresponding to the
+workflow, first addressing the design of the user interface and its functions, then the class
+architecture of the web application and the internal operation of the classes, and finally,
+generating a response in the server.
 
-Numbers six and seven involve evaluating the final result in terms of its suitability for its end use and its potential for further development. In particular, the transferability of the final result is considered with regard to possible future product projects.
+Chapters six and seven involve evaluating the final result in terms of its suitability for its end
+use and its potential for further development. In particular, portability of the final result is
+considered with regard to possible future product projects.
 
 2 HTTP server application
 
-An HTTP server application is an application that listens on the server's HTTP port (usually port 80) and responds to incoming requests. Before sending a response, several steps occur after receiving a request, including parsing the request, processing it, retrieving the necessary data from the server, and forming the response. This chapter discusses these steps and other aspects related to the operation of a server application. The chapter first describes the HTTP protocol used for communication and then the server's operation from the operating system's perspective. In addition, it addresses the security of the server application and, finally, web application software architectures.
+An HTTP server application is an application that listens on the server's HTTP port (usually port
+80) and responds to incoming requests. Before sending a response, several steps occur after
+receiving a request, including parsing the request, processing it, retrieving the necessary data
+from the server, and generating the response. This chapter discusses these steps and other aspects
+related to the operation of a server application. The chapter first describes the HTTP protocol
+used for communication and then the server's operation from the operating system's perspective. In
+addition, it addresses the security of the server application and, finally, web application
+architectures.
 
 2.1 World Wide Web
 
@@ -595,7 +668,7 @@ Using only one single-threaded process can cause server response time issues whe
 
 Application architecture
 
-Because the administration application was intended to be created with maintainability and reusability in mind, the application architecture used in its implementation had to support some architecture that kept the appearance and content separate. Many PHP application frameworks designed for developing web software would be suitable for this purpose, or for example Ruby on Rails, which is an open application framework developed for the Ruby language that follows the MVC architecture. Application frameworks and architectures were discussed in more detail in section 2.5.
+Because the management application was intended to be created with maintainability and reusability in mind, the application architecture used in its implementation had to support some architecture that kept the appearance and content separate. Many PHP application frameworks designed for developing web software would be suitable for this purpose, or for example Ruby on Rails, which is an open application framework developed for the Ruby language that follows the MVC architecture. Application frameworks and architectures were discussed in more detail in section 2.5.
 
 Some servers, such as Klone, Seminole, and GoAhead WebServer, offer their own programming interface for developing web applications, which is considered an advantage in mapping if it is useful in implementing the target application of this project. The usefulness of a server-specific programming interface depends largely on the suitability of the functions it provides for the project. The interface should offer a flexible method for creating generic views and an easy connection to the HTTP interface, so that no attention needs to be paid to the operation of data transfer protocols. Although the interface should be broad enough, an overly versatile interface can be difficult to understand and use. The implementation language of the programming interface is particularly important, as in practice only C and C++ interfaces are usable in this project.
 
@@ -762,7 +835,7 @@ Other possible directives include the loop command for loops and the if and ifno
 
 5 Design and Implementation
 
-The first step in designing the web administration application was designing the application's graphical user interface. This design phase was first because the application's customer requirements were quite well known at the beginning of the project, and they would not depend much on the technical implementation of the project. It made sense to design the user interface based on the application's functional requirements before the technical design. The functional requirements are based on the general use cases for managing the Iris 440 device, which are determined based on the features of the CLI management application and the device's user manual.
+The first step in designing the web management application was designing the application's graphical user interface. This design phase was first because the application's customer requirements were quite well known at the beginning of the project, and they would not depend much on the technical implementation of the project. It made sense to design the user interface based on the application's functional requirements before the technical design. The functional requirements are based on the general use cases for managing the Iris 440 device, which are determined based on the features of the CLI management application and the device's user manual.
 
 After the user interface design, the next step was to design and implement the application's classes. The methods and data structures required by the classes also had to be designed. The class architecture design was based on pre-designed views, from which the necessary classes were deduced. The methods and data structures required by the classes were created according to the model located below the application engine and the requirements of the final views. This chapter also discusses the integration of the management application into the device's application environment. At the end of the chapter, the different stages of response generation are discussed from the perspective of a web application.
 
@@ -832,7 +905,7 @@ The chosen solution was to list attributes as name-value pairs to avoid having t
 
 5.1.3 The navigation nenu
 
-A navigation menu was implemented on the page for navigating between views of different administrative objects, allowing the user to select the desired administrative object. Almost all of the menu buttons open a list of objects of the corresponding type, with a few exceptions that open the display of a single object. It should be noted that the navigation menu is not comprehensive in terms of navigating between views; some navigation takes place using buttons within the views themselves and the browser's back button.
+A navigation menu was implemented on the page for navigating between views of different management objects, allowing the user to select the desired management object. Almost all of the menu buttons open a list of objects of the corresponding type, with a few exceptions that open the display of a single object. It should be noted that the navigation menu is not comprehensive in terms of navigating between views; some navigation takes place using buttons within the views themselves and the browser's back button.
 
 The goal was to make the menu as independent as possible, which means that the menu's current state would be static in relation to the current view, and the functions performed by the different buttons would always be the same. For this reason, some object listing buttons, such as VLAN interfaces or ports belonging to a bridge, are links within the views themselves instead of being accessible directly from the navigation menu. This eliminates the need to maintain referential integrity between different objects in the navigation menu; it is sufficient for the objects in the views to know their references to other objects. Determining the state of the menu only requires the current object type, based on which the branch of the menu being accessed can be estimated. For example, Figure 15 in Appendix 15 shows an SNMP community saved on the device, based on which the menu is assigned a state where the SNMP branch is open.
 
@@ -904,7 +977,7 @@ This section discusses the second main part of the management application, which
 
 5.2.1 Data Structures
 
-The first data structure a web administration application's server-side HTTP request encounters is an STL (Standard Template Library) map of type `map<string, string>` used to store the request's parameters. This type defines a map where the name and value of each data element are strings. The HTTP request parameters are stored in this map, and the requested action and object type name are extracted into their own strings. The remaining part of the request stored in the map is then passed to the action object corresponding to the action and object type, where it is processed.
+The first data structure a web management application's server-side HTTP request encounters is an STL (Standard Template Library) map of type `map<string, string>` used to store the request's parameters. This type defines a map where the name and value of each data element are strings. The HTTP request parameters are stored in this map, and the requested action and object type name are extracted into their own strings. The remaining part of the request stored in the map is then passed to the action object corresponding to the action and object type, where it is processed.
 
 The advantages of using the STL map as a data structure are automatic memory management and flexible usage options, of which the most used in this application are key-based search and iteration. Automatic memory management reduces the time required for programming work and helps to reduce the number of careless errors in the code.
 
@@ -1044,7 +1117,7 @@ The CWebHandler object that made the processing call continues execution and sav
 
 6. Outcome
 
-For the purposes of this master's thesis, the administrative application was considered sufficiently complete when the functionality of the web administrative application largely matched the functionality of the CLI administrative application in scope. This required that most of the page templates required by the views and the features required by the application engine had been implemented, even if there were still shortcomings in their utilization. This chapter examines the results achieved at this level of completion.
+For the purposes of this master's thesis, the application was considered sufficiently complete when the functionality of the web management application largely matched the functionality of the CLI management application in scope. This required that most of the page templates required by the views and the features required by the application engine had been implemented, even if there were still shortcomings in their utilization. This chapter examines the results achieved at this level of completion.
 
 6.1 Suitability for intended use
 
@@ -1054,7 +1127,7 @@ The management application ensures the network endpoint's required security thro
 
 Authorization of functions is based on the user identification provided by authentication and the permission levels assigned to the function. Authorization is based on the permission level assigned to the function, based on which the use of the function is directed to the user who has the access right. For example, in the function defined in picture 5-4 on page 65, the permission level is ADMIN, in which case the function can only be used with the device administrator's credentials. Authorization allows you to easily define different views for different permission levels of a function by setting a separate page template for each permission level.
 
-After logging into the administration application, the user lands on a homepage with a navigation menu on the left and device information displayed on the page. With a few exceptions, the buttons in the navigation menu take the user to the listing view of the desired management object, an example of which is the bridge listing view in Figure 6-1. The listing view includes buttons to display and delete existing bridges, and to add a new bridge. In addition to the management attributes displayed in the list, each bridge also contains other attributes that the user can view in the show view of the desired bridge, which is presented in Appendix 16. However, the user cannot see all attributes through the administration application; some are set to be completely hidden in connection with special configuration of functions. The edit button in the show view allows the user to edit the bridge in its edit view, which is presented in Appendix 17. The attributes set to be editable for the bridge are different from those set to be displayed, so, for example, its MAC address is not editable by the user, but is determined according to the device address set for the device.
+After logging into the management application, the user lands on a homepage with a navigation menu on the left and device information displayed on the page. With a few exceptions, the buttons in the navigation menu take the user to the listing view of the desired management object, an example of which is the bridge listing view in Figure 6-1. The listing view includes buttons to display and delete existing bridges, and to add a new bridge. In addition to the management attributes displayed in the list, each bridge also contains other attributes that the user can view in the show view of the desired bridge, which is presented in Appendix 16. However, the user cannot see all attributes through the management application; some are set to be completely hidden in connection with special configuration of functions. The edit button in the show view allows the user to edit the bridge in its edit view, which is presented in Appendix 17. The attributes set to be editable for the bridge are different from those set to be displayed, so, for example, its MAC address is not editable by the user, but is determined according to the device address set for the device.
 
 Figure 6-1. Device bridges listing view.
 
