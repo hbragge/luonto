@@ -204,61 +204,133 @@ architectures.
 
 2.1 World Wide Web
 
-The World Wide Web saw the light of day in the spring of 1989 when Tim Berners-Lee published his proposal for a new way to present and link information. This started a new era in digital data transmission, which, through uniform resource identification and sharing as well as hypertext, enabled the sharing of audio, images, text, and other information with graphical browsers. The diversity of transmittable information quickly created a need for dynamic information creation and processing as well. Today, it enables interactive applications on WWW servers, the use of which via a browser over the internet is as easy and fast as with traditional applications locally.
+The World Wide Web saw the light of day in the spring of 1989 when Tim Berners-Lee published his
+proposal for a new way to present and link information. This started a new era in digital data
+transmission, which, through uniform resource identification and sharing as well as hypertext,
+enabled the sharing of audio, images, text, and other information with graphical browsers. The
+diversity of transmittable information quickly created a need for dynamic information creation and
+processing as well. Today, it enables interactive applications on WWW servers, the use of which via
+a browser over the internet is as easy and fast as with traditional applications locally.
 
 2.1.1 HTTP Protocol
 
-HTTP is a data transfer protocol used on the WWW, which allows a client and a server to negotiate with each other. HTTP was developed by the W3C (World Wide Web Consortium) and the IETF (Internet Engineering Task Force), and the most common version currently used is HTTP/1.1, which is defined by RFC 2616 [Ber99]. Different versions are backwards compatible, and version 1.1 includes improvements that streamline HTTP traffic and provide better control over the appearance of WWW pages [Pus01, p. 127]. HTTP operates on the application layer, and the TCP protocol is generally used below it, providing HTTP with reliable and connection-oriented data transfer. This subsection is based on sources [Ber99] and [Pel98, pp. 19-21].
+HTTP is a data transfer protocol used on the WWW, which allows a client and a server to negotiate
+with each other. HTTP was developed by the W3C (World Wide Web Consortium) and the IETF (Internet
+Engineering Task Force), and the most common version currently used is HTTP/1.1, which is defined
+by RFC 2616 [Ber99]. Different versions are backwards compatible, and version 1.1 includes
+improvements that streamline HTTP traffic and provide better control over the appearance of WWW
+pages [Pus01, p. 127]. HTTP operates on the application layer, and the TCP protocol is generally
+used below it, providing HTTP with reliable and connection-oriented data transfer. This subsection
+is based on sources [Ber99] and [Pel98, p. 19-21].
 
 Request
 
-HTTP defines a set of methods and corresponding response codes that are used for communication between the user and the server. Through methods, the user expresses to the server what they want to do, and usually the URI of the target is also provided. The response sent by the server always includes a response code, which indicates the status of the response.
+HTTP defines a set of methods and corresponding response codes that are used for communication
+between the user and the server. Through methods, the user expresses to the server what they want
+to do, and usually the URI of the target is also provided. The response sent by the server always
+includes a response code, which indicates the status of the response.
 
-One of the most common HTTP methods is GET, which is used to retrieve data from a specified URI. In addition to the URI, the request usually includes header fields that may contain information about the protocol version or client software. An example of the GET request format is shown in Figure 2-1. The first line of the figure contains the desired method, then the requested URI, and finally the HTTP version used. The second line contains the request target, which is intended to distinguish between DNS names that refer to the same IP address. There can also be more name-value pairs in the header in the same format.
+One of the most common HTTP methods is GET, which is used to retrieve data from a specified URI. In
+addition to the URI, the request usually includes header fields that may contain information about
+the protocol version or client software. An example of the GET request format is shown in Figure
+2-1. The first line of the figure contains the desired method, then the requested URI, and finally
+the HTTP version used. The second line contains the request target, which is intended to
+distinguish between DNS names that refer to the same IP address. There can also be more name-value
+pairs like this in the header.
 
 Figure 2-1. GET request.
 
-In addition to the GET method, other common methods include POST and HEAD. The methods defined in RFC 2616 are shown in Table 2-1 with explanations. The explanation reveals any additional parameters the method may require, typically the URI of the target.
+In addition to the GET method, other common methods include POST and HEAD. The methods defined in
+RFC 2616 are shown in Table 2-1 with explanations. The explanation tells any additional parameters
+the method may require, typically the URI of the target.
 
 Table 2-1. HTTP methods.
 
 Response
 
-When an HTTP server receives a request, it returns the object specified by the requested URI address to the user, i.e., the rfc2616.txt file in the example in Figure 2-1. Since HTTP does not define the content to be sent, it can be any plain text or binary data represented in digital form. Figure 2-2 shows an example of a response sent by the server. The first line, like the request, indicates the protocol version used, followed by the response code, which in this case is 200. In addition, the response shows date and server information, as well as information about the content's format and size.
+When an HTTP server receives a request, it returns the object specified by the requested URI to the
+user, i.e., the rfc2616.txt file in the example in Figure 2-1. Since HTTP does not define the data
+to be sent, it can be any plain text or binary data represented in digital form. Figure 2-2 shows
+an example of a response sent by the server. The first line, like the request, indicates the
+protocol version used, followed by the response code, which in this case is 200. In addition, the
+response shows date and server information, as well as information about the content format and
+size.
 
 Figure 2-2. GET request.
 
-Response codes are categorized by their meaning into "status families" belonging to the same hundreds. Informational statuses belong to the 100s, success statuses to the 200s, redirection statuses to the 300s, user error statuses to the 400s, and server error statuses to the 500s. Common response codes include 404 - Not Found, 500 - Internal Server Error, and 503 - Service Unavailable.
+Response codes are categorized by their meaning into "status families" belonging to the same
+"hundreds". Informational statuses belong to the 100s, success statuses to the 200s, redirection
+statuses to the 300s, user error statuses to the 400s, and server error statuses to the 500s.
+Common response codes include 404 - Not Found, 500 - Internal Server Error, and 503 - Service
+Unavailable.
 
 2.1.2 Dynamic web
 
-Presenting static information on websites can be informative in itself, but often some form of interactivity is needed for the user. This may involve various buttons, forms, and other functions that allow the user to influence the content provided by the page in ways other than just through unambiguous state transitions. To achieve this, some logic is needed that receives the user's input and creates a response based on it. This subsection discusses some ways to implement server-side logic, and is based on sources [Pel98, pp. 478 and 660-661].
+Presenting static information on websites can be informative in itself, but often some form of
+interactivity is needed for the user. This may involve various buttons, forms, and other
+functionality that allow the user to influence the content provided by the page in ways other than
+just through unambiguous state transitions. To achieve this, some logic is needed that receives the
+user input and creates a response based on it. This subsection discusses some ways to implement
+server-side logic, and is based on sources [Pel98, p. 478 and 660-661].
 
 Common Gateway Interface (CGI)
 
-CGI [CoRo99] is a data transfer interface defined between a server and programs executed on the server. CGI enables the creation of dynamic content for the server's use via an interface, using applications run on the server. Information can be assembled for the page sent to the user, for example, using scripting languages.
+CGI [CoRo99] is a data transfer interface defined between the server and applications executed on
+the server. CGI enables the creation of dynamic content via an interface, using applications running
+on the server. Information can be assembled for the page sent to the user, for example using
+scripting languages.
 
-The advantages of CGI are simplicity, separate processes, and independence from the server's programming language and architecture. In practice, data transmission through the CGI interface is accomplished using various environment variables and standard IO data streams. Although separate processes can be considered an advantage on the one hand, they also have their drawbacks.
+The advantages of CGI are simplicity, separate processes, and independence from the server's
+programming language and architecture. In practice, data transmission through the CGI interface is
+accomplished using environment variables and standard-I/O data streams. Although separate processes
+can be considered an advantage on the one hand, they also have their drawbacks.
 
-CGI launches its own process for each request intended for it, which is responsible for handling the request and is closed after processing is complete. This procedure consumes server memory and also affects performance due to the process startup and shutdown associated with each request. Multiple concurrent processes can also cause exclusion and synchronization problems if different processes handle variables in the same memory area or a shared data source.
+CGI launches its own process for each request intended for it, which is responsible for handling
+the request and is closed after processing is complete. This procedure consumes server memory and
+also affects performance due to the process startup and shutdown associated with each request.
+Multiple concurrent processes can also cause synchronization problems if different processes use a
+shared data source.
 
-Because CGI is independent of programming language, CGI applications can be implemented in any language, as long as the server's system platform supports it. Most commonly, a CGI application is implemented in an interpreted language such as Perl, Python, or Ruby.
-
-Implementation is also possible with translatable languages, in which case languages such as C, C++, or Java can be used.
+Because CGI is independent of programming language, CGI applications can be implemented in any
+language, as long as the server supports it. Most commonly, a CGI application is implemented in an
+interpreted language such as Perl, Python or Ruby. Implementation is also possible using compiled
+languages such as C, C++ or Java.
 
 FastCGI
 
-Developed as a replacement for CGI, FastCGI aims to address its predecessor's problems, especially with regard to memory usage. However, it retains the good aspects of CGI, namely simplicity and programming language independence. Unlike CGI, processes in FastCGI are persistent, so after handling one request, they remain waiting for the next [OM96]. FastCGI also aims to reduce the number of processes required to handle requests by performing time-consuming I/O operations with the server application.
+Developed as a replacement for CGI, FastCGI aims to address its predecessor's problems, especially
+with regard to memory usage. However, it retains the good aspects of CGI, namely simplicity and
+programming language independence. Unlike CGI, processes in FastCGI are persistent, so after
+handling one request, they remain waiting for the next [OM96]. FastCGI also aims to reduce the
+number of processes required to handle requests by performing time-consuming I/O operations using
+the server process.
 
-FastCGI combines environment variables and the standard-IO data stream needed for data transmission into a single data stream, which can be transmitted to local processes via Unix sockets and to processes running on remote machines via the TCP protocol.
+FastCGI combines environment variables and the standard-I/O data stream needed for data transmission
+into a single data stream, which can be transmitted to local processes via Unix sockets and to
+processes running on remote machines via the TCP protocol.
 
-API (Application Programming Interface)
+Custom APIs
 
-To fix problems with other application programming interfaces, many servers also offer their own interfaces for application implementation. The best-known are Microsoft's ISAPI (Internet Server API) [MS95] and Apache API [ASF05]. Also, GoAhead WebServer [GA00], Klone [KL07], and Seminole [GS06a], which are presented in chapter four, offer their own interfaces for application programming.
+To fix problems with other application programming interfaces, many servers also offer their own
+interfaces for applications. The best-known are Microsoft's ISAPI (Internet Server API) [MS95] and
+Apache API [ASF05]. Also, GoAhead WebServer [GA00], Klone [KL07], and Seminole [GS06a], which are
+presented in chapter four, offer their own interfaces for application programming.
 
-The main advantage of API applications is speed, as programs linked to a server application operate significantly faster than, for example, CGI programs, because the program operates within the server process and is not started and closed separately for each request. Server APIs often also offer broader functionality than the CGI interface, because it is possible to influence the operation of the server itself during request processing.
+The main advantage of custom APIs is speed, as programs linked to a server application run
+significantly faster than, for example, CGI programs, because the program operates within the
+server process and is not started and closed separately for each request. Server APIs often also
+offer broader functionality than the CGI interface, because it is possible to influence the
+operation of the server itself during request processing.
 
-A drawback of APIs offered by servers is often the complexity of the programming interface and its limitation to a specific programming language and architecture. Because interfaces typically follow the implementation language of the server itself, they are most often implemented in C or C++. In this case, the application programmer does not have much choice with respect to the implementation language. Complexity is also increased by the incompatibility of API implementations, as the implementations often differ widely. This can cause portability problems for the web application if its implementation is strongly tied to the interface of the server application being used. Furthermore, programming interfaces are rarely open or even free, while the number of open alternatives in the CGI world is countless.
+A drawback of APIs offered by servers is often the complexity of the programming interface and its
+limitation to a specific programming language and software architecture. Because interfaces
+typically follow the implementation language of the server itself, they are most often implemented
+in C or C++. In this case, the application programmer does not have much choice with respect to the
+implementation language. Incompatibility of API implementations is also problematic, as the
+implementations often differ widely. This can cause portability problems for the web application if
+its implementation is strongly tied to the interface of the server application being used.
+Furthermore, programming interfaces are rarely open or even free, while the number of open
+alternatives in the CGI world is countless.
 
 2.2 Server operation
 
@@ -368,7 +440,7 @@ Based on user authentication, it is usually also necessary to perform some kind 
 
 2.4.1 HTTP Authentication
 
-The HTTP standard introduces a method for simple access control, i.e., authentication. The standard includes two authentication schemes: the simple basic scheme and the more secure digest scheme. The IETF has defined these methods in more detail in RFC 2617 [Fra99]. This subsection discusses the authentication methods offered by HTTP and is based on the aforementioned RFC in addition to sources [Ker98, pp. 148-153] and [Pus01, pp. 140-153].
+The HTTP standard introduces a method for simple access control, i.e., authentication. The standard includes two authentication schemes: the simple basic scheme and the more secure digest scheme. The IETF has defined these methods in more detail in RFC 2617 [Fra99]. This subsection discusses the authentication methods offered by HTTP and is based on the aforementioned RFC in addition to sources [Ker98, p. 148-153] and [Pus01, p. 140-153].
 
 HTTP authentication is based on identifying a user with a username and password and can be used to protect documents on a server. Although using passwords is a weak authentication method due to human risk factors, it is strong enough for many applications. In more demanding applications, only using a password in conjunction with a strong authentication method, such as SSL, is sufficient to guarantee the required data security.
 
@@ -418,7 +490,7 @@ The user initiates communication with the server with a Client Hello message, wh
 
 The server responds to a successful user connection with a Server Hello message. If an error occurs, an error message is returned. The Server Hello contains information about the encryption and compression algorithms specified by the server, and the server's own random data for encryption. In addition, the server checks the session ID possibly provided by the user, and returns either a value indicating a new session or a value indicating an old, previous session, as needed.
 
-Next, the server sends its certificate to the user, which conforms to the selected encryption settings. Generally, an X.509.v3 standard certificate is used [Ker98, pp. 150-152]. The user knows that the server handshake phase has ended based on the Server Hello Done message. If the server has made a certificate request, the user sends the server their own certificate, which has the same format as the server's certificate. With the help of the certificate, the server can verify the user's authenticity in the same way that the user verifies the server, thus achieving authentication of both endpoints.
+Next, the server sends its certificate to the user, which conforms to the selected encryption settings. Generally, an X.509.v3 standard certificate is used [Ker98, p. 150-152]. The user knows that the server handshake phase has ended based on the Server Hello Done message. If the server has made a certificate request, the user sends the server their own certificate, which has the same format as the server's certificate. With the help of the certificate, the server can verify the user's authenticity in the same way that the user verifies the server, thus achieving authentication of both endpoints.
 
 After this, the user sends a Client Key Exchange message, which contains the key used to create the final session key. This key is called the premaster secret, and its format and length depend on the selected encryption algorithms. The final session key, or master secret, is used to encrypt all data transferred in the session. Encrypting the premaster secret using PKI (Public Key Infrastructure) before sending it is paramount to ensure the transferred data can be encrypted from an attacker.
 
@@ -656,7 +728,7 @@ Most paid server providers also provide the software source code, and often thei
 
 Supported programming languages
 
-Due to the wide range of servers, it is expected that there are also numerous supported programming languages. Most servers support the CGI or FastCGI interface, which allows the web server to handle requests through programming language-independent environment variables and standard-IO. The problem with standard CGI is its heaviness, as its own process is created to handle each request, which is destroyed at the end of processing. Although FastCGI reduces this problem, it was considered most appropriate for this project to find a method that would directly support the programming language used to write web software. However, since CGI opens up the possibility of deploying application frameworks developed for languages such as PHP, Python, and Ruby, support offered for it was also taken into account.
+Due to the wide range of servers, it is expected that there are also numerous supported programming languages. Most servers support the CGI or FastCGI interface, which allows the web server to handle requests through programming language-independent environment variables and standard-I/O. The problem with standard CGI is its heaviness, as its own process is created to handle each request, which is destroyed at the end of processing. Although FastCGI reduces this problem, it was considered most appropriate for this project to find a method that would directly support the programming language used to write web software. However, since CGI opens up the possibility of deploying application frameworks developed for languages such as PHP, Python, and Ruby, support offered for it was also taken into account.
 
 Since the Config API interface of the Iris 440 device, which is managed using a web application, is implemented with C++ classes, the most straightforward programming language for implementing the management application would be C++ or C. In most cases, the supported implementation language also means the server's own implementation language, so server solutions implemented in other languages, such as Java, were excluded from the mapping. Java was excluded from the language options because there was no desire to install a Java virtual machine in the target environment for performance and integration reasons.
 
@@ -1189,26 +1261,26 @@ http://www.gladesoft.com/products/seminole/semdatasheet.pdf. (Retrieved 20.11.20
 [GS06b], GladeSoft, Inc. (2006), Seminole Developer’s Guide,
 http://www.gladesoft.com/products/seminole/semman.pdf. (Retrieved 20.11.2006).
 [HaJä03], Haikala, Ilkka, Järvinen, Hannu-Matti (2003), Käyttöjärjestelmät. Helsinki:
-Talentum. pp. 242
+Talentum. p. 242
 [HaMä98], Haikala, Ilkka, Märijärvi, Jukka (1998), Ohjelmistotuotanto, 6. painos.
-Helsinki: Suomen ATK-kustannus Oy. pp. 389
+Helsinki: Suomen ATK-kustannus Oy. p. 389
 [HuTh00], Hunt, Andrew, Thomas, David (2000), The Pragmatic Programmer. Boston:
-Addison-Wesley. pp. 321
+Addison-Wesley. p. 321
 [Kal95], Kalimo, Anna (1995), Graafisen käyttöliittymän suunnittelu. Helsinki: Tieke
-RY. pp. 229
+RY. p. 229
 [Ker02a], Keren, Guy (2002), Unix Multi-Process Programming and Inter-Process
 Communications (IPC), http://users.actcom.co.il/~choo/lupg/tutorials/multiprocess/multi-process.html. (Retrieved 26.11.2006).
 [Ker02b], Keren, Guy (2002), Network programming under Unix systems,
 http://users.actcom.co.il/~choo/lupg/tutorials/internetworking/internetprogramming.html#sockets. (Retrieved 26.11.2006).
-[Ker98], Kerttula, Matti (1998), Tietoverkkojen tietoturva. Helsinki: Oy Edita Ab. pp. 510
+[Ker98], Kerttula, Matti (1998), Tietoverkkojen tietoturva. Helsinki: Oy Edita Ab. p. 510
 [KL07], KoanLogic (2007), Koanlogic Klone tutorial,
 http://www.koanlogic.com/kl/cont/gb/html/klone-tute.html. (Retrieved 14.1.2007).
 [Kuu03], Kuutti, Wille (2003), Käytettävyys, suunnittelu ja arviointi. Helsinki:
-Talentum. pp. 191
+Talentum. p. 191
 [Maj05], Maj, Arthur (2005), Apache 2 with SSL/TLS: Step-by-Step,
 http://www.securityfocus.com/infocus/1818. (Retrieved 18.2.2007).
 [Mas05], Mason, Mike (2005), Pragmatic Version Control using Subversion. Dallas:
-The Pragmatic Programmers. pp. 207
+The Pragmatic Programmers. p. 207
 [Mbe03], Mbedthis Software LLC (2003), AppWeb/Mbedthis,
 http://www.mbedthis.com. (Retrieved 19.3.2007).
 [MS95], Microsoft Corporation (1995), Internet Server API, http://msdn.microsoft.com.
@@ -1221,14 +1293,14 @@ http://www.opengroup.org/unix/online.html. (Retrieved 19.3.2007).
 Interface, http://www.fastcgi.com/devkit/doc/fastcgi-whitepaper/fastcgi.htm. (Retrieved
 18.3.2007).
 [OvRa98], Ovaska, Saila, Räihä, Kari-Jouko (1998), Käytettävyystestaus. Sytyke RY,
-Systeemityö 4/98. pp. 13-14.
-[Pel98], Peltomäki, Juha (1998), WWW-ohjelmointi. Jyväskylä: Teknolit. pp. 722
+Systeemityö 4/98. p. 13-14.
+[Pel98], Peltomäki, Juha (1998), WWW-ohjelmointi. Jyväskylä: Teknolit. p. 722
 [Per96], Perens, Bruce (1996), BusyBox, http://www.busybox.net. (Retrieved 18.3.2007).
-[Pus01], Puska, Matti (2001), Linux palvelimena. Helsinki: Satku. pp. 304
+[Pus01], Puska, Matti (2001), Linux palvelimena. Helsinki: Satku. p. 304
 [RuCo01], Cobert, Jonathan, Rubini, Alessandro (2001), Linux Device Drivers: Second
-Edition. Sebastopol, CA: O'Reilly & Associates Inc., pp. 564
+Edition. Sebastopol, CA: O'Reilly & Associates Inc., p. 564
 [Yag03], Yaghmour, Karim (2003), Building Embedded Linux Systems. Sebastopol,
-CA: O'Reilly & Associates, Inc., pp. 391
+CA: O'Reilly & Associates, Inc., p. 391
 [ZT95], Zeus Technologies Ltd. (1995), Zeus Web Server,
 http://www.zeus.com/products/zws. (Retrieved 19.3.2007).
 
