@@ -334,21 +334,47 @@ alternatives in the CGI world is countless.
 
 2.2 Server operation
 
-Different HTTP servers use different methods to provide services, but the basic principles of each step, from receiving a request to sending a response, are generally similar. Unix-based HTTP servers primarily utilize the basic methods provided by Unix for inter-process communication and network communication. These methods can be used by functions such as file reading and writing or network communication via socket connections. This section discusses inter-process communication and sockets, and their importance in HTTP servers. In addition, it briefly introduces responding to HTTP requests using Unix system calls.
+Different HTTP servers use different methods to provide services, but the basic principles of each
+step, from receiving a request to sending a response, are generally similar. Unix-based HTTP
+servers primarily utilize the basic methods provided by Unix for inter-process communication and
+network communication. These methods can be used by functions such as file reading and writing or
+network communication via socket connections. This section discusses inter-process communication
+and sockets, and their role in HTTP servers. In addition, it briefly introduces responding to HTTP
+requests using Unix system calls.
 
 2.2.1 Inter-process communication
 
 The most common method for processes to communicate with each other is by using pipes.
 
-A pipe refers to a unidirectional communication channel that allows the transmission of a stream of bytes between two processes. Pipes operate on a FIFO (First-In, First-Out) principle, meaning that the outgoing data is read in the same order as it was sent. The data stream transmitted through a pipe does not adhere to any protocol; instead, the protocol used for communication must be defined independently. The system ensures the reliability of data transmission, i.e., that no data is lost during transfer. [Ker02a]
+A pipe refers to a unidirectional communication channel that allows the transmission of a stream of
+bytes between two processes. Pipes operate on a FIFO (First-In, First-Out) principle, meaning that
+the outgoing data is read in the same order as it was sent. The data stream transmitted through a
+pipe does not adhere to any protocol; instead, the protocol used for communication must be defined
+independently. The system ensures the reliability of data transmission, i.e., that no data is lost
+during transfer. [Ker02a]
 
-A pipe is created using the Unix pipe() system call. This provides two file descriptors, one of which can be used to read from the pipe and the other to write to it. However, only one of these can be used at a time, so one process is meant to use the descriptor for reading from the pipe and another for writing to it.
+A pipe is created using the Unix pipe() system call. This provides two file descriptors, one of
+which can be used to read from the pipe and the other to write to it. Only one of these can be used
+at a time within the same process. Pipes are unidirectional, so two pipes are needed for
+bidirectional communication. This means that in communication between two processes, each process
+utilizes two pipes, one for sending data and the other for receiving. The direction of transmission
+is determined by using the file descriptor corresponding to the direction.
 
-Since pipes are unidirectional, two pipes are needed for bidirectional communication. In practice, this means that in communication between two processes, one process utilizes two pipes, one for sending data and the other for receiving. The direction of transmission is determined by using the file descriptor corresponding to the direction. When the opposing process uses the pipes in a corresponding manner, they can enable bidirectional communication between the processes.
+Implementing bidirectional communication using pipes requires precision because they are prone to
+deadlocks. This means a situation where one or more processes become locked, waiting for an event
+from another process or the release of a resource. An example of a deadlock is a situation where
+there is a bidirectional connection between two processes, and both processes start reading the
+file descriptor of the pipe corresponding to reading. In this case, data will never arrive, and the
+processes will try to read data sent by each other forever. Deadlocks occur most commonly when
+using blocking operations, as they typically return only when the operation succeeds or an error
+occurs.
 
-Implementing bidirectional communication using pipes requires special precision because they are prone to deadlocks. This refers to a situation where one or more processes become locked, waiting for an event from another process or the release of a resource. An example of a deadlock is a situation where there is a bidirectional connection between two processes, and both processes start reading the file descriptor of the pipe corresponding to reading. In this case, data will never arrive, and the processes will try to read data sent by each other forever. Deadlocks occur most commonly when using blocking operations, as they typically return only when the operation succeeds or an error occurs.
-
-However, the possibility of process locking can be minimized by designing programs in such a way that locking situations do not occur. Unix also offers some system calls to prevent this problem. For example, the select() call can select an active file descriptor by feeding the call a group of monitored read or write descriptors and a time after which their monitoring is stopped. With it, a process can, for example, monitor a group of network connections and assess when it can read from one of them without blocking [RuCo01, p. 154].
+However, the possibility of a deadlock can be minimized by designing programs in a certain way.
+Unix also offers system calls to prevent this problem. For example, the select() call can select
+an active file descriptor by feeding the call a group of monitored read or write descriptors and a
+timeout after which their monitoring is stopped. This way a process can, for example, monitor a
+group of network connections and find out when it can read from one of them without blocking
+[RuCo01, p. 154].
 
 2.2.2 Unix sockets
 
