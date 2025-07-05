@@ -325,12 +325,12 @@ operation of the server itself during request processing.
 A drawback of APIs offered by servers is often the complexity of the programming interface and its
 limitation to a specific programming language and software architecture. Because interfaces
 typically follow the implementation language of the server itself, they are most often implemented
-in C or C++. In this case, the application programmer does not have much choice with respect to the
-implementation language. Incompatibility of API implementations is also problematic, as the
-implementations often differ widely. This can cause portability problems for the web application if
-its implementation is strongly tied to the interface of the server application being used.
-Furthermore, programming interfaces are rarely open or even free, while the number of open
-alternatives in the CGI world is countless.
+in C or C++. In this case, developers don't have much choice regarding the implementation language.
+Incompatibility of API implementations is also problematic, as the implementations often differ
+widely. This can cause portability problems for the web application if its implementation is
+strongly tied to the interface of the server application being used. Furthermore, programming
+interfaces are rarely open or even free, while the number of open alternatives in the CGI world is
+massive.
 
 2.2 Server operation
 
@@ -378,11 +378,26 @@ group of network connections and find out when it can read from one of them with
 
 2.2.2 Unix sockets
 
-In Unix systems, sockets are most often used as the application programming interface for communication protocols, and they are defined in practice according to either the Berkeley, System V, or POSIX standard. They provide the application programmer access to the transport layer in the form of the TCP or UDP protocol, or directly to the network layer in the form of the IP protocol. This paragraph utilizes Unix system call manual pages [OG01].
+In Unix systems, sockets are most often used as the interface for communication protocols, and they
+are specified by Berkeley, System V, or POSIX standards. They provide developers access to the
+transport layer in the form of the TCP or UDP protocol, or directly to the network layer in the
+form of the IP protocol. This paragraph utilizes Unix system call manual pages [OG01].
 
-A socket is formally defined as the endpoint of an application program's communication and the protocol stack beneath it. In practice, this means that a program can use a socket to read and write data over the network and control the underlying network protocol by setting various options for the socket. From the perspective of an application programmer, a socket is most commonly a bidirectional communication channel over the network, for which a port and protocol to be used are defined. A socket can technically be compared to file descriptors used for disk operations. [Ker02b]
+A socket is formally defined as the endpoint of the application's communication and the protocol
+stack beneath it. In practice, this means that a program can use a socket to read and write data
+over the network and control the underlying network protocol by setting various options for the
+socket. From the perspective of a developer, a socket is most commonly a bidirectional
+communication channel over the network, for which a port and protocol to be used are defined. A
+socket can technically be compared to file descriptors used for disk operations. [Ker02b]
 
-Various system calls are utilized to create and use sockets, the most common of which are socket(), bind(), connect(), listen(), accept(), send(), recv(), and close(). The following illustrates socket operation using these calls. Unix also includes other system calls related to socket management, but the aforementioned are likely the most relevant for illustrating the socket lifecycle and operation. Figure 2-3 clarifies the order of system calls from the server's perspective. From the user's perspective, the block diagram is quite similar, but instead of listen() and accept() calls, the connect() call is used to establish a connection, and typical data transfer operations recv() and send() occur in reverse order. Common to all calls is the numerical value they return, which can be examined to determine the success of the operation.
+Various system calls are utilized to create and use sockets, the most common of which are socket(),
+bind(), connect(), listen(), accept(), send(), recv(), and close(). Unix also includes other system
+calls related to socket management, but the aforementioned are the most relevant for the socket
+lifecycle and operation. Figure 2-3 clarifies the order of system calls from server perspective.
+From user perspective, the block diagram is quite similar, but instead of listen() and accept()
+calls, the connect() call is used to establish a connection, and typically the data transfer
+operations recv() and send() occur in reverse order. Common to all calls is the numerical value
+they return, which can be examined to determine the success of the operation.
 
 Figure 2-3. Network operation using sockets from the server's perspective.
 
