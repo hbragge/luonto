@@ -399,21 +399,41 @@ calls, the connect() call is used to establish a connection, and typically the d
 operations recv() and send() occur in reverse order. Common to all calls is the numerical value
 they return, which can be examined to determine the success of the operation.
 
-Figure 2-3. Network operation using sockets from the server's perspective.
+Figure 2-3. Network operation using sockets from the server perspective.
 
-Sockets are created using the Unix socket() system call, which takes the address family, socket type, and protocol to be used as parameters. The address family used is usually the AF_INET address family for IP addresses. The socket type can be, for example, SOCK_STREAM for TCP traffic and SOCK_DGRAM for UDP traffic.
+Sockets are created using the socket() system call, which takes the address family, socket type,
+and protocol as parameters. The address family is usually the AF_INET for IP addresses. The socket
+type can be, for example, SOCK_STREAM for TCP traffic and SOCK_DGRAM for UDP traffic. The protocol
+is usually zero, which stands for the default protocol of the socket type. Data can also be handled
+as is, without a protocol, if necessary. Once a socket is created, it can be handled using the
+descriptor returned by the call.
 
-The protocol is usually zero, which means the default protocol for the socket type being used. Once a socket is created, it can be handled using the descriptor returned by the call. Data can also be handled as is, without a protocol, if necessary.
+Once a socket is created, it needs to be bound to a desired connection. This defines the local
+address and remote address, i.e., the endpoints between which the socket will communicate. This is
+done with the bind() call, which takes the socket to be bound, the address, and the address length
+as parameters. In the case of a listening port, the remote address of the connection is usually
+left undefined. The address format must conform to the address family used by the socket. In the
+case of an IP address, it must define the IP address and port to be used.
 
-Once a socket is created, it needs to be bound to a desired connection. This defines the local address and remote address, i.e., the endpoints between which the socket will communicate. This is done with the bind() call, which takes the socket to be bound, the address, and the address length as parameters. In the case of a listening port, the remote address of the connection is usually left open. The address format must conform to the address family used by the socket, and in the case of an IP address, it must define the IP address and port to be used.
+Next, it must be chosen whether to connect to another endpoint or put the socket into listening
+mode. Connecting to another endpoint is done with the connect() call, which requires the socket
+being used, the address, and the address length as parameters. Listening mode can be entered using
+the listen() call, which takes the desired socket and a backlog value as parameters, the backlog
+value representing the maximum length of the connection request queue.
 
-Next, it must be chosen whether to connect to another endpoint or put the socket into listening mode. Connecting to another endpoint is done with the connect() call, which requires the socket being used, the address, and the address length as parameters. Listening mode can be set with the listen() call, which takes the desired socket and a backlog value as parameters, the backlog value representing the maximum length of the connection request queue.
+After binding and connecting or after an incoming connection request, the socket can be used to
+read and write data. This is done using the recv() and send() calls, which take as parameters the
+socket to be used, a character buffer, the length of the buffer, and additional settings. The
+buffer is used for storing the data to be received or sent. In Figure 2-3, the server uses the
+recv() call to read the request and the send() call to send the response.
 
-After binding and connecting or after a connection request, the socket can be used to read and write data. This is done using the recv() and send() calls, which take as parameters the socket to be used, a character buffer, the length of the buffer, and additional settings. When reading, the received data is stored in the character buffer, and when writing, the data to be sent is read from it. In Figure 2-3, the server uses the recv() call to read the request and the send() call to send the response.
+It should be noted that the recv() and send() calls are intended for connection-oriented TCP
+traffic. For transmitting datagram-based UDP traffic, the sendto() and recvfrom() calls are used,
+which require the recipient or sender address as an additional parameter. When using UDP, the
+connect() and listen() calls are not needed.
 
-It should be noted that the recv() and send() calls are intended for connection-oriented TCP traffic. For transmitting datagram-based UDP traffic, the sendto() and recvfrom() calls are used, which require the recipient or sender address as an additional parameter. When using UDP, the connect() and listen() calls are not used because sending and receiving occur without a separate connection establishment.
-
-When a connection is to be terminated, the close() call is invoked. Its only parameter is the socket to be closed. Close() is a general-purpose call for closing file descriptors, so it can be used to close, for example, a file descriptor in addition to a socket.
+When a connection should be terminated, the close() call is invoked. Its only parameter is the
+socket to be closed. Close() is a general-purpose call for closing any kind of file descriptor.
 
 2.2.3 Responding to the Request
 
