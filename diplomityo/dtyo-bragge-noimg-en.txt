@@ -437,15 +437,35 @@ socket to be closed. Close() is a general-purpose call for closing any kind of f
 
 2.2.3 Responding to the Request
 
-The connection to the server begins with a command initiated by the user when they type the desired server address into a browser. After this, the HTTP client program establishes a TCP connection to the server software [Pel98, p. 19]. Once the connection is opened, the transmitted HTTP request header specifies the requested content as described in subsection 2.1.1. If the data requested in the header is static, such as an HTML file, it can be retrieved from the server's file system. Otherwise, the server generates the content dynamically.
+The connection to the server begins with a command initiated by the user when they type the desired
+server address into a browser. After this, the browser establishes a TCP connection to the server
+[Pel98, p. 19]. Once the connection is opened, the transmitted HTTP request header specifies the
+requested content as described in subsection 2.1.1. If the data requested in the header is static,
+such as an HTML file, it can be retrieved from the server's file system. Otherwise, the server
+generates the content dynamically.
 
-Usually, the first step performed by a server program is to start listening to the desired TCP socket. Listening involves receiving incoming connection requests on the port, then accepting the request and reading its request header. After that, the necessary steps are taken to create a response. This may involve, for example, reading from disk or making database calls.
+Usually, the first step performed by a server program is to start listening to the desired TCP
+socket. Listening involves receiving incoming connection requests on the port, then accepting the
+request and reading its request header. After that, the necessary steps are taken to create a
+response. This may involve, for example, reading from disk or making database calls. At its
+simplest, creating a response means sending an HTML file saved on disk, but dynamic web
+applications require more complex logic, such as that discussed in section 2.1.2.
 
-At its simplest, generating a response means sending an HTML file saved on disk, but dynamic web applications require more complex logic, such as that discussed in section 2.1.2.
+When designing a server program, it's important to consider blocking of various operations, as
+mentioned in subsection 2.2.1. Generally, operations that read data or receive connections block,
+i.e. do not return immediately. Blocking occurs, for example, in the Unix accept() call when an
+acceptable connection has not yet arrived, or when reading data with the read() call. An efficient
+HTTP server must take blocking into account so that it does not cause the entire server to stop,
+which could be as unresponsiveness by users. The problem can be solved with child processes started
+using the fork() call, threads, or event-based design. The latter can be aided by the select()
+call, which selects an active file descriptor. Different server process models are discussed in
+more detail in the next section.
 
-When planning server operation, it's important to consider blocking of various operations, as mentioned in subsection 2.2.1. Generally, operations that read data or receive connections block. Blocking occurs, for example, in the Unix accept() call when an acceptable connection has not yet arrived, or when reading data with the read() call. An efficient HTTP server must take blocking into account so that it does not cause the entire server to stop, which would be seen by the user as a poor response. The problem can be solved with child processes started with the fork() call, threads, or event-based design, which can be aided by, for example, the select() call, which selects an active file descriptor. Different server process models are discussed in more detail in the following section.
-
-Once a request is received, its processing can be directed to a child process or thread corresponding to the request, which performs the actions required to handle the request. These may include evaluating the parameters provided by the request and, for example, performing database calls based on the parameters. The response is typically sent to the user using a send() call, after which the socket can be closed or left waiting for the next request.
+Once a request is received, its processing can be directed to a child process or thread
+corresponding to the request, which performs the required actions. These may include evaluating the
+parameters provided by the request and, for example, performing database calls based on the
+parameters. The response is typically sent to the user using a send() call, after which the socket
+can be closed or left waiting for the next request.
 
 2.3 Process models
 

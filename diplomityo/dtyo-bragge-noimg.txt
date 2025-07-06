@@ -12,9 +12,7 @@ Alkulause
 
 Olen tehnyt diplomityön toimiessani ohjelmistokehittäjänä Design Combus Oy:n
 palveluksessa Tampereella. Työ käsittelee graafisen käyttöliittymän luomista yrityksen
-tuoteprojektiin ja sen tarkoitus on helpottaa tuotteen käyttöä. Kiitän esimiestäni Markku
-Lindelliä projektin toimeksiannosta, työn ohjaajaa Petri Ahosta asiantuntevasta
-opastuksesta ja työn tarkastajaa professori Pekka Loulaa arvokkaista neuvoista.
+tuoteprojektiin ja sen tarkoitus on helpottaa tuotteen käyttöä.
 
 Tampereella 1.4.2007
 Henri Bragge
