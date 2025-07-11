@@ -469,13 +469,30 @@ can be closed or left waiting for the next request.
 
 2.3 Process models
 
-This section discusses various process models from the perspective of an HTTP server. The basic principles of the models apply to any process, but in this section, the stages used as the basis for examining the models only occur with a program characterized by receiving a request, processing it, and sending a response, just like an HTTP server. This section is based on the source [Dru99].
+This section discusses various process models from the perspective of an HTTP server. The basic
+principles of the models apply to any process, but the behavior used as the basis for examining the
+models mostly apply to a program that receives a request, processes it, and sends a response, just
+like an HTTP server. This section is based on the source [Dru99].
 
-From a project perspective, the process model of a server application is important in terms of its memory usage and integration with the target environment. From the operating system's point of view, process models mainly differ in the number of processes, as, for example, a multiprocess application uses several concurrent processes, while a multithreaded or SPED-model application usually manages with one. On Unix-based operating systems, the creation of new processes is made more efficient by the fork() call and, consequently, copy-on-write for data sharing [HaJä03, p. 144].
+From a project perspective, the process model of a server application is important in terms of its
+memory usage and integration with the target environment. From the operating system's point of
+view, process models mainly differ in the number of processes, as, for example, a multiprocess
+application uses several concurrent processes, while a multithreaded or SPED-model application
+typically has only one. On Unix-based operating systems, the creation of new processes is made
+more efficient by the fork() call and, consequently, copy-on-write for more efficient memory
+usage [HaJä03, p. 144].
 
-The impact of the process model on the application's memory capacity requirement is therefore small, because virtual memory pages are allocated according to the use of variables, making the application's implementation and its actual load the more important factor affecting the memory requirement. Nevertheless, even a small memory saving offered by the process model was considered beneficial in the project, which favored minimizing the number of processes.
+The impact of the process model on the application's memory requirement is therefore small, because
+virtual memory pages are allocated according to the use of variables, making the implementation and
+its load the more important factor regarding memory. Nevertheless, even a small memory saving
+offered by the process model was considered beneficial in the project, which favored minimizing the
+number of processes.
 
-The ease of integrating the process model into the project's target environment is of particular importance. In the target environment, the interleaving of time-consuming operations of various application modules is done in the manner described in 3.2.1, by listening to file descriptors corresponding to the modules. Increasing the number of processes also increases the number of file descriptors to be listened to due to process-specific resources, so this fact also supports minimizing the number of processes used.
+The ease of integrating the process model into the target environment is of particular importance.
+In the target environment, the interleaving of time-consuming operations of various application
+modules is done in the manner described in 3.2.1, by listening to file descriptors corresponding to
+the modules. Increasing the number of processes also increases the number of file descriptors to be
+listened to, so this fact also supports minimizing the number of processes used.
 
 Multiprocessing model
 
