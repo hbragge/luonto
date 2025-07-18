@@ -496,9 +496,19 @@ listened to, so this fact also supports minimizing the number of processes used.
 
 Multiprocessing model
 
-In a multi-process model, a process is assigned to each user request, which executes the sequential steps associated with that request. The process completes all steps related to one HTTP request before accepting a new request. This typically means in practice that one process handles receiving requests and starts a sub-process (child process in Unix systems) that handles the individual request. When multiple sub-processes are started, multiple HTTP requests can be served simultaneously. If a process becomes blocked, for example, due to a disk or network operation, the operating system switches the process being executed, so that processor time is not wasted.
+In a multi-process model, a separate process is assigned to each user request, which then
+sequentially executes the steps associated with that request. The process completes all steps
+related to one HTTP request before accepting a new request. This typically means that one process
+handles the receiving of requests and starts sub-processes (child process in Unix systems) to take
+care of each request. When multiple sub-processes are started, multiple HTTP requests can be served
+simultaneously. If a process becomes blocked, for example due to a disk or network operation, the
+operating system switches the process being executed, so that processor time is not wasted.
 
-Each process also has its own address space, which makes it easier to execute concurrent HTTP requests, as each process can maintain the state information of the request being processed without worrying about conflicts between requests. However, implementing optimizations based on global data, such as cached URLs, may be difficult. Most HTTP servers also require some kind of database, in which case the requests, saves, and other operations made by the processes must take place taking into account the integrity of the database. This usually requires solving exclusion and synchronization problems through inter-process communication.
+Each process has its own address space, which makes it easier to execute concurrent HTTP requests,
+as each process can maintain its state information without worrying about conflicts between
+requests. However, implementing optimizations based on global data, such as cached URLs, may be
+difficult. Most HTTP servers also use some kind of database, which means that an IPC (Inter-Process
+Communication) mechanism might be needed to synchronize access to the database.
 
 Multithreaded model
 
@@ -692,7 +702,7 @@ Process modules
 
 Process modules are programs designed for a specific task, offering their own interface for use by the rest of the application environment or the outside world. Embedded systems are characterized by real-time processes, the execution of which differs from traditional systems in terms of timing requirements and concurrency management [HaMä98, p. 306]. The inputs and data streams processed by the system are unpredictable, which necessitates specific requirements compared to traditional batch-based applications. Real-time systems may also have parts that process batch-type inputs, and these are called passive modules.
 
-In the Iris 440 device's application environment, the challenges posed by real-time operation have been solved through inter-process module communication and their asynchronous operation. Inter-process communication is implemented using an IPC (Inter-Process Communication) interface, which is realized by a separate IPC module. The IPC interface allows processes to transmit data and requests to each other, and it can be used to take care of process synchronization. In this case, asynchronous operation means that each module registers itself with the system's operation-controlling monitoring module, to which the module can report its activity, for example, in connection with an I/O operation. A module can become active, for example, when input arrives from the user.
+In the Iris 440 device's application environment, the challenges posed by real-time operation have been solved through inter-process module communication and their asynchronous operation. Inter-process communication is implemented using an IPC interface, which is realized by a separate IPC module. The IPC interface allows processes to transmit data and requests to each other, and it can be used to take care of process synchronization. In this case, asynchronous operation means that each module registers itself with the system's operation-controlling monitoring module, to which the module can report its activity, for example, in connection with an I/O operation. A module can become active, for example, when input arrives from the user.
 
 The advantage of module asynchronicity is that computing power is not wasted while a single module waits for an event to occur; instead, that computing time can be used elsewhere, and the module signals its activity as needed. Module registration with the monitoring module is implemented using a special class from which the module inherits its own listener class. This class must implement a specific method that the monitoring module calls when the module is active. This method initiates the execution of the function implemented by the module, which may include reading and processing I/O input, for example. Registration of the listener object with the monitoring module is done through the monitoring module's `register_fd()` method, to which the listener provides the file descriptor to be monitored and itself as input.
 
