@@ -512,9 +512,21 @@ Communication) mechanism might be needed to synchronize access to the database.
 
 Multithreaded model
 
-A multithreaded server operates on the same principle as a multiprocess server, but to conserve resources, threads handle requests instead of processes. When one thread blocks, for example due to an I/O operation, the program's execution can continue in another thread. The most significant difference between a process and a thread is in resource usage: instead of thread-specific resources, threads within the same process share, among other things, the process's memory space and file descriptors. This reduces the amount of resources needed and speeds up context switching between different threads. Each thread's local variables are stored in its own stack memory. Controlling threads usually requires utilizing shared state information and synchronizing access to shared data. Like processes, one thread performs all the necessary steps after receiving and accepting one HTTP request before accepting a new request.
+A multithreaded server operates on the same principle as a multiprocess server, but to conserve
+resources, requests are handled by threads instead of processes. When one thread blocks, for
+example due to an I/O operation, the program's execution can continue in another thread. The most
+significant difference between a process and a thread is in resource usage: instead of
+thread-specific resources, threads within the same process share, among other things, the process's
+memory space and file descriptors. This reduces the amount of resources needed and speeds up
+context switching between different threads. Each thread's local variables are stored in its own
+stack memory. Controlling threads usually requires utilizing shared state information and
+synchronizing access to shared data. Like processes, after receiving and accepting an HTTP request,
+one thread processes it completely before accepting a new request.
 
-Using threads requires operating system support, and the benefits gained from threading partly depend on the implementation of that support. Some operating systems also offer user-space thread libraries, in which case actual kernel support is not required, but the performance benefits do not reach the level of native threading.
+Using threads requires operating system support, and the benefits gained from threading partly
+depend on the implementation. Some operating systems also offer user-space thread libraries, in
+which case kernel support is not required, but the performance benefits are smaller compared to
+native threading.
 
 Single-process Event-driven (SPED)
 
