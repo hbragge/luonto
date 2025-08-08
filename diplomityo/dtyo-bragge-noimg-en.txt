@@ -530,13 +530,35 @@ native threading.
 
 Single-process Event-driven (SPED)
 
-The SPED model differs from the previous two models in that, instead of a process or thread being started for each HTTP request, a single process is responsible for both receiving and handling requests. The execution of this server process must occur in such a way that it never enters a locked state, which would interrupt the server's operation. This requires using blocking system calls in a way that maintains server availability. Additionally, instead of blocking I/O operations, their asynchronous counterparts can be used, if the operating system supports them. In Unix systems, it is useful to use the select() call, mentioned in subsection 2.2.1, in connection with blocking calls. The principle of this call is that, instead of waiting, which excludes other activity, it periodically checks whether the I/O operations to be performed are active, so that processor time is not spent waiting for a single blocking operation. In addition, some blocking calls can be given an additional parameter that causes them to return immediately, and the success of the operation can be determined from its return value.
+The SPED model differs from the previous two models in that, instead of a process or thread being
+started for each HTTP request, just a single process is responsible for both receiving requests and
+processing them. The execution of this server process must happen in a way that it never gets
+blocked for too long. This requires using blocking system calls in a way that maintains server
+availability. Additionally, instead of blocking I/O operations, their asynchronous counterparts can
+be used, if the operating system supports them. In Unix systems, it is useful to use the select()
+call, mentioned in subsection 2.2.1, whenever blocking calls are needed. The principle of this call
+is that, instead of waiting, which excludes other activity, it periodically checks whether the I/O
+operations to be performed are active, so that processor time is not spent waiting for a single
+blocking operation. Some blocking calls can also be given an additional parameter that causes them
+to return immediately, and the success of the operation can be determined from its return value.
 
-The operation of the SPED server is based on maintaining request-specific state information, allowing each request to be processed in segmented stages, one step at a time. In each iteration cycle, the server can check incoming connections, transmit buffers, or completed file operations and select the active source to execute. After execution, the next stage of that request is initialized, which could be, for example, sending an HTTP response.
+The operation of the SPED server is based on maintaining request-specific state, allowing each
+request to be processed step-by-step. In each iteration, the server can check incoming connections,
+transmit buffers, or completed file operations and select the active source to handle. After that,
+the next stage of that request is initialized, which could be, for example, sending an HTTP
+response.
 
-A significant problem with SPED servers is the processor time-consuming I/O operations, such as reading a large file. The server process should not block when executing a single request, as this prevents new requests from being received, potentially resulting in poor availability or response time for the user. In modern operating systems, many CPU, disk, and network operations can also be overlapped or executed in slices. This further enhances the performance and especially the response time of the SPED server, but the problem is the lack of support in older operating systems. For example, asynchronous disk operations are a standard feature in systems using the Linux kernel 2.6.
+A big challenge with SPED servers is the I/O operations, such as reading a large file. The server
+process shouldn't block, as this prevents new requests from being received, potentially resulting
+in poor availability or response time for the user. In modern operating systems, many CPU, disk,
+and network operations can also be executed in steps. This further enhances the performance and
+response time of the server, but the problem is the lack of support in older operating systems. For
+example, asynchronous disk operations are only supported since Linux kernel version 2.6.
 
-Despite support for asynchronous operations, most SPED servers do not utilize them, instead relying on traditional system calls and their provided concurrency management. Consequently, SPED servers are generally used only for specific reasons due to their memory saving benefits. They are particularly well-suited for embedded systems with limited memory capacity.
+Even when asynchronous I/O operations are supported, most of the current SPED servers don't use
+them, instead relying on traditional system calls. Consequently, SPED servers are generally used
+only for specific reasons due to their memory saving benefits. They are particularly well-suited
+for embedded systems with limited memory capacity.
 
 Asymmetric Multi-process Event-driven (AMPED)
 
