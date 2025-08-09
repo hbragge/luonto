@@ -562,13 +562,24 @@ for embedded systems with limited memory capacity.
 
 Asymmetric Multi-process Event-driven (AMPED)
 
-The AMPED model aims to leverage the essential features of the event-driven SPED model, namely state-based execution and shared memory, and to support it with multiple auxiliary processes or threads. Auxiliary processes can handle, for example, necessary I/O operations. They help to improve the server's response time because blocking disk and network operations can be handled in their own processes while the event-driven main process handles the other stages of HTTP request processing.
+The AMPED model aims to leverage the essential features of the event-driven SPED model, namely
+state-based execution and shared memory, but supports it with multiple auxiliary processes or
+threads. Auxiliary processes can, for example, handle necessary I/O operations. They help to
+improve the server's response time because blocking disk and network operations can be handled in
+their own processes while the event-driven main process handles the other stages of HTTP request
+processing.
 
-The AMPED model aims to maintain the performance of the SPED model in operations other than file reading, but avoids its problems regarding, for example, slow disk operations and system support issues for asynchronous disk operations.
+The AMPED model aims to maintain the performance of the SPED model in operations other than file
+reading, but avoids its problems regarding, for example, slow disk operations.
 
-The AMPED model can be utilized with conventional operating system methods, so there is no need to compromise on ease of deployment and broad system support. In Unix systems, AMPED uses standard system calls such as read(), write(), and accept() when using sockets and pipes, as well as the select() or poll() call to test for I/O operation completion. When using the AMPED model, managing file system data access is also essential, just like with multiprocess and multithreaded models.
+The AMPED model can be utilized with conventional operating system methods, so there is no need to
+compromise on ease of deployment and broad system support. In Unix systems, AMPED uses standard
+system calls such as read(), write(), and accept() when using sockets and pipes, as well as the
+select() or poll() call to test for I/O operation completion.
 
-Although the AMPED model isn't as popular as other process models presented in this section, it is a server option to be seriously considered, especially for embedded systems where good performance is required from the software with a small load.
+Although the AMPED model isn't as popular as other process models presented in this section, it is
+an option worth serious consideration, especially for embedded systems where good performance with
+low system load is required.
 
 2.4 Server Security
 
