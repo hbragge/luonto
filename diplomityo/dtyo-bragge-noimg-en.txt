@@ -209,16 +209,16 @@ proposal for a new way to present and link information. This started a new era i
 transmission, which, through uniform resource identification and sharing as well as hypertext,
 enabled the sharing of audio, images, text, and other information with graphical browsers. The
 diversity of transmittable information quickly created a need for dynamic information creation and
-processing as well. Today, it enables interactive applications on WWW servers, the use of which via
+processing as well. Today, it enables interactive applications on web servers, the use of which via
 a browser over the internet is as easy and fast as with traditional applications locally.
 
 2.1.1 HTTP Protocol
 
-HTTP is a data transfer protocol used on the WWW, which allows a client and a server to negotiate
+HTTP is a data transfer protocol used on the web, which allows a client and a server to negotiate
 with each other. HTTP was developed by the W3C (World Wide Web Consortium) and the IETF (Internet
 Engineering Task Force), and the most common version currently used is HTTP/1.1, which is defined
 by RFC 2616 [Ber99]. Different versions are backwards compatible, and version 1.1 includes
-improvements that streamline HTTP traffic and provide better control over the appearance of WWW
+improvements that streamline HTTP traffic and provide better control over the appearance of web
 pages [Pus01, p. 127]. HTTP operates on the application layer, and the TCP protocol is generally
 used below it, providing HTTP with reliable and connection-oriented data transfer. This subsection
 is based on sources [Ber99] and [Pel98, p. 19-21].
@@ -583,9 +583,16 @@ low system load is required.
 
 2.4 Server Security
 
-Implementing any server application often inherently includes security. In the case of a WWW server, this usually means access control for the server's documents and, in applications requiring greater privacy, such as banking services, also encrypting the transferred data. This section discusses a few of the most common security methods that arose during the project, related to both user authentication and data encryption.
+Implementing a server application often inherently involves security. In the case of a web server,
+this usually means access control for the server's documents and, in applications requiring greater
+privacy, such as banking services, also encrypting the transferred data. This section discusses a
+few of the most relevant security methods that came up during the project, related to both user
+authentication and data encryption.
 
-The authentication methods covered include HTTP standard authentication, as well as SSL (Secure Sockets Layer) and its successor TLS (Transport Layer Security) for stronger authentication. A common way to implement strong authentication is the public key method used by SSL. In connection with SSL and TLS protocols, the means they offer for encrypting data are also examined.
+The authentication methods covered include HTTP standard authentication, as well as SSL (Secure
+Sockets Layer) and its successor TLS (Transport Layer Security) for stronger authentication. A
+common way to implement strong authentication is the public key method used by SSL. Regarding SSL
+and TLS protocols, their methods for encrypting data are also examined.
 
 Server-specific security solutions, such as IP-based access control and file system-based permission restrictions, are excluded. A server application can also implement its own authentication method, allowing the management application to verify the user's authenticity. These aspects will be discussed later in chapter four when introducing servers. Furthermore, this section only covers the security between the user and the server application, even though a secure server implementation must also consider the server architecture, the security of the software code, and the company or organization's overall information security.
 
