@@ -1,4 +1,4 @@
-Gesundheitscheck vom 18.10.2024
+=== Gesundheitscheck vom 18.10.2024
 
 Laborwert    Ihre       Einheit Normwert
              Ergebnisse         (m=männl. w=weibl.)
@@ -15,6 +15,24 @@ HS           6.5             mg/dl   m: < 6.5
 HDL          66.1            mg/dl   m: > 40
 LDL          145.7           mg/dl   m: < 160
 LDL/HDL      2.2                     m: < 3.5
+
+=== Gesundheitscheck vom 12.12.2025
+
+Laborwert    Ihre       Einheit Normwert
+             Ergebnisse         (m=männl. w=weibl.)
+
+GGT          9.63         U/l      m: < 85
+TBI          1.25         mg/dl    m: < 1.2
+CHOL         201.0        mg/dl    m:<240
+                                   m:<200(wünschenswert)
+TGL          66.8         mg/dl    m: < 150
+CREA         0.889        mg/dl    m: < 1.3
+GOT          26.0         mg/dl    m: < 50
+GPT          14.2         mg/dl    m: < 50
+HS           4.7          mg/dl    m: < 6.5
+HDL          63.4         mg/dl    m: > 40
+LDL          120.0        mg/dl    m: < 160
+LDL/HDL      1.89                  m: < 3.5
 
  •   GPT, GOT und GGT sind Leitenzyme für das Organ Leber. Bei Leberschädigungen geben sie einen Anhalt
      für die Ausdehnung des Zellschadens. Einflussgrößen auf diese Leberenzyme sind u.a. Nahrungsaufnahme
