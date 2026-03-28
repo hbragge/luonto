@@ -609,15 +609,31 @@ necessary in chapter five.
 
 2.4.1 HTTP Authentication
 
-The HTTP standard introduces a method for simple access control, i.e., authentication. The standard includes two authentication schemes: the simple basic scheme and the more secure digest scheme. The IETF has defined these methods in more detail in RFC 2617 [Fra99]. This subsection discusses the authentication methods offered by HTTP and is based on the aforementioned RFC in addition to sources [Ker98, p. 148-153] and [Pus01, p. 140-153].
+The HTTP standard introduces a method for simple access control, i.e. authentication. The standard
+includes two authentication schemes: the basic scheme and the more secure digest scheme. The IETF
+has defined these methods in more detail in RFC 2617 [Fra99]. This subsection discusses the
+authentication methods offered by HTTP and is based on the aforementioned RFC in addition to
+sources [Ker98, p. 148-153] and [Pus01, p. 140-153].
 
-HTTP authentication is based on identifying a user with a username and password and can be used to protect documents on a server. Although using passwords is a weak authentication method due to human risk factors, it is strong enough for many applications. In more demanding applications, only using a password in conjunction with a strong authentication method, such as SSL, is sufficient to guarantee the required data security.
+HTTP authentication is based on identifying a user with a username and password and can be used to
+protect documents on a server. Although using passwords is a weak authentication method due to
+human risk factors, it is strong enough for many applications. In more demanding applications, only
+using a password in conjunction with a strong authentication method, such as SSL, is sufficient to
+guarantee the required data security.
 
 Basic authentication
 
-The server can be configured to use basic authentication, which is usually done in the server's general configuration file, where the authentication to be used and the allowed usernames are defined on a directory-specific basis. User passwords can be set in the same file or in a separate password file, which is usually also encrypted.
+The server can be configured to use basic authentication, which is usually done in the server's
+general configuration, where the authentication to be used and the allowed usernames are defined on
+a directory-specific basis. User passwords can be set in the same file or in a separate password
+file, which is usually encrypted.
 
-When a user establishes a browser connection to a protected folder on a server, the server responds with a message indicating that accessing the folder requires user authentication. Figure 2-4 presents an authentication request from the server when basic authentication is used. It shows, in addition to the concepts familiar from subsection 2.1.1, the response code 401 indicating a usage restriction, the authentication method used (basic), and the realm "salainen" (secret). The latter can be used to define "security realms" within which the user only needs to authenticate once.
+When a user connects to a protected server folder using a web browser, the server responds with a
+message indicating that accessing the folder requires user authentication. Figure 2-4 presents an
+authentication request from the server when basic authentication is used. It shows, in addition to
+the concepts familiar from subsection 2.1.1, the response code 401 indicating a usage restriction,
+the authentication method used (basic), and the realm "salainen". The latter can be used to define
+"security realms" within which the user only needs to authenticate once.
 
 Figure 2-4. Server basic authentication request.
 
