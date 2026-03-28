@@ -1,0 +1,45 @@
+Gesundheitscheck vom 18.10.2024
+
+Laborwert    Ihre       Einheit Normwert
+             Ergebnisse         (m=männl. w=weibl.)
+
+GGT          13.0            U/l     m: < 85
+TBI          1.87            mg/dl   m: < 1.2
+CHOL         233.0           mg/dl   m:<240
+                                     m:<200(wünschenswert)
+TGL          78.5            mg/dl   m: < 150
+CREA         1.11            mg/dl   m: < 1.3
+GOT          27.2            mg/dl   m: < 50
+GPT          13.2            mg/dl   m: < 50
+HS           6.5             mg/dl   m: < 6.5
+HDL          66.1            mg/dl   m: > 40
+LDL          145.7           mg/dl   m: < 160
+LDL/HDL      2.2                     m: < 3.5
+
+ •   GPT, GOT und GGT sind Leitenzyme für das Organ Leber. Bei Leberschädigungen geben sie einen Anhalt
+     für die Ausdehnung des Zellschadens. Einflussgrößen auf diese Leberenzyme sind u.a. Nahrungsaufnahme
+     und Ernährungsgewohnheiten, Lebensalter, körperliche Belastung, Alkoholkonsum und
+     Medikamenteneinnahme (auch Ovulationshemmer).
+
+ •   Das Bilirubin (TBI) ist ein Abbauprodukt des Hämoglobins und lässt bei einer Erhöhung u.a. Rückschlüsse
+     auf eine Störung des Leber-/Galle-Stoffwechsels zu.
+
+ •   Cholesterin wird bestimmt zur Früherkennung des Atherosklerose-Risikos (z.B. Herzkranzgefäße, Hals- und
+     Gehirngefäße), aber auch zur Therapie-Kontrolle bei Behandlung mit lipidsenkenden Medikamenten. Für die
+     Beurteilung des Fettstoffwechsels und des kardiovaskulären Risikos wird die HDL- und LDL-Konzentration
+     mitbestimmt: LDL-Cholesterin ist das sogenannte „schlechte Cholesterin“, HDL-Cholesterin scheint einen
+     Schutz vor dem Auftreten der koronaren Herzkrankheit zu bieten („gutes Cholesterin“), niedrige HDL-Werte
+     stellen einen unabhängigen Risikofaktor dar.
+
+ •   Triglyceride (TGL) werden zur Früherkennung eines Artherosklerose-Risikos bestimmt und ebenfalls zur
+     Kontrolle diätischer und medikamentöser Lipid-senkender Therapie. Für die koronare Herzkrankheit stellt die
+     Kombination von erhöhten Triglyceriden und erhöhtem LDL-Cholesterin ein speziell hohes Risiko dar.
+
+ •   Die Messung der Kreatininkonzentration (CREA) im Blut ist ein grober Indikator zur Beurteilung der
+     Effektivität der Ausscheidungsleistung durch die Niere. Sie gibt bei Erhöhung u.a. Hinweise auf akute und
+     chronische Nierenerkrankungen, Stoffwechselstörungen (z.B. Diabetes, Gicht) oder Krankheiten mit
+     vermehrtem Eiweißmetabolismus.
+
+ •   Eine Erhöhung der Harnsäure (HS) über 6,5 mg/dl ist primär ein Symptom der Gicht, sekundär tritt sie auf in
+     Verbindung mit Risikofaktoren der koronaren Herzerkrankung (Hypertonie, Hyperlipidämie, Übergewicht und
+     Störungen des Glucosemetabolismus) und Zuständen mit vermehrtem Zellumsatz.
